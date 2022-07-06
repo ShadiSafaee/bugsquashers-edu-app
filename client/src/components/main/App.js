@@ -1,11 +1,12 @@
 import React from "react";
 import HomePage from "../pages/HomePage";
-
+import { Routes, Route, Link } from "react-router-dom";
 function App() {
   return (
     <>
-      <h1>App</h1>
-      <HomePage></HomePage>
+      <Routes>
+        <Route index element={<HomePage />}></Route>
+      </Routes>
     </>
   );
 }

@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Content from "../general/Content";
 import Header from "../general/Header";
+import "../../styles/homePage.css";
+import Footer from "../general/Footer";
 const HomePage = () => {
-  const [test, setTest] = useState("");
-  useEffect(() => {
-    const url = "http://localhost:5000/api/user";
-    const callServer = async () => {
-      const res = await fetch(url);
-      const { message } = await res.json();
-      setTest(message);
-    };
-    callServer();
-  }, []);
   return (
     <>
       <article className="homepage_art">
         <article className="header_main_art">
           <Header></Header>
-          <article className="main"></article>
+          <div className="home_video_div">
+            <video className="home_video" muted loop autoPlay>
+              <source src="/video/1.mp4" type="video/mp4"></source>
+            </video>
+          </div>
+
+          <Content></Content>
         </article>
+        <Footer></Footer>
       </article>
     </>
   );
