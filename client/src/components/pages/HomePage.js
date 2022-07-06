@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Header from "../general/Header";
 const HomePage = () => {
   const [test, setTest] = useState("");
   useEffect(() => {
@@ -10,7 +11,16 @@ const HomePage = () => {
     };
     callServer();
   }, []);
-  return <h1>{test}</h1>;
+  return (
+    <>
+      <article className="homepage_art">
+        <article className="header_main_art">
+          <Header></Header>
+          <article className="main"></article>
+        </article>
+      </article>
+    </>
+  );
 };
 
 export default HomePage;
