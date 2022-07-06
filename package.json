@@ -1,7 +1,6 @@
 {
   "name": "cyf-bugsquashers-edu-app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,5 +8,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ali-Jahankah/bugsquashers-edu-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ali-Jahankah/bugsquashers-edu-app/issues"
+  },
+  "homepage": "https://github.com/Ali-Jahankah/bugsquashers-edu-app#readme",
+  "description": ""
 }
