@@ -1,0 +1,41 @@
+h2 {
+  color: #41424f;
+  font-size: 30px;
+}
+.log {
+  background-color: whitesmoke;
+  border-radius: 5px;
+  width: 550px;
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  display: inline-block;
+}
+.log_body {
+  text-align: right;
+  padding: 40px 10px;
+}
+.log_body > * {
+  padding: 5px;
+}
+.log_input {
+  width: 60%;
+  justify-items: center;
+  margin-right: 15%;
+  margin-top: 1%;
+}
+.log_btn {
+  width: 20%;
+  font-size: larger;
+  background-color: #41424f;
+  border-radius: 5px;
+  color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+  margin-left: 40%;
+  margin-top: 10%;
+}
+.log_btn:hover {
+  background-color: blanchedalmond;
+  color: #41424f;
+}
