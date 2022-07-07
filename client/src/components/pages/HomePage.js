@@ -9,11 +9,10 @@ const HomePage = () => {
       <article className="homepage_art">
         <article className="header_main_art">
           <Header></Header>
-          <div className="home_video_div">
-            <video className="home_video" muted loop autoPlay>
-              <source src="/video/1.mp4" type="video/mp4"></source>
-            </video>
-          </div>
+
+          <video className="home_video" muted loop autoPlay>
+            <source src="/video/1.mp4" type="video/mp4"></source>
+          </video>
 
           <Content></Content>
         </article>
