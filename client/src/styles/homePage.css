@@ -7,9 +7,14 @@
   position: relative;
 }
 .header_main_art {
-  width: 100vw;
   height: 90vh;
+}
+.video_layer {
+  width: 100vw;
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .home_video {
