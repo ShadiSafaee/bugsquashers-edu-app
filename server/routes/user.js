@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 
+
 const pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
   // ssl: {
@@ -122,6 +123,7 @@ router.post("/dashboard", checkToken, (req, res) => {
       res.status(200).json({ msg: "User authorized", authorizedData });
     }
   });
+
 });
 
 module.exports = router;
