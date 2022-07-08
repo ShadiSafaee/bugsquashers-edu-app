@@ -9,5 +9,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "react-datepicker": "^4.8.0",
+    "react-select": "^5.4.0",
+    "react-select-country-list": "^2.2.3"
+  }
 }
