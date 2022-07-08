@@ -33,6 +33,8 @@ router.post("/signup", async (req, res) => {
     "INSERT INTO user_data (firstname, surname, email, password, dob, country) VALUES ($1, $2, $3, $4, $5, $6)";
   const checkEmailQuery =
     "SELECT EXISTS (SELECT email FROM user_data WHERE email= $1)";
+  const query = "SELECT * FROM user_data";
+
   const emailChecked = await pool.query(checkEmailQuery, [email]);
 
   if (emailChecked.rows[0].exists) {
@@ -55,8 +57,8 @@ router.post("/signup", async (req, res) => {
       dob,
       country,
     ]);
-    res.status(200).json({ msg: "New user created" });
-    // res.redirect("/api/user/");
+    const data = await pool.query(query);
+    res.status(200).json({ msg: "New user created", user: data.rows });
   }
 });
 
@@ -74,7 +76,7 @@ router.post("/login", async (req, res) => {
     if (passwordChecked) {
       if (email === userFound.rows[0].email) {
         jwt.sign(
-          { user },
+          userFound.rows[0],
           process.env.mySecret,
           { expiresIn: "1h" },
           (err, token) => {
@@ -111,14 +113,13 @@ const checkToken = (req, res, next) => {
 };
 
 //accessing a protected route for user
-router.get("/dashboard", checkToken, (req, res) => {
+router.post("/dashboard", checkToken, (req, res) => {
+  console.log(req.token, process.env.mySecret);
   jwt.verify(req.token, process.env.mySecret, (err, authorizedData) => {
     if (err) {
-      res
-        .status(403)
-        .json({ msg: "ERROR: Could not connect to the protected route" });
+      res.status(403).json({ msg: "Not authorized" });
     } else {
-      res.json({ msg: "Successful log in", authorizedData });
+      res.status(200).json({ msg: "User authorized", authorizedData });
     }
   });
 });
