@@ -10,12 +10,13 @@ const HomePage = () => {
         <article className="header_main_art">
           <Header></Header>
 
-          <video className="home_video" muted loop autoPlay>
+          <video className="home_video" muted loop>
             <source src="/video/1.mp4" type="video/mp4"></source>
           </video>
 
           <Content></Content>
         </article>
+
         <Footer></Footer>
       </article>
     </>

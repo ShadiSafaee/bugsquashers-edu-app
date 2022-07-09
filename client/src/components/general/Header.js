@@ -4,8 +4,6 @@ import "../../styles/header.css";
 import SyntaxContext from "../../context/user/SyntaxContext";
 
 const Header = () => {
-  const context = useContext(SyntaxContext);
-  console.log(context);
   return (
     <header className="header">
       <div className="nav_options">
