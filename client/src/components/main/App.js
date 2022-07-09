@@ -1,14 +1,12 @@
 import React from "react";
 import HomePage from "../pages/HomePage";
-import RegistrationForm from "../general/RegistrationForm";
-import LogIn from "../general/LogIn";
-
+import { Routes, Route, Link } from "react-router-dom";
 function App() {
   return (
     <>
-      <h1>App</h1> <HomePage></HomePage>
-      <LogIn />
-      <RegistrationForm />
+      <Routes>
+        <Route index element={<HomePage />}></Route>
+      </Routes>
     </>
   );
 }
