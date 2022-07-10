@@ -4,8 +4,7 @@ import "../../styles/header.css";
 import SyntaxContext from "../../context/user/SyntaxContext";
 
 const Header = () => {
-  const context = useContext(SyntaxContext);
-  console.log(context);
+  const { mobileNavClass, setMobileNavClass } = useContext(SyntaxContext);
   return (
     <header className="header">
       <div className="nav_options">
@@ -21,19 +20,29 @@ const Header = () => {
       </div>
       <nav className="nav_dektop">
         <ul className="nav_ul">
-          <li className="nav_link">
-            <Link to="/">Home</Link>
+          <li>
+            <Link to="/" className="nav_link">
+              <img src="/svg/home.svg" alt="home svg" />
+              <span>Home</span>
+            </Link>
           </li>
         </ul>
       </nav>
-      <div className="mobile_nav moving">
+      <div className={`mobile_nav ${mobileNavClass && "moving"}`}>
         <ul className="mobile_nav_ul">
-          <li className="mobile_nav_link">
-            <Link to="/">Home</Link>
+          <li>
+            <Link to="/" className="mobile_nav_link">
+              {" "}
+              <img src="/svg/home.svg" alt="home svg" />
+              <span>Home</span>
+            </Link>
           </li>
         </ul>
       </div>
-      <div className="hamburger_container">
+      <div
+        className="hamburger_container"
+        onClick={() => setMobileNavClass(!mobileNavClass)}
+      >
         <div className="hamburger_parts color"></div>
         <div className="hamburger_parts color"></div>
         <div className="hamburger_parts color"></div>
