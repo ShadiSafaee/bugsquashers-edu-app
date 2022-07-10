@@ -16,6 +16,7 @@ const HomePage = () => {
             <Content></Content>
           </div>
         </article>
+
         <Footer></Footer>
       </article>
     </>
