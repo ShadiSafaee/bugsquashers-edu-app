@@ -33,7 +33,7 @@ router.post("/signup", async (req, res) => {
     "INSERT INTO user_data (firstname, surname, email, password, dob, country) VALUES ($1, $2, $3, $4, $5, $6)";
   const checkEmailQuery =
     "SELECT EXISTS (SELECT email FROM user_data WHERE email= $1)";
-  const query = "SELECT * FROM user_data";
+  const query = "SELECT * FROM user_data WHERE email = $1";
 
   const emailChecked = await pool.query(checkEmailQuery, [email]);
 
@@ -57,7 +57,7 @@ router.post("/signup", async (req, res) => {
       dob,
       country,
     ]);
-    const data = await pool.query(query);
+    const data = await pool.query(query, [email]);
     res.status(200).json({ msg: "New user created", user: data.rows });
   }
 });
@@ -125,5 +125,17 @@ router.post("/dashboard", checkToken, (req, res) => {
 });
 // this is a test
 // second test
+
+//log out route
+router.put("/logout", (req, res) => {
+  const authHeader = req.headers["authorization"];
+  jwt.sign(authHeader, "", { expiresIn: 1 }, (logout, err) => {
+    if (logout) {
+      res.send({ msg: "You have been Logged Out" });
+    } else {
+      res.send({ msg: "Error" });
+    }
+  });
+});
 
 module.exports = router;
