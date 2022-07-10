@@ -8,5 +8,8 @@ const Context = createContext({
   register: {},
   setRegister: () => {},
   loginHandler: () => {},
+  registerHandler: () => {},
+  loginFormHandler: () => {},
+  registerFormHandler: () => {},
 });
 export default Context;

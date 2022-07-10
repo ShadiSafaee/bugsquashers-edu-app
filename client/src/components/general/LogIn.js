@@ -1,7 +1,6 @@
 import "../styles/LogIn.css";
 import { React, useContext } from "react";
 import SyntaxContext from "../../context/user/SyntaxContext";
-import e from "cors";
 const LogIn = () => {
   const { login, setLogin, loginHandler } = useContext(SyntaxContext);
   return (
@@ -12,19 +11,16 @@ const LogIn = () => {
           className="login_input"
           type="email"
           placeholder="Email..."
-          name="email"
-          // value={login["email"]}
-          // onChange={(e) => {
-          //   setLogin((prev) => (prev += e.target.value));
-          //   console.log(login);
-          // }}
+          value={login["email"]}
+          onChange={(e) => loginHandler("email", e.target.value)}
           required
         />
         <input
           className="login_input"
           type="password"
           placeholder="Password..."
-          name="password"
+          value={login["password"]}
+          onChange={(e) => loginHandler("pass", e.target.value)}
           required
         />
         <button className="log_btn" type="submit">
