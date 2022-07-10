@@ -6,7 +6,7 @@ import SyntaxContext from "../../context/user/SyntaxContext";
 import { Link } from "react-router-dom";
 
 const RegistrationForm = () => {
-  const { registerFormHandler, registerHandler, register } =
+  const { registerFormHandler, registerHandler, register, errorMessage } =
     useContext(SyntaxContext);
   const countries = [
     "Mexico",
@@ -16,7 +16,6 @@ const RegistrationForm = () => {
     "South Africa",
     "Lebanon",
   ];
-
   return (
     <section className="register_section">
       <h2>Register</h2>
@@ -24,35 +23,64 @@ const RegistrationForm = () => {
         className="register_form"
         onSubmit={(e) => {
           e.preventDefault();
-          registerHandler();
+          registerHandler(e);
         }}
       >
-        <input
-          className="register_input"
-          type="email"
-          value={register["email"]}
-          onChange={(e) => registerFormHandler("email", e.target.value)}
-          placeholder="Email..."
-          required
-        ></input>
-        <input
-          className="register_input"
-          type="password"
-          value={register["password"]}
-          onChange={(e) => registerFormHandler("pass", e.target.value)}
-          placeholder="Password..."
-          required
-        ></input>
-
-        <input
-          className="register_input"
-          type="password"
-          value={register["confpass"]}
-          onChange={(e) => registerFormHandler("confpass", e.target.value)}
-          placeholder="Retype password..."
-          required
-        ></input>
-
+        <div>
+          <input
+            className="register_input"
+            type="email"
+            value={register["email"]}
+            onChange={(e) => registerFormHandler("email", e.target.value)}
+            placeholder="Email..."
+            required
+          ></input>
+          <span className="input_message">{errorMessage["email"]}</span>
+        </div>
+        <div>
+          <input
+            className="register_input"
+            type="password"
+            value={register["password"]}
+            onChange={(e) => registerFormHandler("pass", e.target.value)}
+            placeholder="Password..."
+            required
+          ></input>
+          <span className="input_message">{errorMessage["password"]}</span>
+        </div>
+        <div>
+          <input
+            className="register_input"
+            type="password"
+            value={register["confpass"]}
+            onChange={(e) => registerFormHandler("confpass", e.target.value)}
+            placeholder="Retype password..."
+            required
+          ></input>
+          <span className="input_message">{errorMessage["confpass"]}</span>
+        </div>
+        <div>
+          <input
+            className="register_input"
+            type="text"
+            value={register["firstname"]}
+            onChange={(e) => registerFormHandler("fname", e.target.value)}
+            placeholder="Firstname..."
+            required
+          ></input>
+          <span className="input_message">{errorMessage["firstname"]}</span>
+        </div>
+        <div>
+          <input
+            className="register_input"
+            type="text"
+            value={register["surname"]}
+            onChange={(e) => registerFormHandler("lname", e.target.value)}
+            placeholder="Surname"
+            required
+          ></input>
+          <span className="input_message">{errorMessage["surname"]}</span>
+        </div>
         <DatePicker
           selected={register["dob"]}
           onSelect={(date) => {
@@ -64,28 +92,31 @@ const RegistrationForm = () => {
           scrollableYearDropdown
           dateFormat="dd/MM/yyyy"
         />
-
-        <select
-          className="register_select"
-          value={register["country"]}
-          onChange={(e) => registerFormHandler("country", e.target.value)}
-        >
-          <option
-            value="none"
-            onChange={(e) => registerFormHandler("country", "none")}
+        <div className="gerister_select_div">
+          <select
+            className="register_select"
+            value={register["country"]}
+            onChange={(e) => registerFormHandler("country", e.target.value)}
           >
-            Select Country...
-          </option>
-          {countries.map((country) => (
             <option
-              className="register_select_opts"
-              onChange={(e) => registerFormHandler("country", country)}
-              value={country}
+              value="none"
+              onChange={(e) => registerFormHandler("country", "none")}
             >
-              {country}
+              Select Country...
             </option>
-          ))}
-        </select>
+            {countries.map((country) => (
+              <option
+                className="register_select_opts"
+                onChange={(e) => registerFormHandler("country", country)}
+                value={country}
+              >
+                {country}
+              </option>
+            ))}
+          </select>
+          <span className="input_message">{errorMessage["country"]}</span>
+        </div>
+
         <button type="submit" className="btn register_btn">
           Register
         </button>
