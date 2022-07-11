@@ -19,7 +19,7 @@ const isEqual = async (enteredPassword, hashedPassword) => {
 router.get("/", async (req, res) => {
   const query = "SELECT * FROM user_data";
   const data = await pool.query(query);
-  res.send(data.rows);
+  res.json(data.rows);
 });
 
 router.post("/signup", async (req, res) => {
