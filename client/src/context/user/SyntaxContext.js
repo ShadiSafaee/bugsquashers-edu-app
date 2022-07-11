@@ -11,5 +11,7 @@ const Context = createContext({
   registerHandler: () => {},
   loginFormHandler: () => {},
   registerFormHandler: () => {},
+  errorMessage: {},
+  setErrorMessage: () => {},
 });
 export default Context;

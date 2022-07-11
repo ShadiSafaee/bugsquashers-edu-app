@@ -116,7 +116,6 @@ const checkToken = (req, res, next) => {
 
 //accessing a protected route for user
 router.post("/dashboard", checkToken, (req, res) => {
-  console.log(req.token, process.env.mySecret);
   jwt.verify(req.token, process.env.mySecret, (err, authorizedData) => {
     if (err) {
       res.status(403).json({ msg: "Not authorized" });
