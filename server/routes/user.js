@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
+const cors = require("cors");
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -21,6 +22,12 @@ const pool = new Pool({
 const isEqual = async (enteredPassword, hashedPassword) => {
   return await bcrypt.compare(enteredPassword, hashedPassword);
 };
+
+const corsOptions = {
+  origin: "*",
+};
+app.use(cors(corsOptions));
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Credentials", true);
@@ -31,7 +38,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
 router.get("/", async (req, res) => {
   const query = "SELECT * FROM user_data";
   const data = await pool.query(query);
