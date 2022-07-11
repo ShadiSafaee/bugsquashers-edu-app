@@ -1,4 +1,3 @@
-import "../styles/LogIn.css";
 import { React, useContext } from "react";
 import SyntaxContext from "../../context/user/SyntaxContext";
 const LogIn = () => {

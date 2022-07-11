@@ -28,9 +28,14 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div className={`mobile_nav ${mobileNavClass && "moving"}`}>
+      <div className={`mobile_nav ${mobileNavClass ? "moving" : ""}`}>
         <ul className="mobile_nav_ul">
-          <li>
+          <li
+            onClick={() => {
+              console.log(mobileNavClass);
+              setMobileNavClass(false);
+            }}
+          >
             <Link to="/" className="mobile_nav_link">
               {" "}
               <img src="/svg/home.svg" alt="home svg" />

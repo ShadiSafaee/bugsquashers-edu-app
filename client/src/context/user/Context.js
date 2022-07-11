@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SyntaxContext from "./SyntaxContext";
 const Context = ({ children }) => {
-  const [mobileNavClass, setMobileNavClass] = useState("false");
+  const [mobileNavClass, setMobileNavClass] = useState(false);
   const [login, setLogin] = useState({ email: "", password: "" });
   const [register, setRegister] = useState({
     email: "",
