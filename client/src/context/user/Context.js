@@ -22,6 +22,9 @@ const Context = ({ children }) => {
     country: "",
   });
   const registerFormHandler = (id, val) => {
+    if (id !== "dob" && id !== "country") {
+      val = val.replace(/\s/g, "");
+    }
     switch (id) {
       case "email":
         setRegister({ ...register, email: val });
@@ -30,7 +33,6 @@ const Context = ({ children }) => {
           !val.includes("@gmail.com") &&
           !val.includes("@bugsquashers.com")
         ) {
-          console.log(val.includes("@bugsqashers.com"));
           setErrorMessage({
             ...errorMessage,
             email: "Please enter only email or gmail!",
@@ -117,15 +119,40 @@ const Context = ({ children }) => {
     switch (id) {
       case "email":
         setLogin({ ...login, email: val });
+        if (
+          !val.includes("@yahoo.com") &&
+          !val.includes("@gmail.com") &&
+          !val.includes("@bugsquashers.com")
+        ) {
+          setErrorMessage({
+            ...errorMessage,
+            email: "Please enter only email or gmail!",
+          });
+        } else {
+          setErrorMessage({
+            ...errorMessage,
+            email: "",
+          });
+        }
         break;
       case "pass":
         setLogin({ ...login, password: val });
+        if (val.length < 8 || val.length > 12) {
+          setErrorMessage({
+            ...errorMessage,
+            password: "Please choose a password between 8-12 characters!",
+          });
+        } else {
+          setErrorMessage({
+            ...errorMessage,
+            password: "",
+          });
+        }
         break;
       default:
         break;
     }
   };
-
   const registerValidationHandler = () => {
     const { email, password, confpass, firstname, surname, country, dob } =
       register;
@@ -150,6 +177,19 @@ const Context = ({ children }) => {
       alert("NO");
     }
   };
+  const loginValidation = () => {
+    const { email, password } = login;
+    let valid = false;
+    if (
+      email.length !== 0 &&
+      password.length !== 0 &&
+      errorMessage.email.length === 0 &&
+      errorMessage.password.length === 0
+    ) {
+      valid = true;
+    }
+    return valid;
+  };
   const registerHandler = (e) => {
     const valid = registerValidationHandler();
     console.log(valid);
@@ -158,7 +198,9 @@ const Context = ({ children }) => {
       return alert("Done");
     }
   };
-  const loginHandler = () => {};
+  const loginHandler = async () => {
+    const valid = loginValidation();
+  };
 
   return (
     <SyntaxContext.Provider
@@ -174,6 +216,7 @@ const Context = ({ children }) => {
         loginFormHandler,
         registerFormHandler,
         errorMessage,
+        setErrorMessage,
       }}
     >
       {children}

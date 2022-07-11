@@ -59,6 +59,8 @@
 .register_btn {
   width: fit-content;
   transition: 0.6s all;
+  background: yellow;
+  border: 2px solid rgb(0, 250, 0);
 }
 .register_btn:hover {
   background: rgb(255, 174, 0);

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "../../styles/register.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,8 +6,29 @@ import SyntaxContext from "../../context/user/SyntaxContext";
 import { Link } from "react-router-dom";
 
 const RegistrationForm = () => {
-  const { registerFormHandler, registerHandler, register, errorMessage } =
-    useContext(SyntaxContext);
+  const {
+    registerFormHandler,
+    registerHandler,
+    setLogin,
+    register,
+    errorMessage,
+    setErrorMessage,
+  } = useContext(SyntaxContext);
+  useEffect(() => {
+    setLogin({
+      email: "",
+      password: "",
+    });
+    setErrorMessage({
+      email: "",
+      password: "",
+      confpass: "",
+      firstname: "",
+      surname: "",
+      country: "",
+    });
+  }, []);
+
   const countries = [
     "Mexico",
     "Colombia",
@@ -94,7 +115,7 @@ const RegistrationForm = () => {
           />
         </div>
         <div className="image_selecttag_container">
-          <img src="/svg/girl.svg" alt="girld svg" className="register_svg" />
+          <img src="/svg/girl.svg" alt="girl svg" className="register_svg" />
           <div className="select_btn_container">
             <div className="register_select_div">
               <select
@@ -108,8 +129,9 @@ const RegistrationForm = () => {
                 >
                   Select Country...
                 </option>
-                {countries.map((country) => (
+                {countries.map((country, index) => (
                   <option
+                    key={index}
                     className="register_select_opts"
                     onChange={(e) => registerFormHandler("country", country)}
                     value={country}
