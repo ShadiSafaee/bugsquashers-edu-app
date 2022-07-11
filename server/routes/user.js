@@ -6,15 +6,10 @@ const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  // connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   rejectUnauthorized: false,
-  // },
-  user: "shadab",
-  host: "localhost",
-  database: "bug_squashers",
-  password: "222222",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 const isEqual = async (enteredPassword, hashedPassword) => {
