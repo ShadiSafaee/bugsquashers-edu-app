@@ -1,14 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const cors = require("cors");
-const bodyParser = require("body-parser");
+
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
