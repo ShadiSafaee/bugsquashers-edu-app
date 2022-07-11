@@ -203,9 +203,9 @@ const Context = ({ children }) => {
         body: JSON.stringify(user),
       };
       const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/signup";
-      try {
-        const res = await fetch(url, postOption);
+      const res = await fetch(url, postOption);
 
+      try {
         if (res.ok) {
           const { msg } = await res.json();
           alert(msg);
