@@ -156,6 +156,7 @@ const Context = ({ children }) => {
   const registerValidationHandler = () => {
     const { email, password, confpass, firstname, surname, country, dob } =
       register;
+    let valid = false;
     if (
       email.length !== 0 &&
       password.length !== 0 &&
@@ -172,10 +173,9 @@ const Context = ({ children }) => {
         errorMessage["country"].length) === 0 &&
       register["password"] === register["confpass"]
     ) {
-      alert("Done");
-    } else {
-      alert("NO");
+      valid = true;
     }
+    return valid;
   };
   const loginValidation = () => {
     const { email, password } = login;
@@ -190,12 +190,33 @@ const Context = ({ children }) => {
     }
     return valid;
   };
-  const registerHandler = (e) => {
+  const registerHandler = async () => {
     const valid = registerValidationHandler();
-    console.log(valid);
-    console.log(errorMessage);
+
     if (valid) {
-      return alert("Done");
+      const user = register;
+      const postOption = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      };
+      const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/signup";
+      try {
+        const res = await fetch(url, postOption);
+        console.log(res, res.json());
+
+        if (res.ok) {
+          const { msg } = await res.json();
+          alert(msg);
+        }
+      } catch (error) {
+        console.log(error);
+        alert("User couldn't be created! :(");
+      }
+    } else {
+      alert("Please fill all the fields");
     }
   };
   const loginHandler = async () => {
