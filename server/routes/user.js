@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const cors = require("cors");
-
+const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
@@ -15,6 +15,11 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  // user: "ali",
+  // host: "localhost",
+  // database: "bug_squashers",
+  // password: "111111",
+  // port: 5432,
 });
 
 const isEqual = async (enteredPassword, hashedPassword) => {
