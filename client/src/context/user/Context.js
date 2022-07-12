@@ -192,9 +192,11 @@ const Context = ({ children }) => {
   };
   const registerHandler = async () => {
     const valid = registerValidationHandler();
+    const { email, password, firstname, surname, country, role } = register;
+    const dob = register.dob.toLocaleDateString();
 
     if (valid) {
-      const user = register;
+      const user = { email, password, firstname, surname, country, role, dob };
       const postOption = {
         method: "POST",
         headers: {
@@ -204,7 +206,6 @@ const Context = ({ children }) => {
       };
       const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/signup";
       const res = await fetch(url, postOption);
-
       try {
         if (res.ok) {
           const { msg } = await res.json();
