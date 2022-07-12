@@ -1,0 +1,28 @@
+.preloader_cont {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  background: #2f7660;
+  z-index: 20;
+}
+.preloader_cont div {
+  position: relative;
+  text-align: center;
+}
+.preloader_cont img {
+  width: 100%;
+}
+.preloader_cont h2 {
+  width: 100%;
+  font-family: "Flavors", cursive;
+  font-weight: 500;
+  letter-spacing: 10px;
+  position: absolute;
+  bottom: 10%;
+}

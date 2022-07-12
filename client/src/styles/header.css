@@ -17,6 +17,9 @@
   cursor: pointer;
   z-index: 2;
 }
+.user_header_name {
+  color: #ffd400;
+}
 .nav_dektop {
   display: none;
 }

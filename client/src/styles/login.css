@@ -76,6 +76,7 @@
 }
 .login_svg_girl {
   right: 0;
+  transform: scale(1.15);
 }
 .image_selecttag_container {
   width: 100%;

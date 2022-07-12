@@ -13,5 +13,9 @@ const Context = createContext({
   registerFormHandler: () => {},
   errorMessage: {},
   setErrorMessage: () => {},
+  preLoader: false,
+  setPreLoader: () => {},
+  user: {},
+  setUser: () => {},
 });
 export default Context;

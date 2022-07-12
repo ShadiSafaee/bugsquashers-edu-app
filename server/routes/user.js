@@ -6,15 +6,15 @@ const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-  // user: "ali",
-  // host: "localhost",
-  // database: "bug_squashers",
-  // password: "111111",
-  // port: 5432,
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
+  user: "ali",
+  host: "localhost",
+  database: "bug_squashers",
+  password: "111111",
+  port: 5432,
 });
 
 const isEqual = async (enteredPassword, hashedPassword) => {
@@ -83,7 +83,7 @@ router.post("/login", async (req, res) => {
             if (err) {
               console.log(err);
             }
-            res.status(200).json({ token, msg: "Log in successfull" });
+            res.status(200).json({ token: token, msg: "Log in successfull" });
           }
         );
       } else {

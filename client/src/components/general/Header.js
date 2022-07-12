@@ -4,16 +4,27 @@ import "../../styles/header.css";
 import SyntaxContext from "../../context/user/SyntaxContext";
 
 const Header = () => {
-  const { mobileNavClass, setMobileNavClass } = useContext(SyntaxContext);
+  const { mobileNavClass, setMobileNavClass, user } = useContext(SyntaxContext);
   return (
     <header className="header">
       <div className="nav_options">
         <div className="user_div">
           <ul className="user_ul">
-            <li>
-              <Link to="/login">Log in</Link> |{" "}
-              <Link to="/register">Register</Link>
-            </li>
+            {user["firstname"] ? (
+              <li>
+                Hello
+                <Link to="/user/dashboard" className="user_header_name">
+                  {" "}
+                  {user["firstname"]}
+                </Link>{" "}
+                | <Link to="/logout">Log Out</Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="/login">Log in</Link> |{" "}
+                <Link to="/register">Register</Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="logo_div"></div>

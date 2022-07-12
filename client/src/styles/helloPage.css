@@ -1,0 +1,35 @@
+.hello_sec {
+  width: 95%;
+  height: 60vh;
+  position: relative;
+  margin: 1em auto;
+  padding: 1em;
+  background: rgba(12, 11, 11, 0.795);
+  border-radius: 20px;
+  text-align: center;
+  color: #3e8c8c;
+  font-weight: 100;
+}
+.hello_sec h1 {
+  font-family: "Lemon", cursive;
+  font-size: 1.8rem;
+}
+.hello_sec img {
+  width: 100px;
+  position: absolute;
+  bottom: 0;
+}
+@media screen and (min-width: 400px) {
+  .hello_sec {
+    display: flex;
+    align-items: center;
+  }
+  .hello_sec img {
+    position: relative;
+  }
+}
+@media screen and (min-width: 700px) {
+  .hello_sec {
+    width: 50%;
+  }
+}
