@@ -4,7 +4,7 @@ import "../../styles/header.css";
 import SyntaxContext from "../../context/user/SyntaxContext";
 
 const Header = () => {
-  const { mobileNavClass, setMobileNavClass, user } = useContext(SyntaxContext);
+  const { mobileNavClass, setMobileNavClass, user,logOutHandler } = useContext(SyntaxContext);
   return (
     <header className="header">
       <div className="nav_options">
@@ -17,7 +17,7 @@ const Header = () => {
                   {" "}
                   {user["firstname"]}
                 </Link>{" "}
-                | <Link to="/logout">Log Out</Link>
+                | <Link to="/logout" onClick={()=>logOutHandler()}>Log Out</Link>
               </li>
             ) : (
               <li>

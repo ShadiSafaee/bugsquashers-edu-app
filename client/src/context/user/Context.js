@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import SyntaxContext from "./SyntaxContext";
 import { isExpired, decodeToken } from "react-jwt";
+import { useNavigate } from "react-router";
+// ==========================================================
 const Context = ({ children }) => {
   const [mobileNavClass, setMobileNavClass] = useState(false);
   const [login, setLogin] = useState({ email: "", password: "" });
@@ -25,6 +27,7 @@ const Context = ({ children }) => {
   });
 
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
   const registerFormHandler = (id, val) => {
     if (id !== "dob" && id !== "country") {
       val = val.replace(/\s/g, "");
@@ -217,12 +220,13 @@ const Context = ({ children }) => {
         },
         body: JSON.stringify(user),
       };
-      const url = "http://localhost:5000/api/user/signup";
+      const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/signup";
       const res = await fetch(url, postOption);
       try {
         if (res.ok) {
           alert("Register was successful! :)");
           setPreloader(false);
+          navigate("/login");
         } else {
           setPreloader(false);
           alert("This email is aliredy existed");
@@ -238,7 +242,7 @@ const Context = ({ children }) => {
   const loginHandler = async () => {
     const valid = loginValidation();
     const { email, password } = login;
-    const url = "http://localhost:5000/api/user/login";
+    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/login";
     const user = { email, password };
     const postOption = {
       method: "POST",
@@ -257,9 +261,34 @@ const Context = ({ children }) => {
           setUser(decodeToken(data.token));
 
           setPreloader(false);
+          navigate("/", { replace: true });
         } else {
           setPreloader(false);
-          alert(res.status);
+          alert("Email not found :( Register first please :)");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const logOutHandler = async () => {
+    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/logout";
+    const token = localStorage.getItem("token");
+    if (user["firstname"] && token) {
+      const putOption = {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        body: "",
+      };
+      try {
+        const res = await fetch(url, putOption);
+        if (res.ok) {
+          const { msg } = await res.json();
+          alert(msg);
+        } else {
+          alert("Please login first");
         }
       } catch (error) {
         console.log(error);
@@ -286,6 +315,7 @@ const Context = ({ children }) => {
         setPreloader,
         user,
         setUser,
+        logOutHandler,
       }}
     >
       {children}

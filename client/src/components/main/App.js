@@ -5,6 +5,7 @@ import LogIn from "../privet/LogIn";
 import Register from "../privet/Register";
 import LogOut from "../privet/LogOut";
 import HelloPage from "../general/HelloPage";
+import Error404 from "./Error404";
 function App() {
   return (
     <>
@@ -15,6 +16,7 @@ function App() {
           <Route path="register" element={<Register />}></Route>
           <Route path="logout" element={<LogOut />}></Route>
         </Route>
+        <Route path="*" element={<Error404 />}></Route>
       </Routes>
     </>
   );
