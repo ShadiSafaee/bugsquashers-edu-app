@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SyntaxContext from "./SyntaxContext";
 import { isExpired, decodeToken } from "react-jwt";
 import { useNavigate } from "react-router";
@@ -27,6 +27,10 @@ const Context = ({ children }) => {
   });
 
   const [user, setUser] = useState({});
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    token && setUser(decodeToken(token));
+  }, []);
   const navigate = useNavigate();
   const registerFormHandler = (id, val) => {
     if (id !== "dob" && id !== "country") {

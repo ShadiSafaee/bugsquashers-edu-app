@@ -1,7 +1,10 @@
 import { React, useContext, useEffect } from "react";
 import SyntaxContext from "../../context/user/SyntaxContext";
+import { isExpired } from "react-jwt";
+import { useNavigate } from "react-router";
 import "../../styles/login.css";
 const LogIn = () => {
+  const navigate = useNavigate();
   const {
     login,
     loginHandler,
@@ -11,6 +14,15 @@ const LogIn = () => {
     loginFormHandler,
   } = useContext(SyntaxContext);
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const isEx = isExpired(token);
+      console.log(isEx);
+      if (!isEx) {
+        navigate("/");
+        return alert("Please log out first!");
+      }
+    }
     setRegister({
       email: "",
       password: "",
