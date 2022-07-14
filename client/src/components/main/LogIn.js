@@ -17,10 +17,8 @@ const LogIn = () => {
     const token = localStorage.getItem("token");
     if (token) {
       const isEx = isExpired(token);
-      console.log(isEx);
       if (!isEx) {
-        navigate("/");
-        return alert("Please log out first!");
+        return navigate("/");
       }
     }
     setRegister({
@@ -54,6 +52,7 @@ const LogIn = () => {
         <div className="login_input_container">
           <input
             className="login_input"
+            autoComplete="false"
             type="email"
             placeholder="Email..."
             value={login["email"]}
@@ -70,6 +69,7 @@ const LogIn = () => {
         <div className="login_input_container">
           <input
             className="login_input"
+            autoComplete="false"
             type="password"
             placeholder="Password..."
             value={login["password"]}

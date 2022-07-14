@@ -19,5 +19,7 @@ const Context = createContext({
   setUser: () => {},
   logOutHandler: () => {},
   auth: () => {},
+  isAuth: false,
+  setIsAuth: () => {},
 });
 export default Context;

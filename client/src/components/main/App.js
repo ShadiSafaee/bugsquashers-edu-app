@@ -24,7 +24,7 @@ function App() {
           <Route path="logout" element={<LogOut />}></Route>
 
           <Route path="dashboard" element={<PrivetLayout />}>
-            {/* <Route path="" element={<HelloPage />} />
+            <Route path="" element={<HelloPage />} />
             <Route
               path="teacher"
               element={
@@ -34,7 +34,7 @@ function App() {
               }
             />
             <Route path="student" element={<Student />} />
-            <Route path="admin" element={<Admin />} /> */}
+            <Route path="admin" element={<Admin />} />
           </Route>
         </Route>
       </Routes>

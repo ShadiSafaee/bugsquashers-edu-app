@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import SyntaxContext from "./SyntaxContext";
-import { decodeToken } from "react-jwt";
+import { decodeToken, isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
 // ==========================================================
 const Context = ({ children }) => {
   const [mobileNavClass, setMobileNavClass] = useState(false);
   const [login, setLogin] = useState({ email: "", password: "" });
   const [preloader, setPreloader] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [register, setRegister] = useState({
     email: "",
     password: "",
@@ -26,12 +27,25 @@ const Context = ({ children }) => {
     country: "",
   });
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(
+    decodeToken(localStorage.getItem("token")) || {}
+  );
   const token = localStorage.getItem("token");
-  useEffect(() => {
-    token && setUser(decodeToken(token));
-  }, [token]);
   const navigate = useNavigate();
+  useEffect(() => {
+    const decode = decodeToken(token);
+    const isEx = isExpired(token);
+    auth();
+    if (!user["firstname"]) {
+      localStorage.removeItem("token");
+    }
+    if (!isEx) {
+      setUser(decode);
+      setIsAuth(true);
+    } else {
+      setUser({});
+    }
+  }, [setUser, navigate]);
   const registerFormHandler = (id, val) => {
     if (id !== "dob" && id !== "country") {
       val = val.replace(/\s/g, "");
@@ -263,12 +277,15 @@ const Context = ({ children }) => {
           const data = await res.json();
           localStorage.setItem("token", data.token);
           setUser(decodeToken(data.token));
-          console.log(decodeToken(data.token));
+          setIsAuth(true);
           setPreloader(false);
           navigate("/", { replace: true });
         } else {
           setPreloader(false);
-          alert("Email not found :( Register first please :)");
+          setErrorMessage({
+            ...errorMessage,
+            email: "Email not found :( Register first please :)",
+          });
         }
       } catch (error) {
         console.log(error);
@@ -292,13 +309,14 @@ const Context = ({ children }) => {
         if (res.ok) {
           localStorage.removeItem("token");
           setUser({});
+          setIsAuth(false);
           setPreloader(false);
           const { msg } = await res.json();
           navigate("/", { replace: "true" });
-          alert(msg);
+          console.log(msg);
         } else {
           setPreloader(false);
-          alert("Please login first");
+          setIsAuth(false);
         }
       } catch (error) {
         console.log(error);
@@ -306,6 +324,7 @@ const Context = ({ children }) => {
     }
   };
   const auth = async () => {
+    let check = false;
     const postOption = {
       method: "POST",
       headers: {
@@ -314,17 +333,18 @@ const Context = ({ children }) => {
       },
       body: "",
     };
-    let x = false;
+
     try {
       const res = await fetch(
         "http://localhost:5000/api/user/dashboard",
         postOption
       );
       if (res.ok) {
-        x = true;
-        return x;
+        setIsAuth(true);
+        check = true;
+        return check;
       } else {
-        return x;
+        return check;
       }
     } catch (error) {
       console.log(error);
@@ -352,6 +372,8 @@ const Context = ({ children }) => {
         setUser,
         logOutHandler,
         auth,
+        isAuth,
+        setIsAuth,
       }}
     >
       {children}

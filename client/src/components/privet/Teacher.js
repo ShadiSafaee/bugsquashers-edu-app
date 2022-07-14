@@ -1,13 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
+import SyntaxContext from "../../context/user/SyntaxContext";
+import { isExpired } from "react-jwt";
+
 import TeacherContext from "../../context/teacher/TeacherContext";
-const Teacher = ({ user }) => {
+const Teacher = () => {
   const navigate = useNavigate();
-  const { test } = useContext(TeacherContext);
-  // if (user["role"] === "student") {
-  //   return navigate("/", { replace: true });
-  // }
-  console.log(test);
+  const { user, isAuth } = useContext(SyntaxContext);
+  useEffect(() => {
+    if (user.role !== "teacher") {
+      return navigate("/", { replace: true });
+    }
+  }, [user]);
   return <h1>Teacher</h1>;
 };
 
