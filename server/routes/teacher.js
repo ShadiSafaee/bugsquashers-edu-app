@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 const pool = new Pool({
   user: "shadab",
@@ -98,5 +100,37 @@ router.delete("/deletedmodule/:id", async (req, res) => {
     res.status(400).json({ msg: "This module already deleted!" });
   }
 });
+
+//*******************************************LESSONS' END POINTS*******************************************//
+
+//uploading files
+const uploadFiles = (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
+  res.json({ message: "Successfully uploaded files" });
+};
+router.post("/upload_files", upload.array("files"), uploadFiles);
+
+//Create a new lesson
+router.post("/addnewlesson", async (req, res) => {
+  const {
+    lesson_name,
+    lesson_description,
+    lesson_type,
+    lesson_url,
+    lesson_created_date,
+  } = req.body;
+  const lessCreatedQuery =
+    "INSERT INTO lessons (lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5)";
+  const lessCheckedQuery =
+    "SELECT EXISTS (SELECT lesson_name FROM lessons WHERE lesson_name LIKE '%' || $1 || '%')";
+  const newLessQuery =
+    "SELECT * FROM lessons WHERE lesson_name LIKE '%' || $1 || '%'";
+});
+
+//Get/show a lesson (based on Lesson ID)
+//Update/modify an existing lesson (name, description, and re-upload document only)
+//Delete a lesson
+//Show all lessons
 
 module.exports = router;
