@@ -160,22 +160,14 @@ router.post("/upload_files", upload.array("files"), uploadFiles);
 //Update/modify
 router.put("/updatedlesson/:id", async (req, res) => {
   const { id } = req.params;
-  const {
-    lesson_name,
-    lesson_description,
-    lesson_type,
-    lesson_url,
-    lesson_created_date,
-  } = req.body;
+  const { lesson_name, lesson_description, lesson_url } = req.body;
   const updateLessQuery =
-    "UPDATE lessons SET lesson_name = $1, lesson_description = $2, lesson_type = $3, lesson_url = $4, module_created_date = $5 WHERE id = $6";
+    "UPDATE lessons SET lesson_name = $1, lesson_description = $2,  lesson_url = $3, WHERE id = $4";
   const updatedDataQuery = "SELECT * FROM lessons WHERE id=$1";
   await pool.query(updateLessQuery, [
     lesson_name,
     lesson_description,
-    lesson_type,
     lesson_url,
-    lesson_created_date,
     id,
   ]);
   const updatedSigleLesson = await pool.query(updatedDataQuery, [id]);
