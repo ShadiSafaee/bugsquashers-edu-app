@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SyntaxContext from "./SyntaxContext";
-import { isExpired, decodeToken } from "react-jwt";
+import { decodeToken } from "react-jwt";
 import { useNavigate } from "react-router";
 // ==========================================================
 const Context = ({ children }) => {
@@ -30,7 +30,7 @@ const Context = ({ children }) => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     token && setUser(decodeToken(token));
-  }, []);
+  }, [token]);
   const navigate = useNavigate();
   const registerFormHandler = (id, val) => {
     if (id !== "dob" && id !== "country") {
@@ -246,7 +246,7 @@ const Context = ({ children }) => {
   const loginHandler = async () => {
     const valid = loginValidation();
     const { email, password } = login;
-    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/login";
+    const url = "http://localhost:5000/api/user/login";
     const user = { email, password };
     const postOption = {
       method: "POST",
@@ -263,7 +263,7 @@ const Context = ({ children }) => {
           const data = await res.json();
           localStorage.setItem("token", data.token);
           setUser(decodeToken(data.token));
-
+          console.log(decodeToken(data.token));
           setPreloader(false);
           navigate("/", { replace: true });
         } else {
@@ -276,9 +276,10 @@ const Context = ({ children }) => {
     }
   };
   const logOutHandler = async () => {
-    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/logout";
+    const url = "http://localhost:5000/api/user/logout";
     const token = localStorage.getItem("token");
     if (user["firstname"] && token) {
+      setPreloader(true);
       const putOption = {
         method: "PUT",
         headers: {
@@ -289,14 +290,44 @@ const Context = ({ children }) => {
       try {
         const res = await fetch(url, putOption);
         if (res.ok) {
+          localStorage.removeItem("token");
+          setUser({});
+          setPreloader(false);
           const { msg } = await res.json();
+          navigate("/", { replace: "true" });
           alert(msg);
         } else {
+          setPreloader(false);
           alert("Please login first");
         }
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+  const auth = async () => {
+    const postOption = {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: "",
+    };
+    let x = false;
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/user/dashboard",
+        postOption
+      );
+      if (res.ok) {
+        x = true;
+        return x;
+      } else {
+        return x;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -320,6 +351,7 @@ const Context = ({ children }) => {
         user,
         setUser,
         logOutHandler,
+        auth,
       }}
     >
       {children}
