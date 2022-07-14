@@ -1,9 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TeacherContext from "./TeacherContext";
 const Tcontext = ({ children }) => {
-  const [test, settest] = useState("test");
+  const [modules, setModules] = useState([]);
+  const [module, setModule] = useState({
+    module_name: "",
+    moudule_description: "",
+    moudule_created_date: "",
+  });
+  const [lessons, setLessons] = useState([]);
+  useEffect(() => {}, []);
+
+  const getModulesHandler = () => {
+    const url = "http://localhost:5000/api/";
+  };
   return (
-    <TeacherContext.Provider value={{ test }}>
+    <TeacherContext.Provider
+      value={{
+        modules,
+        setModules,
+        module,
+        setModule,
+        lessons,
+        setLessons,
+      }}
+    >
       {children}
     </TeacherContext.Provider>
   );

@@ -12,6 +12,8 @@ import Teacher from "../privet/Teacher";
 import Student from "../privet/Student";
 import Admin from "../privet/Admin";
 import Tcontext from "../../context/teacher/TContext";
+import TeacherDashboard from "../privet/TeacherDashboard";
+import ModulesTable from "../privet/tables/ModulesTable";
 function App() {
   // const { user } = useContext(SyntaxContext);
   return (
@@ -29,10 +31,17 @@ function App() {
               path="teacher"
               element={
                 <Tcontext>
-                  <Teacher />
+                  <Teacher></Teacher>
                 </Tcontext>
               }
-            />
+            >
+              <Route
+                path=":name"
+                element={<TeacherDashboard></TeacherDashboard>}
+              >
+                <Route path="modules" element={<ModulesTable />} />
+              </Route>
+            </Route>
             <Route path="student" element={<Student />} />
             <Route path="admin" element={<Admin />} />
           </Route>
