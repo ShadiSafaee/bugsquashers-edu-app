@@ -67,7 +67,7 @@ router.put("/updatedmodule/:id", async (req, res) => {
   const updateModQuery =
     "UPDATE modules SET module_name = $1, module_description = $2, module_created_date = $3 WHERE id = $4";
   const updatedDataQuery = "SELECT * FROM modules WHERE id=$1";
-  const updatedModule = await pool.query(updateModQuery, [
+  await pool.query(updateModQuery, [
     module_name,
     module_description,
     module_created_date,
@@ -103,17 +103,10 @@ router.delete("/deletedmodule/:id", async (req, res) => {
 
 //*******************************************LESSONS' END POINTS*******************************************//
 
-//uploading files
-const uploadFiles = (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
-  res.json({ message: "Successfully uploaded files" });
-};
-router.post("/upload_files", upload.array("files"), uploadFiles);
-
 //Create a new lesson
 router.post("/addnewlesson", async (req, res) => {
   const {
+    module_id,
     lesson_name,
     lesson_description,
     lesson_type,
@@ -121,16 +114,101 @@ router.post("/addnewlesson", async (req, res) => {
     lesson_created_date,
   } = req.body;
   const lessCreatedQuery =
-    "INSERT INTO lessons (lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5)";
+    "INSERT INTO lessons (module_id, lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5, $6)";
   const lessCheckedQuery =
     "SELECT EXISTS (SELECT lesson_name FROM lessons WHERE lesson_name LIKE '%' || $1 || '%')";
   const newLessQuery =
     "SELECT * FROM lessons WHERE lesson_name LIKE '%' || $1 || '%'";
+  const lessChecked = await pool.query(lessCheckedQuery, [lesson_name]);
+  if (modChecked.rows[0].exists) {
+    res.status(404).json({ msg: "This lesson has already been created!" });
+  } else {
+    const createdLesson = await pool.query(lessCreatedQuery, [
+      module_id,
+      lesson_name,
+      lesson_description,
+      lesson_type,
+      lesson_url,
+      lesson_created_date,
+    ]);
+    const newLess = await pool.query(newLessQuery, [lesson_name]);
+    console.log(newLess);
+    res
+      .status(200)
+      .json({ msg: "New lesson is created", teacher: newLess.rows });
+  }
 });
 
-//Get/show a lesson (based on Lesson ID)
+//show a lesson (based on Lesson ID)
+router.get("/lesson/:id", async (req, res) => {
+  const { id } = req.params;
+  const lessonQeury = "SELECT * FROM lessons WHERE id = $1";
+  const lesson = await pool.query(lessonQeury, [id]);
+  res
+    .status(200)
+    .json({ msg: "This is an existing lesson", data: lesson.rows });
+});
+
 //Update/modify an existing lesson (name, description, and re-upload document only)
+//uploading files
+const uploadFiles = (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
+  res.json({ msg: "Successfully uploaded files" });
+};
+router.post("/upload_files", upload.array("files"), uploadFiles);
+//Update/modify
+router.put("/updatedlesson/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    lesson_name,
+    lesson_description,
+    lesson_type,
+    lesson_url,
+    lesson_created_date,
+  } = req.body;
+  const updateLessQuery =
+    "UPDATE lessons SET lesson_name = $1, lesson_description = $2, lesson_type = $3, lesson_url = $4, module_created_date = $5 WHERE id = $6";
+  const updatedDataQuery = "SELECT * FROM lessons WHERE id=$1";
+  await pool.query(updateLessQuery, [
+    lesson_name,
+    lesson_description,
+    lesson_type,
+    lesson_url,
+    lesson_created_date,
+    id,
+  ]);
+  const updatedSigleLesson = await pool.query(updatedDataQuery, [id]);
+  res
+    .status(200)
+    .json({ msg: "Lesson updated", data: updatedSigleLesson.rows });
+});
+
 //Delete a lesson
+router.delete("/deletedlesson/:id", async (req, res) => {
+  const { id } = req.params;
+  const deletedLessQuery = "DELETE FROM lessons WHERE id = $1";
+  const lessCheckedDelQuery =
+    "SELECT EXISTS (SELECT lesson_name FROM lessons WHERE id = $1)";
+  const allLessQuery = "SELECT * FROM lessons";
+
+  const lessCheckedDel = await pool.query(lessCheckedDelQuery, [id]);
+
+  if (lessCheckedDel.rows[0].exists) {
+    await pool.query(deletedLessQuery, [id]);
+
+    const allLessons = await pool.query(allLessQuery);
+    res.status(200).json(allLessons.rows);
+  } else {
+    res.status(400).json({ msg: "This lesson already deleted!" });
+  }
+});
+
 //Show all lessons
+router.get("/lessons", async (req, res) => {
+  const allLessonsQuery = "SELECT * FROM lessons";
+  const result = await pool.query(allLessonsQuery);
+  res.status(200).json(result.rows);
+});
 
 module.exports = router;
