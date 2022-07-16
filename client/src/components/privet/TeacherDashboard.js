@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import TeacherContext from "../../context/teacher/TeacherContext";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
 import "../../styles/teacherDash.css";
 const TeacherDashboard = () => {
-  const context = useContext(TeacherContext);
   return (
     <article className="teacher_dash_art">
       <section className="dash_column">

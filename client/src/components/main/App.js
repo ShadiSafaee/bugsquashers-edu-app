@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import HomePage from "../pages/HomePage";
 import { Routes, Route } from "react-router-dom";
-import SyntaxContext from "../../context/user/SyntaxContext";
+
 import LogIn from "./LogIn";
 import Register from "./Register";
 import LogOut from "./LogOut";
@@ -14,6 +14,11 @@ import Admin from "../privet/Admin";
 import Tcontext from "../../context/teacher/TContext";
 import TeacherDashboard from "../privet/TeacherDashboard";
 import ModulesTable from "../privet/tables/ModulesTable";
+import EditModule from "../privet/EditModule";
+import NewModule from "../privet/NewModule";
+import LessonsTable from "../privet/tables/LessonsTable";
+import NewLesson from "../privet/NewLesson";
+import EditLesson from "../privet/EditLesson";
 function App() {
   // const { user } = useContext(SyntaxContext);
   return (
@@ -39,7 +44,20 @@ function App() {
                 path=":name"
                 element={<TeacherDashboard></TeacherDashboard>}
               >
-                <Route path="modules" element={<ModulesTable />} />
+                <Route path="modules" element={<ModulesTable />}>
+                  <Route
+                    path="edit-module/:id"
+                    element={<EditModule></EditModule>}
+                  />
+                  <Route path="new-module" element={<NewModule></NewModule>} />
+                </Route>
+                <Route path="lessons" element={<LessonsTable></LessonsTable>}>
+                  <Route path="new-lesson" element={<NewLesson></NewLesson>} />
+                  <Route
+                    path="edit-lesson/:id"
+                    element={<EditLesson></EditLesson>}
+                  />
+                </Route>
               </Route>
             </Route>
             <Route path="student" element={<Student />} />

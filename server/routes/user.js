@@ -28,6 +28,7 @@ router.get("/", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   let { firstname, surname, email, password, dob, country, role } = req.body;
+  console.log(req.body);
   const signUpQuery =
     "INSERT INTO user_data (firstname, surname, email, password, dob, country, role) VALUES ($1, $2, $3, $4, $5, $6, $7)";
   const checkEmailQuery =

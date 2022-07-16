@@ -219,7 +219,7 @@ const Context = ({ children }) => {
     const valid = registerValidationHandler();
     const { email, password, firstname, surname, country } = register;
     const dob = register.dob.toLocaleDateString();
-
+    console.log(valid);
     if (valid) {
       setPreloader(true);
       const user = {
@@ -238,7 +238,7 @@ const Context = ({ children }) => {
         },
         body: JSON.stringify(user),
       };
-      const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/signup";
+      const url = "http://localhost:5000/api/user/signup";
       const res = await fetch(url, postOption);
       try {
         if (res.ok) {

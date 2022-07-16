@@ -3,26 +3,28 @@ import TeacherContext from "../../../context/teacher/TeacherContext";
 import "../../../styles/modulesTable.css";
 import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
-const ModulesTable = () => {
+const LessonsTable = () => {
   const context = useContext(TeacherContext);
   const {
-    modules,
-    showEdit,
-    setShowEdit,
-    deleteModuleHandler,
-    getModulesHandler,
+    lesson,
+    setlesson,
+    lessons,
+    setShowLessonEdit,
+    showLessonEdit,
+    getLessonsHandler,
+    deletelessonHandler,
   } = context;
   useEffect(() => {
-    getModulesHandler();
-  }, [deleteModuleHandler]);
+    getLessonsHandler();
+  }, []);
   return (
     <>
       <h1 className="dash_header">
-        Modules
+        Lessons
         <Link
-          to="new-module"
+          to="new-lesson"
           className="dash_add_btn btn"
-          onClick={() => setShowEdit(true)}
+          onClick={() => setShowLessonEdit(true)}
         >
           Add new
         </Link>
@@ -33,28 +35,33 @@ const ModulesTable = () => {
             <td>#</td>
             <td>Name</td>
             <td>Description</td>
+            <td>Type</td>
+            <td>url</td>
             <td>Date</td>
             <td>Edit</td>
             <td>Delete</td>
           </tr>
         </thead>
         <tbody>
-          {modules.length === 0 ? (
+          {lessons.length === 0 ? (
             <tr>
-              <td> There is no modules</td>
+              <td> There is no lesson</td>
             </tr>
           ) : (
-            modules.map((item, index) => {
+            lessons.map((item, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{item.module_name}</td>
-                  <td>{item.module_description}</td>
-                  <td>{item.module_created_date}</td>
+                  <td>{item.lesson_name}</td>
+                  <td>{item.lesson_description}</td>
+                  <td>{item.lesson_type}</td>
+                  <td>{item.lesson_url}</td>
+                  <td>{item.lesson_created_date}</td>
+
                   <td>
                     <Link
-                      to={`edit-module/${item.id}-${item.module_name}`}
-                      onClick={() => setShowEdit(true)}
+                      to={`edit-lesson/${item.id}-${item.lesson_name}`}
+                      onClick={() => setShowLessonEdit(true)}
                     >
                       <img src="/img/edit.png" alt="edit png"></img>
                     </Link>
@@ -63,7 +70,7 @@ const ModulesTable = () => {
                     <img
                       src="/img/delete.png"
                       alt="delete png"
-                      onClick={() => deleteModuleHandler(item.id)}
+                      onClick={() => deletelessonHandler(item.id)}
                     ></img>
                   </td>
                 </tr>
@@ -72,7 +79,7 @@ const ModulesTable = () => {
           )}
         </tbody>
       </table>
-      {showEdit && (
+      {setShowLessonEdit && (
         <>
           <Outlet></Outlet>
           <Outlet></Outlet>
@@ -82,4 +89,4 @@ const ModulesTable = () => {
   );
 };
 
-export default ModulesTable;
+export default LessonsTable;
