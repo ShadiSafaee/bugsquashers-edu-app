@@ -2,7 +2,15 @@ const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "--" + file.originalname);
+  },
+});
+let upload = multer({ storage: storage });
 
 const pool = new Pool({
   user: "ali",
@@ -107,6 +115,7 @@ router.delete("/deletedmodule/:id", async (req, res) => {
 // router.post("/upload_files", , uploadFiles);
 
 //Create a new lesson
+
 router.post("/addnewlesson", upload.single("file"), async (req, res) => {
   const {
     module_id,
@@ -128,7 +137,8 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
     lesson_url,
     lesson_created_date,
   ]);
-  console.log(req.body);
+  console.log(res, req.files);
+
   res.status(200).json({ msg: "New lesson is created" });
 });
 
