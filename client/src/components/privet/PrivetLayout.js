@@ -3,7 +3,7 @@ import { useNavigate, Outlet } from "react-router";
 import SyntaxContext from "../../context/user/SyntaxContext";
 
 const PrivetLayout = () => {
-  const { user, isAuth, auth } = useContext(SyntaxContext);
+  const { user, auth } = useContext(SyntaxContext);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
