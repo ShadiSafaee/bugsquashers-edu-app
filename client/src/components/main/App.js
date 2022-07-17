@@ -25,13 +25,13 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />}>
-          <Route path="" element={<HelloPage />}></Route>
+          <Route index element={<HelloPage />}></Route>
           <Route path="login" element={<LogIn />} />
           <Route path="register" element={<Register />}></Route>
           <Route path="logout" element={<LogOut />}></Route>
 
           <Route path="dashboard" element={<PrivetLayout />}>
-            <Route path="" element={<HelloPage />} />
+            <Route index element={<HelloPage />} />
             <Route
               path="teacher"
               element={
