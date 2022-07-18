@@ -10,11 +10,6 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
-  // user: "ali",
-  // host: "localhost",
-  // database: "bug_squashers",
-  // password: "111111",
-  // port: 5432,
 });
 
 const isEqual = async (enteredPassword, hashedPassword) => {

@@ -5,6 +5,10 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
 const pool = new Pool({
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
   user: "shadab",
   host: "localhost",
   database: "bug_squashers",
@@ -132,7 +136,7 @@ router.post("/addnewlesson", async (req, res) => {
       lesson_created_date,
     ]);
     const newLess = await pool.query(newLessQuery, [lesson_name]);
-    console.log(newLess);
+
     res
       .status(200)
       .json({ msg: "New lesson is created", teacher: newLess.rows });
@@ -156,7 +160,7 @@ const uploadFiles = (req, res) => {
   console.log(req.files);
   res.json({ msg: "Successfully uploaded files" });
 };
-router.post("/upload_files", upload.array("files"), uploadFiles);
+router.post("/upload_files", upload.single("files"), uploadFiles);
 //Update/modify
 router.put("/updatedlesson/:id", async (req, res) => {
   const { id } = req.params;
