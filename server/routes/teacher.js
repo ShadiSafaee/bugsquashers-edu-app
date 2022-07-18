@@ -2,7 +2,15 @@ const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "--" + file.originalname);
+  },
+});
+let upload = multer({ storage: storage });
 
 const pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
@@ -108,7 +116,7 @@ router.delete("/deletedmodule/:id", async (req, res) => {
 //*******************************************LESSONS' END POINTS*******************************************//
 
 //Create a new lesson
-router.post("/addnewlesson", async (req, res) => {
+router.post("/addnewlesson", upload.single("file"), async (req, res) => {
   const {
     module_id,
     lesson_name,
@@ -116,31 +124,22 @@ router.post("/addnewlesson", async (req, res) => {
     lesson_type,
     lesson_url,
     lesson_created_date,
+    lesson_file,
   } = req.body;
   const lessCreatedQuery =
     "INSERT INTO lessons (module_id, lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5, $6)";
-  const lessCheckedQuery =
-    "SELECT EXISTS (SELECT lesson_name FROM lessons WHERE lesson_name LIKE '%' || $1 || '%')";
-  const newLessQuery =
-    "SELECT * FROM lessons WHERE lesson_name LIKE '%' || $1 || '%'";
-  const lessChecked = await pool.query(lessCheckedQuery, [lesson_name]);
-  if (modChecked.rows[0].exists) {
-    res.status(404).json({ msg: "This lesson has already been created!" });
-  } else {
-    const createdLesson = await pool.query(lessCreatedQuery, [
-      module_id,
-      lesson_name,
-      lesson_description,
-      lesson_type,
-      lesson_url,
-      lesson_created_date,
-    ]);
-    const newLess = await pool.query(newLessQuery, [lesson_name]);
 
-    res
-      .status(200)
-      .json({ msg: "New lesson is created", teacher: newLess.rows });
-  }
+  await pool.query(lessCreatedQuery, [
+    module_id,
+    lesson_name,
+    lesson_description,
+    lesson_type,
+    lesson_url,
+    lesson_created_date,
+  ]);
+  console.log(res, req.files);
+
+  res.status(200).json({ msg: "New lesson is created" });
 });
 
 //show a lesson (based on Lesson ID)
