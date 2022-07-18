@@ -16,6 +16,10 @@ const Context = createContext({
   preLoader: false,
   setPreLoader: () => {},
   user: {},
-  setUser: () => {},logOutHandler:()=>{}
+  setUser: () => {},
+  logOutHandler: () => {},
+  auth: () => {},
+  isAuth: false,
+  setIsAuth: () => {},
 });
 export default Context;

@@ -67,28 +67,24 @@ router.get("/module/:id", async (req, res) => {
 
 //Show all modules
 router.get("/modules", async (req, res) => {
-  const allModsQuery = "SELECT * FROM modules";
+  const allModsQuery = "SELECT * FROM modules ORDER by id";
   const result = await pool.query(allModsQuery);
   res.status(200).json(result.rows);
 });
 
 //Update/modify an existing module (name and description only)
-router.put("/updatedmodule/:id", async (req, res) => {
-  const { id } = req.params;
-  const { module_name, module_description, module_created_date } = req.body;
+router.put("/updatedmodule", async (req, res) => {
+  const { module_name, module_description, module_created_date, id } = req.body;
   const updateModQuery =
     "UPDATE modules SET module_name = $1, module_description = $2, module_created_date = $3 WHERE id = $4";
-  const updatedDataQuery = "SELECT * FROM modules WHERE id=$1";
-  await pool.query(updateModQuery, [
+
+  const updatedModule = await pool.query(updateModQuery, [
     module_name,
     module_description,
     module_created_date,
     id,
   ]);
-  const updatedSigleModule = await pool.query(updatedDataQuery, [id]);
-  res
-    .status(200)
-    .json({ msg: "Module updated", data: updatedSigleModule.rows });
+  res.status(200).json({ msg: "Module updated", data: updatedModule.rows });
 });
 
 //Delete an existing module
@@ -98,7 +94,6 @@ router.delete("/deletedmodule/:id", async (req, res) => {
   const deletedModQuery = "DELETE FROM modules WHERE id = $1";
   const modCheckedDelQuery =
     "SELECT EXISTS (SELECT module_name FROM modules WHERE id = $1)";
-  const allModsQuery = "SELECT * FROM modules";
 
   const modCheckedDel = await pool.query(modCheckedDelQuery, [id]);
 
@@ -106,8 +101,7 @@ router.delete("/deletedmodule/:id", async (req, res) => {
     await pool.query(deletedLessQuery, [id]);
     await pool.query(deletedModQuery, [id]);
 
-    const allMods = await pool.query(allModsQuery);
-    res.status(200).json(allMods.rows);
+    res.status(200).json({ msg: "Item delete!" });
   } else {
     res.status(400).json({ msg: "This module already deleted!" });
   }

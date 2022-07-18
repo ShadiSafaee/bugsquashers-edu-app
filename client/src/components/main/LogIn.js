@@ -1,7 +1,10 @@
 import { React, useContext, useEffect } from "react";
 import SyntaxContext from "../../context/user/SyntaxContext";
+import { isExpired } from "react-jwt";
+import { useNavigate } from "react-router";
 import "../../styles/login.css";
 const LogIn = () => {
+  const navigate = useNavigate();
   const {
     login,
     loginHandler,
@@ -11,6 +14,13 @@ const LogIn = () => {
     loginFormHandler,
   } = useContext(SyntaxContext);
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const isEx = isExpired(token);
+      if (!isEx) {
+        return navigate("/");
+      }
+    }
     setRegister({
       email: "",
       password: "",
@@ -42,6 +52,7 @@ const LogIn = () => {
         <div className="login_input_container">
           <input
             className="login_input"
+            autoComplete="false"
             type="email"
             placeholder="Email..."
             value={login["email"]}
@@ -58,6 +69,7 @@ const LogIn = () => {
         <div className="login_input_container">
           <input
             className="login_input"
+            autoComplete="false"
             type="password"
             placeholder="Password..."
             value={login["password"]}

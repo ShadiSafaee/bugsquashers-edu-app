@@ -4,7 +4,7 @@ import "../../styles/header.css";
 import SyntaxContext from "../../context/user/SyntaxContext";
 
 const Header = () => {
-  const { mobileNavClass, setMobileNavClass, user,logOutHandler } = useContext(SyntaxContext);
+  const { mobileNavClass, setMobileNavClass, user } = useContext(SyntaxContext);
   return (
     <header className="header">
       <div className="nav_options">
@@ -13,15 +13,20 @@ const Header = () => {
             {user["firstname"] ? (
               <li>
                 Hello
-                <Link to="/user/dashboard" className="user_header_name">
+                <Link
+                  to={`/dashboard/${user["role"]}/${user["firstname"]}-${user["surname"]}`}
+                  className="user_header_name"
+                >
                   {" "}
                   {user["firstname"]}
                 </Link>{" "}
-                | <Link to="/logout" onClick={()=>logOutHandler()}>Log Out</Link>
+                <span style={{ color: "red" }}> | </span>{" "}
+                <Link to="/logout">Log Out</Link>
               </li>
             ) : (
               <li>
-                <Link to="/login">Log in</Link> |{" "}
+                <Link to="/login">Log in</Link>{" "}
+                <span style={{ color: "red" }}> | </span>{" "}
                 <Link to="/register">Register</Link>
               </li>
             )}

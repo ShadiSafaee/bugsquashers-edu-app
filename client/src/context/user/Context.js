@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SyntaxContext from "./SyntaxContext";
-import { isExpired, decodeToken } from "react-jwt";
+import { decodeToken, isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
 // ==========================================================
 const Context = ({ children }) => {
   const [mobileNavClass, setMobileNavClass] = useState(false);
   const [login, setLogin] = useState({ email: "", password: "" });
   const [preloader, setPreloader] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [register, setRegister] = useState({
     email: "",
     password: "",
@@ -26,8 +27,25 @@ const Context = ({ children }) => {
     country: "",
   });
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(
+    decodeToken(localStorage.getItem("token")) || {}
+  );
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  useEffect(() => {
+    const decode = decodeToken(token);
+    const isEx = isExpired(token);
+    auth();
+    if (!user["firstname"]) {
+      localStorage.removeItem("token");
+    }
+    if (!isEx) {
+      setUser(decode);
+      setIsAuth(true);
+    } else {
+      setUser({});
+    }
+  }, [setUser, navigate]);
   const registerFormHandler = (id, val) => {
     if (id !== "dob" && id !== "country") {
       val = val.replace(/\s/g, "");
@@ -201,7 +219,7 @@ const Context = ({ children }) => {
     const valid = registerValidationHandler();
     const { email, password, firstname, surname, country } = register;
     const dob = register.dob.toLocaleDateString();
-
+    console.log(valid);
     if (valid) {
       setPreloader(true);
       const user = {
@@ -259,12 +277,15 @@ const Context = ({ children }) => {
           const data = await res.json();
           localStorage.setItem("token", data.token);
           setUser(decodeToken(data.token));
-
+          setIsAuth(true);
           setPreloader(false);
           navigate("/", { replace: true });
         } else {
           setPreloader(false);
-          alert("Email not found :( Register first please :)");
+          setErrorMessage({
+            ...errorMessage,
+            email: "Email not found :( Register first please :)",
+          });
         }
       } catch (error) {
         console.log(error);
@@ -275,6 +296,7 @@ const Context = ({ children }) => {
     const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/logout";
     const token = localStorage.getItem("token");
     if (user["firstname"] && token) {
+      setPreloader(true);
       const putOption = {
         method: "PUT",
         headers: {
@@ -285,14 +307,47 @@ const Context = ({ children }) => {
       try {
         const res = await fetch(url, putOption);
         if (res.ok) {
+          localStorage.removeItem("token");
+          setUser({});
+          setIsAuth(false);
+          setPreloader(false);
           const { msg } = await res.json();
-          alert(msg);
+          navigate("/", { replace: "true" });
+          console.log(msg);
         } else {
-          alert("Please login first");
+          setPreloader(false);
+          setIsAuth(false);
         }
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+  const auth = async () => {
+    let check = false;
+    const postOption = {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: "",
+    };
+
+    try {
+      const res = await fetch(
+        "https://bugsquashers-edu-app.herokuapp.com/api/user/dashboard",
+        postOption
+      );
+      if (res.ok) {
+        setIsAuth(true);
+        check = true;
+        return check;
+      } else {
+        return check;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -316,6 +371,9 @@ const Context = ({ children }) => {
         user,
         setUser,
         logOutHandler,
+        auth,
+        isAuth,
+        setIsAuth,
       }}
     >
       {children}

@@ -4,8 +4,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SyntaxContext from "../../context/user/SyntaxContext";
 import { Link } from "react-router-dom";
+import { isExpired } from "react-jwt";
+import { useNavigate } from "react-router";
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
   const {
     registerFormHandler,
     registerHandler,
@@ -15,10 +18,20 @@ const RegistrationForm = () => {
     setErrorMessage,
   } = useContext(SyntaxContext);
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const isEx = isExpired(token);
+      if (!isEx) {
+        return navigate("/");
+      }
+    }
+  }, []);
+  useEffect(() => {
     setLogin({
       email: "",
       password: "",
     });
+
     setErrorMessage({
       email: "",
       password: "",
