@@ -169,7 +169,14 @@ router.post("/addnewsubmission", upload.single("file"), async (req, res) => {
   res.status(200).json({ msg: "Submission done!" });
 });
 
-//Sow a submission (based on submission ID)
-router.get("/submission", async (req, req) => {});
+//Show a submission (based on submission ID)
+router.get("/submission/:id", async (req, res) => {
+  const { id } = req.params;
+  const submissionQeury = "SELECT * FROM submission WHERE id = $1";
+  const submission = await pool.query(submissionQeury, [id]);
+  res
+    .status(200)
+    .json({ msg: "This is a submitted assignment", data: submission.rows });
+});
 
 module.exports = router;
