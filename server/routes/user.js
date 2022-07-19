@@ -4,12 +4,27 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "--" + file.originalname);
+  },
+});
+let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
+  user: "shadab",
+  host: "localhost",
+  database: "bug_squashers",
+  password: "222222",
+  port: 5432,
 });
 
 const isEqual = async (enteredPassword, hashedPassword) => {
@@ -23,7 +38,6 @@ router.get("/", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   let { firstname, surname, email, password, dob, country, role } = req.body;
-  console.log(req.body);
   const signUpQuery =
     "INSERT INTO user_data (firstname, surname, email, password, dob, country, role) VALUES ($1, $2, $3, $4, $5, $6, $7)";
   const checkEmailQuery =
@@ -137,5 +151,29 @@ router.put("/logout", checkToken, (req, res) => {
     }
   );
 });
+
+//********************************Submission Endpoints ****/
+
+//Create a new submission
+
+router.post("/addnewsubmission", upload.single("file"), async (req, res) => {
+  const { lesson_id, user_id, comment, type } = req.body;
+  const submissionQuery =
+    "INSERT INTO user_data (lesson_id, user_id, comment,type) VALUES ($1, $2, $3, $4)";
+  url = req.file.path;
+  console.log(req.file);
+  const submissionSent = await pool.query(submissionQuery, [
+    lesson_id,
+    user_id,
+    comment,
+    type,
+    url,
+  ]);
+
+  res.status(200).json({ msg: "Submission done!", data: submissionSent.rows });
+});
+
+//Sow a submission (based on submission ID)
+// router.get("/submission", async (req, req) => {});
 
 module.exports = router;

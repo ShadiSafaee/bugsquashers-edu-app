@@ -116,13 +116,12 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
     lesson_name,
     lesson_description,
     lesson_type,
-    lesson_url,
     lesson_created_date,
     lesson_file,
   } = req.body;
   const lessCreatedQuery =
     "INSERT INTO lessons (module_id, lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5, $6)";
-
+  lesson_url = req.file.path;
   await pool.query(lessCreatedQuery, [
     module_id,
     lesson_name,
