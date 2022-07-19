@@ -158,22 +158,18 @@ router.put("/logout", checkToken, (req, res) => {
 
 router.post("/addnewsubmission", upload.single("file"), async (req, res) => {
   const { lesson_id, user_id, comment, type } = req.body;
+  if (!lesson_id || !user_id) {
+    res.status(404).json({ msg: "User or Lesson not found!" });
+  }
   const submissionQuery =
-    "INSERT INTO user_data (lesson_id, user_id, comment,type) VALUES ($1, $2, $3, $4)";
-  url = req.file.path;
-  console.log(req.file);
-  const submissionSent = await pool.query(submissionQuery, [
-    lesson_id,
-    user_id,
-    comment,
-    type,
-    url,
-  ]);
+    "INSERT INTO submission (lesson_id, user_id, comment, type, url) VALUES ($1, $2, $3, $4, $5)";
+  const url = req.file.path;
+  await pool.query(submissionQuery, [lesson_id, user_id, comment, type, url]);
 
-  res.status(200).json({ msg: "Submission done!", data: submissionSent.rows });
+  res.status(200).json({ msg: "Submission done!" });
 });
 
 //Sow a submission (based on submission ID)
-// router.get("/submission", async (req, req) => {});
+router.get("/submission", async (req, req) => {});
 
 module.exports = router;
