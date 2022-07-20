@@ -27,11 +27,11 @@ const Tcontext = ({ children }) => {
     module_id: "",
     lesson_file: {},
   });
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const getModulesHandler = async () => {
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/modules";
+    const url = "http://localhost:5000/api/teacher/modules";
     const res = await fetch(url);
     try {
       if (res.ok) {
@@ -70,8 +70,7 @@ const Tcontext = ({ children }) => {
   };
   const editModuleHandler = async () => {
     if (errorMessage.name.length === 0 && module.module_name.length !== 0) {
-      const url =
-        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/updatedmodule";
+      const url = "http://localhost:5000/api/teacher/updatedmodule";
       const newDate = new Date();
       const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
       const { module_name, module_description } = module;
@@ -107,7 +106,7 @@ const Tcontext = ({ children }) => {
       },
       body: "",
     };
-    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/deletedmodule/${id}`;
+    const url = `http://localhost:5000/api/teacher/deletedmodule/${id}`;
     try {
       const res = fetch(url, deleteOptions);
       if (res.ok) {
@@ -122,8 +121,7 @@ const Tcontext = ({ children }) => {
     if (module.module_name.length !== 0) {
       const newDate = new Date();
       const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
-      const url =
-        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/addnewmodule";
+      const url = "http://localhost:5000/api/teacher/addnewmodule";
       const user = {
         module_name,
         module_description,
@@ -155,8 +153,7 @@ const Tcontext = ({ children }) => {
 
   // =============================Lessons ===========
   const getLessonsHandler = async () => {
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/lessons";
+    const url = "http://localhost:5000/api/teacher/lessons";
     const res = await fetch(url);
     try {
       if (res.ok) {
@@ -177,7 +174,7 @@ const Tcontext = ({ children }) => {
       },
       body: "",
     };
-    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/deletedlesson/${id}`;
+    const url = `http://localhost:5000/api/teacher/deletedlesson/${id}`;
     try {
       const res = fetch(url, deleteOptions);
       if (res.ok) {
@@ -187,7 +184,36 @@ const Tcontext = ({ children }) => {
       console.log(error);
     }
   };
-  const editLessonHandler = () => {};
+  const editLessonHandler = async (id) => {
+    if (errorMessage.name.length === 0 && lesson.lesson_name.length !== 0) {
+      const url = `http://localhost:5000/api/teacher/updatedmodule/${id}`;
+      const newDate = new Date();
+      const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
+      const { lesson_name, lesson_description, module_id } = lesson;
+      const newLesson = {
+        lesson_name: lesson_name,
+        lesson_description: lesson_description,
+        lesson_created_date: fullDate,
+        module_id: module_id,
+      };
+      const putOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newLesson),
+      };
+      try {
+        const res = await fetch(url, putOptions);
+
+        if (res.ok) {
+          alert("done");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   const editLessonInputs = (id, val) => {
     switch (id) {
       case "name":
@@ -257,7 +283,7 @@ const Tcontext = ({ children }) => {
   const newLessonHandler = async () => {
     const {
       lesson_name,
-      lesson_url,
+
       lesson_type,
       lesson_file,
       module_id,
@@ -272,8 +298,7 @@ const Tcontext = ({ children }) => {
     ) {
       return alert("Please fill all the fields");
     }
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/addnewlesson";
+    const url = "http://localhost:5000/api/teacher/addnewlesson";
     const newDate = new Date();
     const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
     const myForm = new FormData();
@@ -284,7 +309,6 @@ const Tcontext = ({ children }) => {
     myForm.append("lesson_type", lesson_type);
     myForm.append("lesson_created_date", fullDate);
     myForm.append("file", lesson_file);
-    console.log(myForm);
     const postOption = {
       method: "POST",
 
@@ -293,7 +317,6 @@ const Tcontext = ({ children }) => {
     try {
       const res = await fetch(url, postOption);
       if (res.ok) {
-        console.log(res);
         navigate("/dashboard/teacher/teacher-Admin/lessons", {
           replace: true,
         });
@@ -307,7 +330,42 @@ const Tcontext = ({ children }) => {
       console.log(error);
     }
   };
-
+  const getAllUsers = async () => {
+    const url = "http://localhost:5000/api/teacher/allusers";
+    const res = await fetch(url);
+    if (res.ok) {
+      const { data } = await res.json();
+      setUsers(data);
+    } else {
+      alert("No User Found");
+    }
+  };
+  const userRoleHandler = async (id, val) => {
+    const reqBody = { id: id, newRole: val };
+    const postOption = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    };
+    if (id && (val === "teacher" || val === "student")) {
+      console.log(val, id);
+      const url = "http://localhost:5000/api/teacher/change-user-role";
+      try {
+        const res = await fetch(url, postOption);
+        if (res.ok) {
+          const { msg } = await res.json();
+          getAllUsers();
+          alert(msg);
+        } else {
+          alert("Please try again later");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <TeacherContext.Provider
       value={{
@@ -335,6 +393,10 @@ const Tcontext = ({ children }) => {
         editLessonInputs,
         getModulesHandler,
         newLessonHandler,
+        users,
+        setUsers,
+        getAllUsers,
+        userRoleHandler,
       }}
     >
       {children}

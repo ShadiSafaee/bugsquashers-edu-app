@@ -1,33 +1,39 @@
 import React, { useContext, useEffect } from "react";
 import TeacherContext from "../../../context/teacher/TeacherContext";
 import "../../../styles/modulesTable.css";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 const LessonsTable = () => {
   const context = useContext(TeacherContext);
+  const navigate = useNavigate();
   const {
-    lesson,
+    modules,
     setlesson,
     lessons,
     setShowLessonEdit,
     showLessonEdit,
     getLessonsHandler,
     deletelessonHandler,
+    getModulesHandler,
   } = context;
   useEffect(() => {
     getLessonsHandler();
-  }, []);
+    getModulesHandler();
+  }, [setlesson]);
+
   return (
     <>
       <h1 className="dash_header">
         Lessons
-        <Link
-          to="new-lesson"
-          className="dash_add_btn btn"
-          onClick={() => setShowLessonEdit(true)}
-        >
-          Add new
-        </Link>
+        {modules.length !== 0 && (
+          <Link
+            to="new-lesson"
+            className="dash_add_btn btn"
+            onClick={() => setShowLessonEdit(true)}
+          >
+            Add new
+          </Link>
+        )}
       </h1>
       <table className="modules_table">
         <thead>
@@ -55,7 +61,17 @@ const LessonsTable = () => {
                   <td>{item.lesson_name}</td>
                   <td>{item.lesson_description}</td>
                   <td>{item.lesson_type}</td>
-                  <td>{item.lesson_url}</td>
+                  <td>
+                    <a
+                      style={{ color: "#fff900" }}
+                      href={`http://localhost:5000/${item.lesson_url}`}
+                      download
+                      target="blank"
+                    >
+                      {" "}
+                      Download
+                    </a>
+                  </td>
                   <td>{item.lesson_created_date}</td>
 
                   <td>
@@ -79,12 +95,7 @@ const LessonsTable = () => {
           )}
         </tbody>
       </table>
-      {setShowLessonEdit && (
-        <>
-          <Outlet></Outlet>
-          <Outlet></Outlet>
-        </>
-      )}
+      {showLessonEdit && <Outlet></Outlet>}
     </>
   );
 };

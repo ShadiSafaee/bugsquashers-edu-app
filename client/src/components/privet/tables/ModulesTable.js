@@ -75,7 +75,6 @@ const ModulesTable = () => {
       {showEdit && (
         <>
           <Outlet></Outlet>
-          <Outlet></Outlet>
         </>
       )}
     </>

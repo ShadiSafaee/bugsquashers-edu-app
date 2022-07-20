@@ -14,7 +14,6 @@ const EditLesson = () => {
     editLessonInputs,
     editLessonHandler,
     setShowEdit,
-    editlessonInputs,
     showLessonEdit,
     setShowLessonEdit,
   } = useContext(TeacherContext);
@@ -22,7 +21,7 @@ const EditLesson = () => {
   useEffect(() => {
     const newId = id.split("-")[0];
     const target = lessons.find((item) => String(item.id) === newId);
-
+    console.log(target);
     target
       ? setLesson(target)
       : navigate("/dashboard/teacher/teacher-Admin/lessons", {
@@ -50,8 +49,8 @@ const EditLesson = () => {
             <input
               className="module_input"
               type="text"
-              value={lesson["module_name"]}
-              onChange={(e) => editlessonInputs("name", e.target.value)}
+              value={lesson["lesson_name"]}
+              onChange={(e) => editLessonInputs("name", e.target.value)}
               placeholder="Name..."
             ></input>
             <span className="input_message">{errorMessage["name"]}</span>
@@ -63,7 +62,7 @@ const EditLesson = () => {
               rows="10"
               className="module_textarea"
               value={lesson["lesson_description"]}
-              onChange={(e) => editlessonInputs("desc", e.target.value)}
+              onChange={(e) => editLessonInputs("desc", e.target.value)}
               placeholder="Description..."
               resize="none"
             ></textarea>

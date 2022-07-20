@@ -13,21 +13,38 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-  // user: "ali",
-  // host: "localhost",
-  // database: "bug_squashers",
-  // password: "111111",
-  // port: 5432,
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
+  user: "ali",
+  host: "localhost",
+  database: "bug_squashers",
+  password: "111111",
+  port: 5432,
 });
 
 router.get("/", (req, res) => {
   res.send("it is working!");
 });
-
+//users role and get all users
+router.get("/allusers", async (req, res) => {
+  const query = "select * from user_data order by id";
+  const data = await pool.query(query);
+  res.status(200).json({ msg: `${data.rows.length} found`, data: data.rows });
+});
+router.post("/change-user-role", async (req, res) => {
+  const { id, newRole } = req.body;
+  const findQuery = "SELECT EXISTS ( SELECT * FROM user_data WHERE id = $1 )";
+  const setRoleQuery = "UPDATE user_data set role = $1 WHERE id = $2";
+  const findUser = await pool.query(findQuery, [id]);
+  if (findUser.rows[0].exists) {
+    await pool.query(setRoleQuery, [newRole, id]);
+    res.status(200).json({ msg: `Role updated to ${newRole}` });
+  } else {
+    res.status(404).json({ msg: "unvalid values!" });
+  }
+});
 //Create a new module
 router.post("/addnewmodule", async (req, res) => {
   const { module_name, module_description, module_created_date } = req.body;
@@ -48,7 +65,6 @@ router.post("/addnewmodule", async (req, res) => {
       module_created_date,
     ]);
     const newMod = await pool.query(newModQuery, [module_name]);
-    console.log(newMod);
     res
       .status(200)
       .json({ msg: "New module is created", teacher: newMod.rows });
@@ -109,14 +125,6 @@ router.delete("/deletedmodule/:id", async (req, res) => {
 
 //*******************************************LESSONS' END POINTS*******************************************//
 
-// uploading files
-// const uploadFiles = (req, res) => {
-//   console.log(req.body);
-//   console.log(req.files);
-//   res.json({ message: "Successfully uploaded files" });
-// };
-// router.post("/upload_files", , uploadFiles);
-
 //Create a new lesson
 
 router.post("/addnewlesson", upload.single("file"), async (req, res) => {
@@ -125,10 +133,11 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
     lesson_name,
     lesson_description,
     lesson_type,
-    lesson_url,
     lesson_created_date,
-    lesson_file,
   } = req.body;
+
+  const lesson_url = req.file.path;
+
   const lessCreatedQuery =
     "INSERT INTO lessons (module_id, lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5, $6)";
 
@@ -140,7 +149,6 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
     lesson_url,
     lesson_created_date,
   ]);
-  console.log(res, req.files);
 
   res.status(200).json({ msg: "New lesson is created" });
 });
@@ -158,8 +166,6 @@ router.get("/lesson/:id", async (req, res) => {
 //Update/modify an existing lesson (name, description, and re-upload document only)
 //uploading files
 const uploadFiles = (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
   res.json({ msg: "Successfully uploaded files" });
 };
 router.post("/upload_files", upload.single("files"), uploadFiles);

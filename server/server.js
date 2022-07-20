@@ -3,7 +3,6 @@ const app = express();
 const userRouter = require("./routes/user");
 const teacherRouter = require("./routes/teacher");
 const bodyParser = require("body-parser");
-const teacherRouter = require("./routes/teacher");
 const path = require("path");
 const cors = require("cors");
 app.use("/uploads", express.static(__dirname + "/uploads"));
