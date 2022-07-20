@@ -26,7 +26,7 @@ const Context = ({ children }) => {
     surname: "",
     country: "",
   });
-
+  //setting user data by decodeing token
   const [user, setUser] = useState(
     decodeToken(localStorage.getItem("token")) || {}
   );

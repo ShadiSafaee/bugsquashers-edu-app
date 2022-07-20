@@ -19,6 +19,10 @@ import NewModule from "../privet/NewModule";
 import LessonsTable from "../privet/tables/LessonsTable";
 import NewLesson from "../privet/NewLesson";
 import EditLesson from "../privet/EditLesson";
+import UserProfile from "../privet/UserProfile";
+import SContext from "../../context/student/SContext";
+import StudentInfo from "../privet/StudentInfo";
+import Quize from "../privet/Quize";
 function App() {
   // const { user } = useContext(SyntaxContext);
   return (
@@ -60,7 +64,19 @@ function App() {
                 </Route>
               </Route>
             </Route>
-            <Route path="student" element={<Student />} />
+            <Route
+              path="student"
+              element={
+                <SContext>
+                  <Student />
+                </SContext>
+              }
+            >
+              <Route path=":name" element={<UserProfile />}>
+                <Route path="info" element={<StudentInfo />} />
+                <Route path="quize" element={<Quize />} />
+              </Route>
+            </Route>
             <Route path="admin" element={<Admin />} />
           </Route>
         </Route>

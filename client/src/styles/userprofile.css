@@ -1,0 +1,38 @@
+.user_profile_article {
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 0.5em;
+}
+.user_col_section {
+  width: 100%;
+}
+.user_content_section {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background: linear-gradient(45deg, #85ffbd, #fffb7d);
+}
+.user_col_section ul {
+  display: flex;
+  height: 100%;
+  /* flex-direction: column; */
+
+  align-items: center;
+  text-align: center;
+}
+.user_col_section ul li {
+  list-style: none;
+  height: 100%;
+  width: 100%;
+  padding: 1em;
+  background: #ffffff24;
+  color: white;
+  font-weight: 700;
+  transition: 1s all;
+}
+.user_col_section ul li:hover {
+  background: rgba(0, 0, 0, 0.142);
+  box-shadow: 0 0 8px 2px white;
+}
