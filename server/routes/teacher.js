@@ -13,15 +13,15 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-  // user: "ali",
-  // host: "localhost",
-  // database: "bug_squashers",
-  // password: "111111",
-  // port: 5432,
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
+  user: "shadab",
+  host: "localhost",
+  database: "bug_squashers",
+  password: "222222",
+  port: 5432,
 });
 
 router.get("/", (req, res) => {
@@ -48,7 +48,6 @@ router.post("/addnewmodule", async (req, res) => {
       module_created_date,
     ]);
     const newMod = await pool.query(newModQuery, [module_name]);
-    console.log(newMod);
     res
       .status(200)
       .json({ msg: "New module is created", teacher: newMod.rows });
@@ -84,7 +83,6 @@ router.put("/updatedmodule", async (req, res) => {
     module_created_date,
     id,
   ]);
-  console.log(updatedModule);
   res.status(200).json({ msg: "Module updated", data: updatedModule.rows });
 });
 
@@ -110,14 +108,6 @@ router.delete("/deletedmodule/:id", async (req, res) => {
 
 //*******************************************LESSONS' END POINTS*******************************************//
 
-// uploading files
-// const uploadFiles = (req, res) => {
-//   console.log(req.body);
-//   console.log(req.files);
-//   res.json({ message: "Successfully uploaded files" });
-// };
-// router.post("/upload_files", , uploadFiles);
-
 //Create a new lesson
 
 router.post("/addnewlesson", upload.single("file"), async (req, res) => {
@@ -141,7 +131,6 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
     lesson_url,
     lesson_created_date,
   ]);
-  console.log(res, req.files);
 
   res.status(200).json({ msg: "New lesson is created" });
 });
@@ -151,10 +140,15 @@ router.get("/lessons", async (req, res) => {
   const result = await pool.query(allLessonsQuery);
   res.status(200).json(result.rows);
 });
+//Get/show all the lessons based on module_id
 
-//Get/show a lesson (based on Lesson ID)
-//Update/modify an existing lesson (name, description, and re-upload document only)
-//Delete a lesson
-//Show all lessons
+router.post("/modules/lessons/:moduleid", async (req, res) => {
+  const { moduleid } = req.params;
+  const lessonQeury = "SELECT * FROM lessons WHERE module_id = $1 ORDER BY id";
+  const lessons = await pool.query(lessonQeury, [moduleid]);
+  res
+    .status(200)
+    .json({ msg: `${lessons.rows.length} lessons found`, data: lessons.rows });
+});
 
 module.exports = router;

@@ -1,0 +1,39 @@
+/* @keyframes unit_border {
+    0%:{
+        border
+    }
+} */
+.quize_art {
+  width: 100%;
+  display: flex;
+}
+.quize_modules_sec {
+  width: 47%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  overflow-y: auto;
+}
+.quize_modules_sec h3 {
+  box-shadow: 0 0 4px 1px blue;
+  display: inline-block;
+  padding: 2em 1em;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+.module_card {
+  width: 50%;
+  height: 200px;
+  padding: 0.5em;
+  box-shadow: 0 0 8px 3px rgb(0, 0, 0);
+  overflow-y: auto;
+}
+.module_card:nth-child(odd) {
+  background: rgb(255, 213, 0);
+}
+.module_card:nth-child(even) {
+  background: rgb(171, 205, 50);
+}
+.module_card::-webkit-scrollbar {
+  display: none;
+}

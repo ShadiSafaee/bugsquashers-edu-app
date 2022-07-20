@@ -1,5 +1,12 @@
 import { createContext } from "react";
 
-const StudentContext = createContext({ test: false, setTest: () => {} });
+const StudentContext = createContext({
+  modules: [],
+  setModules: () => {},
+  getModulesHandler: () => {},
+  ModuleHandler: () => {},
+  lessons: [],
+  setLessons: () => {},
+});
 
 export default StudentContext;
