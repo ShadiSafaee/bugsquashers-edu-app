@@ -24,5 +24,9 @@ const Context = createContext({
   editLessonInputs: () => {},
   getModulesHandler: () => {},
   newLessonHandler: () => {},
+  users: [],
+  setUsers: () => {},
+  getAllUsers: () => {},
+  userRoleHandler: () => {},
 });
 export default Context;

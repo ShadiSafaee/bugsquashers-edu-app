@@ -19,6 +19,7 @@ import NewModule from "../privet/NewModule";
 import LessonsTable from "../privet/tables/LessonsTable";
 import NewLesson from "../privet/NewLesson";
 import EditLesson from "../privet/EditLesson";
+import UsersTable from "../privet/tables/UsersTable";
 function App() {
   // const { user } = useContext(SyntaxContext);
   return (
@@ -58,6 +59,7 @@ function App() {
                     element={<EditLesson></EditLesson>}
                   />
                 </Route>
+                <Route path="users" element={<UsersTable></UsersTable>} />
               </Route>
             </Route>
             <Route path="student" element={<Student />} />
