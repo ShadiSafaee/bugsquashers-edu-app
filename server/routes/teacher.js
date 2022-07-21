@@ -214,6 +214,8 @@ router.get("/lessons", async (req, res) => {
   const allLessonsQuery = "SELECT * FROM lessons";
   const result = await pool.query(allLessonsQuery);
   res.status(200).json(result.rows);
+});
+
 router.post("/modules/lessons/:moduleid", async (req, res) => {
   const { moduleid } = req.params;
   const lessonQeury = "SELECT * FROM lessons WHERE module_id = $1 ORDER BY id";
