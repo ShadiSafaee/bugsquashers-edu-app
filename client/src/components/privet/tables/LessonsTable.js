@@ -10,17 +10,18 @@ const LessonsTable = () => {
     modules,
     setlesson,
     lessons,
+    setLessons,
     setShowLessonEdit,
     showLessonEdit,
     getLessonsHandler,
     deletelessonHandler,
     getModulesHandler,
   } = context;
+
   useEffect(() => {
     getLessonsHandler();
     getModulesHandler();
-  }, [setlesson]);
-
+  }, [setlesson, setLessons]);
   return (
     <>
       <h1 className="dash_header">

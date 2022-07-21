@@ -320,6 +320,7 @@ const Tcontext = ({ children }) => {
         navigate("/dashboard/teacher/teacher-Admin/lessons", {
           replace: true,
         });
+        getLessonsHandler();
       } else {
         console.log("Error");
         navigate("/dashboard/teacher/teacher-Admin/lessons", {
