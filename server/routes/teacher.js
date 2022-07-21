@@ -17,10 +17,10 @@ const pool = new Pool({
   // ssl: {
   //   rejectUnauthorized: false,
   // },
-  user: "shadab",
+  user: "ali",
   host: "localhost",
   database: "bug_squashers",
-  password: "222222",
+  password: "111111",
   port: 5432,
 });
 

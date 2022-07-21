@@ -13,6 +13,7 @@ const Quize = () => {
   console.log(lessons);
   return (
     <article className="quize_art">
+      <h1 className="quize_headers">Modules</h1>
       <section className="quize_modules_sec">
         {modules.map((mod, index) => (
           <div
@@ -28,15 +29,13 @@ const Quize = () => {
           </div>
         ))}
       </section>
-      <section>
-        {console.log(lessons)}
+      <h1 className="quize_headers">Lessons</h1>
+      <section className="quize_lessons_sec">
         {lessons.length !== 0 &&
           lessons.map((lesson, index) => {
             return (
               <Link to={`lesson-${lesson.id}`} key={index}>
-                <div className="lesson_card">
-                  <h2>{lesson.lesson_name}</h2>
-                </div>
+                <div className="lesson_card">{lesson.lesson_name}</div>
               </Link>
             );
           })}

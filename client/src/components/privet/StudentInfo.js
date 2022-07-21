@@ -42,6 +42,7 @@ const StudentInfo = () => {
             </tr>
           </tbody>
         </table>
+        <button className="btn edit_profile_btn">Edit Profile</button>
       </section>
       <section className="student_score_section">Student Scores</section>
     </article>
