@@ -31,14 +31,19 @@ const Quize = () => {
       </section>
       <h1 className="quize_headers">Lessons</h1>
       <section className="quize_lessons_sec">
-        {lessons.length !== 0 &&
+        {lessons.length !== 0 && lessons.length !== 0 ? (
           lessons.map((lesson, index) => {
             return (
               <Link to={`lesson-${lesson.id}`} key={index}>
                 <div className="lesson_card">{lesson.lesson_name}</div>
               </Link>
             );
-          })}
+          })
+        ) : (
+          <h1 className="quize_headers no_lesson_header">
+            There is no lesson yet
+          </h1>
+        )}
       </section>
     </article>
   );

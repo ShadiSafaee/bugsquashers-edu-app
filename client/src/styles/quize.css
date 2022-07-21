@@ -84,6 +84,12 @@
   background: #4defff80;
   margin: 0.5em 0 0;
 }
+.no_lesson_header {
+  width: 100%;
+  padding: 1em 0;
+  background: rgba(255, 255, 255, 0.411);
+  border-radius: 20px;
+}
 .module_card:hover {
   background: red;
 }
