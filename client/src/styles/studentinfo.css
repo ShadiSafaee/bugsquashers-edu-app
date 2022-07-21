@@ -1,0 +1,79 @@
+.student_info_article {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.student_info_section {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  padding: 0.5em;
+}
+.student_score_section {
+  height: 50%;
+  margin: 0 auto;
+}
+.edit_profile_btn {
+  border-radius: 0;
+  background: #ffbf00;
+  padding: 0 0.2em;
+  border-top-right-radius: 91%;
+  border-bottom-right-radius: 91%;
+  box-shadow: 2px 2px 3px 0px black;
+  margin: 0;
+}
+.student_info_table {
+  width: 95%;
+  text-align: center;
+  border-spacing: 0px 8px;
+  font-weight: 600;
+  text-shadow: 0 0 4px white;
+  background: #ffffffb0;
+  margin: 0 auto;
+  padding: 1em 0em;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.student_info_table thead {
+  font-size: 1.1rem;
+  color: black;
+  font-family: "Lemon", cursive;
+  letter-spacing: 6px;
+  font-weight: 100;
+  text-decoration: underline;
+  text-shadow: 2px 2px 4px rgb(250, 233, 0);
+}
+@media screen and (min-width: 650px) {
+  .student_info_section {
+    width: 80%;
+  }
+  .student_info_table thead {
+    font-size: 1.2rem;
+  }
+  .student_info_table {
+    font-size: 1.2rem;
+  }
+  .student_info_section {
+    font-size: 1rem;
+  }
+  .edit_profile_btn {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 800px) {
+  .student_info_table thead {
+    font-size: 1.4rem;
+  }
+  .student_info_table {
+    font-size: 1.4rem;
+  }
+  .student_info_section {
+    font-size: 1.2rem;
+  }
+  .edit_profile_btn {
+    font-size: 1.2rem;
+  }
+}

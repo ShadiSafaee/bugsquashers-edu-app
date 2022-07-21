@@ -33,9 +33,11 @@ const Tcontext = ({ children }) => {
   const getModulesHandler = async () => {
     const url = "http://localhost:5000/api/teacher/modules";
     const res = await fetch(url);
+
     try {
       if (res.ok) {
         const data = await res.json();
+
         setModules(data);
       } else {
         setModules([...modules]);
@@ -44,6 +46,7 @@ const Tcontext = ({ children }) => {
       console.log(error);
     }
   };
+
   const editModuleInputs = (id, val) => {
     switch (id) {
       case "name":

@@ -162,6 +162,7 @@ router.get("/lesson/:id", async (req, res) => {
     .status(200)
     .json({ msg: "This is an existing lesson", data: lesson.rows });
 });
+//Get/show all the lessons based on module_id
 
 //Update/modify an existing lesson (name, description, and re-upload document only)
 //uploading files
@@ -213,6 +214,13 @@ router.get("/lessons", async (req, res) => {
   const allLessonsQuery = "SELECT * FROM lessons";
   const result = await pool.query(allLessonsQuery);
   res.status(200).json(result.rows);
+router.post("/modules/lessons/:moduleid", async (req, res) => {
+  const { moduleid } = req.params;
+  const lessonQeury = "SELECT * FROM lessons WHERE module_id = $1 ORDER BY id";
+  const lessons = await pool.query(lessonQeury, [moduleid]);
+  res
+    .status(200)
+    .json({ msg: `${lessons.rows.length} lessons found`, data: lessons.rows });
 });
 
 module.exports = router;
