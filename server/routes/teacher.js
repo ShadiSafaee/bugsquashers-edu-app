@@ -205,12 +205,11 @@ router.update("/marksubmission/:id", async (req, res) => {
   const { id } = req.params;
   const { user_id, lesson_id, mark, mark_by, mark_comments } = req.body;
   const markSubQuery =
-    "UPDATE submission SET user_id = $1, lesson_id = $2, url = $3, mark = $4, mark_by = $5, mark_comments WHERE id = $6";
-  const url = req.file.path;
+    "UPDATE submission SET mark = $1, mark_by = $2, mark_comments = $3 WHERE id = $4";
   if (!user_id || !lesson_id) {
     res.status(404).json({ msg: "User or Lesson not found!" });
   } else {
-    await pool.query(markSubQuery, [url, mark, mark_by, mark_comments, id]);
+    await pool.query(markSubQuery, [mark, mark_by, mark_comments, id]);
     res.status(200).json({ msg: "Marking done! Thanks" });
   }
 });

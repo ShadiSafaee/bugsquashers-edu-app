@@ -157,14 +157,14 @@ router.put("/logout", checkToken, (req, res) => {
 //Create a new submission
 
 router.post("/addnewsubmission", upload.single("file"), async (req, res) => {
-  const { lesson_id, user_id, comment, type } = req.body;
+  const { lesson_id, user_id } = req.body;
   if (!lesson_id || !user_id) {
     res.status(404).json({ msg: "User or Lesson not found!" });
   }
   const submissionQuery =
-    "INSERT INTO submission (lesson_id, user_id, comment, type, url) VALUES ($1, $2, $3, $4, $5)";
+    "INSERT INTO submission (lesson_id, user_id, url) VALUES ($1, $2, $3)";
   const url = req.file.path;
-  await pool.query(submissionQuery, [lesson_id, user_id, comment, type, url]);
+  await pool.query(submissionQuery, [lesson_id, user_id, url]);
 
   res.status(200).json({ msg: "Submission done!" });
 });
