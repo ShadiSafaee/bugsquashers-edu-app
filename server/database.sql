@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS modules;
+DROP TABLE IF EXISTS lessons;
+DROP TABLE IF EXISTS user_data;
+
 
 CREATE TABLE user_data (
     id SERIAL PRIMARY KEY,
@@ -9,9 +13,6 @@ CREATE TABLE user_data (
     country VARCHAR(50) NOT NULL,
     role VARCHAR(10) NOT NULL
 );
-
-DROP TABLE IF EXISTS modules;
-DROP TABLE IF EXISTS lessons;
 
 
 CREATE TABLE modules (
@@ -30,5 +31,18 @@ CREATE TABLE lessons (
     lesson_created_date VARCHAR(20) NOT NULL
 );
 
+
+CREATE TABLE submission (
+    id SERIAL PRIMARY KEY,
+    lesson_id INT NOT NULL REFERENCES lessons(id),
+    user_id INT NOT NULL REFERENCES user_data(id),
+    comment VARCHAR(8000),
+    created_date Date NOT NULL DEFAULT CURRENT_DATE,
+    type VARCHAR(30) ,
+    url VARCHAR(100),
+    mark INT DEFAULT NULL,
+    mark_by INT REFERENCES user_data(id),
+    mark_comments VARCHAR(8000) DEFAULT NULL
+);
 
 
