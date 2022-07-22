@@ -10,6 +10,7 @@ const StudentContext = createContext({
   getLessonHandler: () => {},
   lesson: {},
   setLesson: () => {},
+  submitLessonHandler: () => {},
 });
 
 export default StudentContext;

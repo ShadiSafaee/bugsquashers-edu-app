@@ -5,6 +5,7 @@ const SContext = ({ children }) => {
   const [modules, setModules] = useState([]);
   const [lessons, setLessons] = useState([]);
   const [lesson, setLesson] = useState({});
+  const [submitFile, setSubmitFile] = useState({});
   const getModulesHandler = async () => {
     const url = "http://localhost:5000/api/teacher/modules";
     const res = await fetch(url);
@@ -54,6 +55,27 @@ const SContext = ({ children }) => {
       }
     }
   };
+  const submitLessonHandler = async (userId, lessonId) => {
+    const myBody = { user_id: userId, lesson_id: lessonId };
+    const postOption = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(myBody),
+    };
+    const url = "http://localhost:5000/api/teacher/addnewsubmission";
+    try {
+      const res = fetch(url, postOption);
+      if (res.ok) {
+        alert("Lesson Submitted!");
+      } else {
+        alert(res.msg);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <StudentContext.Provider
@@ -67,6 +89,9 @@ const SContext = ({ children }) => {
         getLessonHandler,
         lesson,
         setLesson,
+        submitFile,
+        setSubmitFile,
+        submitLessonHandler,
       }}
     >
       {children}

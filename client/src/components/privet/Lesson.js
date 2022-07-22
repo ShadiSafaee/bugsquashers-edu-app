@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import StudentContext from "../../context/student/StudentContext";
+import SyntaxContext from "../../context/user/SyntaxContext";
 import "../../styles/lesson.css";
 
 const Lesson = () => {
-  const { getLessonHandler, lesson } = useContext(StudentContext);
+  const { getLessonHandler, lesson, setSubmitFile, submitLessonHandler } =
+    useContext(StudentContext);
+  const { user } = useContext(SyntaxContext);
   const { lessonId } = useParams();
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const Lesson = () => {
               <td>{lesson.lesson_created_date}</td>
             </tr>
             <tr>
-              <td colSpan="1">
+              <td colSpan="2">
                 <a
                   href={`http://localhost:5000/${lesson.lesson_url}`}
                   target="_blank"
@@ -48,7 +51,28 @@ const Lesson = () => {
           </tbody>
         </table>
       </section>
-      <section className="lesson_form_sec"></section>
+      <section className="lesson_form_sec">
+        <h1>Submit New Lesson</h1>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitLessonHandler(user["id"], lessonId);
+          }}
+        >
+          <label htmlFor="upfile">
+            <input
+              type="file"
+              id="upfile"
+              placeholder="Upload here"
+              className="upload_btn"
+              onChange={(e) => setSubmitFile(e.target.files[0])}
+            />
+          </label>
+          <button type="submit" className="btn submission_upload">
+            Submit
+          </button>
+        </form>
+      </section>
     </article>
   ) : (
     <h1>Loading...</h1>

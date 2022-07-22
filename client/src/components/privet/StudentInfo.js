@@ -31,7 +31,6 @@ const StudentInfo = () => {
             <tr>
               <td>Date of Birth</td>
               <td>{dob}</td>
-              {console.log(dob)}
             </tr>
             <tr>
               <td>Country</td>
