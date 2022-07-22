@@ -30,7 +30,7 @@ const StudentInfo = () => {
             </tr>
             <tr>
               <td>Date of Birth</td>
-              <td>{dob}</td>
+              <td>{new Date(dob).toLocaleDateString()}</td>
             </tr>
             <tr>
               <td>Country</td>

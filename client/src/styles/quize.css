@@ -28,19 +28,24 @@
 }
 .module_card {
   width: 170px;
-
+  height: 270px;
   padding: 0.5em;
-  overflow-y: auto;
   flex: none;
   cursor: pointer;
-  background: rgb(255 255 255 / 32%);
+  background: #a1f5aa;
   margin: 0 0.5em;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   transition: 0.7s;
   word-break: break-all;
+}
+.module_card h2 {
+  margin: 0.5em 0;
+}
+.module_card div {
+  overflow-y: auto;
 }
 .lesson_card {
   width: 150px;
@@ -65,12 +70,12 @@
   background: linear-gradient(0deg, #e3f10f, #00ff08);
 }
 .quize_modules_sec h3 {
-  box-shadow: 0 0 13px 2px #e4ff00;
+  box-shadow: 0 0 13px 0.5px #19832f;
   display: inline-block;
   padding: 2em 1em;
   border-radius: 50%;
   margin: 0 auto;
-  background: rgb(250, 233, 0);
+  background: rgb(227 217 88 / 66%);
   font-family: "Lemon", cursive;
 }
 
@@ -80,16 +85,18 @@
 .quize_headers {
   text-align: center;
   padding: 0.7em;
-  font-size: 1rem;
-  background: #4defff80;
+  font-size: 1.3rem;
+  color: snow;
+  background: #4dff56a6;
   margin: 0.5em 0 0;
 }
 .no_lesson_header {
   width: 100%;
   padding: 1em 0;
-  background: rgba(255, 255, 255, 0.411);
+  background: rgba(255, 255, 255, 0.666);
   border-radius: 20px;
+  color: black;
 }
 .module_card:hover {
-  background: red;
+  background: rgb(252, 241, 113);
 }

@@ -219,7 +219,6 @@ const Context = ({ children }) => {
     const valid = registerValidationHandler();
     const { email, password, firstname, surname, country } = register;
     const dob = register.dob.toLocaleDateString();
-    console.log(valid);
     if (valid) {
       setPreloader(true);
       const user = {
