@@ -28,6 +28,7 @@ const Tcontext = ({ children }) => {
     lesson_file: {},
   });
   const [submissions, setSubmissions] = useState([]);
+  const [mark, setMark] = useState("");
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
@@ -374,7 +375,39 @@ const Tcontext = ({ children }) => {
 
   //==================================Submission====================
   const getAllSubmission = async () => {
-    const url = "";
+    const url = "http://localhost:5000/api/user/addnewsubmission";
+    const res = await fetch(url);
+    if (res.ok) {
+      const { data } = await res.json();
+      setSubmissions(data);
+    } else {
+      alert("No submission found!");
+    }
+  };
+  const markSubmitHandler = async (mark_by, lesson_id, user_id) => {
+    const myBody = { mark, mark_by, mark_comments: "", lesson_id, user_id };
+    const url = `http://localhost:5000/api/teacher/marksubmission`;
+    const putOption = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        myBody,
+      }),
+    };
+    try {
+      const res = await fetch(url, putOption);
+      if (res.ok) {
+        const { msg } = await res.json();
+        getAllSubmission();
+        alert(msg);
+      } else {
+        alert("Please try again later");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <TeacherContext.Provider
@@ -407,6 +440,12 @@ const Tcontext = ({ children }) => {
         setUsers,
         getAllUsers,
         userRoleHandler,
+        submissions,
+        setSubmissions,
+        getAllSubmission,
+        mark,
+        setMark,
+        markSubmitHandler,
       }}
     >
       {children}

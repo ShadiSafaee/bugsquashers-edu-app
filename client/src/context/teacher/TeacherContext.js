@@ -28,5 +28,11 @@ const Context = createContext({
   setUsers: () => {},
   getAllUsers: () => {},
   userRoleHandler: () => {},
+  submissions: [],
+  setSubmissions: () => {},
+  getAllSubmission: () => {},
+  mark: "",
+  setMark: () => {},
+  markSubmitHandler: () => {},
 });
 export default Context;
