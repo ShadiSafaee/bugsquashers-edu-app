@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import StudentContext from "../../context/student/StudentContext";
-import "../../styles/quize.css";
+import "../../styles/quiz.css";
 import { Link } from "react-router-dom";
 
-const Quize = () => {
+const Quiz = () => {
   const { modules, getModulesHandler, moduleHandler, lessons, setLessons } =
     useContext(StudentContext);
+
   useEffect(() => {
-    getModulesHandler();
+    modules.length === 0 && getModulesHandler();
   }, [setLessons]);
 
-  console.log(lessons);
   return (
     <article className="quize_art">
       <h1 className="quize_headers">Modules</h1>
@@ -34,7 +34,7 @@ const Quize = () => {
         {lessons.length !== 0 && lessons.length !== 0 ? (
           lessons.map((lesson, index) => {
             return (
-              <Link to={`lesson-${lesson.id}`} key={index}>
+              <Link to={`lesson/${lesson.id}`} key={index}>
                 <div className="lesson_card">{lesson.lesson_name}</div>
               </Link>
             );
@@ -49,4 +49,4 @@ const Quize = () => {
   );
 };
 
-export default Quize;
+export default Quiz;

@@ -7,6 +7,9 @@ const StudentContext = createContext({
   ModuleHandler: () => {},
   lessons: [],
   setLessons: () => {},
+  getLessonHandler: () => {},
+  lesson: {},
+  setLesson: () => {},
 });
 
 export default StudentContext;

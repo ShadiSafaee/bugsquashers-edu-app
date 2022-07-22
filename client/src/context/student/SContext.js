@@ -4,6 +4,7 @@ import StudentContext from "./StudentContext";
 const SContext = ({ children }) => {
   const [modules, setModules] = useState([]);
   const [lessons, setLessons] = useState([]);
+  const [lesson, setLesson] = useState({});
   const getModulesHandler = async () => {
     const url = "http://localhost:5000/api/teacher/modules";
     const res = await fetch(url);
@@ -41,6 +42,18 @@ const SContext = ({ children }) => {
       console.log(error);
     }
   };
+  const getLessonHandler = async (id) => {
+    const url = `http://localhost:5000/api/teacher/lesson/${id}`;
+    if (id) {
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        setLesson(data.data);
+      } else {
+        alert("Lesson not found");
+      }
+    }
+  };
 
   return (
     <StudentContext.Provider
@@ -51,6 +64,9 @@ const SContext = ({ children }) => {
         moduleHandler,
         lessons,
         setLessons,
+        getLessonHandler,
+        lesson,
+        setLesson,
       }}
     >
       {children}

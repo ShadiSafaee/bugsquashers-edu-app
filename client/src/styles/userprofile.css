@@ -29,8 +29,9 @@
   height: 100%;
   width: 100%;
   padding: 1em;
-  background: rgba(0, 0, 0, 0.363);
+  background: rgba(0, 0, 0, 0.63);
   color: rgb(250, 192, 0);
+
   font-weight: 700;
   transition: 1s all;
 }

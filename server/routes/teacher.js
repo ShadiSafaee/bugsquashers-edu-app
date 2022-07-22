@@ -155,12 +155,21 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
 
 //show a lesson (based on Lesson ID)
 router.get("/lesson/:id", async (req, res) => {
+  console.log("vared shod");
   const { id } = req.params;
+  const findQuery = "SELECT EXISTS(SELECT * FROM lessons WHERE id = $1)";
   const lessonQeury = "SELECT * FROM lessons WHERE id = $1";
-  const lesson = await pool.query(lessonQeury, [id]);
-  res
-    .status(200)
-    .json({ msg: "This is an existing lesson", data: lesson.rows });
+  const found = await pool.query(findQuery, [id]);
+  console.log(found.rows);
+  if (found.rows[0].exists) {
+    console.log("true");
+    const lesson = await pool.query(lessonQeury, [id]);
+    res
+      .status(200)
+      .json({ msg: "This is an existing lesson", data: lesson.rows[0] });
+  } else {
+    res.status(404).json({ msg: "Lesson not found!" });
+  }
 });
 //Get/show all the lessons based on module_id
 
