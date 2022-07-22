@@ -1,0 +1,83 @@
+.edit_module_sec {
+  width: 100%;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  background: linear-gradient(145deg, #0073ad 30%, #00e945);
+
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+}
+.module_form {
+  width: 100%;
+}
+.edit_module_sec h1 {
+  font-size: 2rem;
+  margin: 1em;
+  font-family: sans-serif;
+  letter-spacing: 4px;
+  color: white;
+  text-shadow: 0px 0px 20px #5491ff;
+}
+.input_container {
+  position: relative;
+}
+.module_textarea::placeholder,
+.module_input::placeholder {
+  color: black;
+}
+
+.module_input,
+.module_textarea {
+  padding: 0.5em 1em;
+  resize: none;
+  background: rgba(255, 255, 255, 0);
+  color: white;
+  border-radius: 20px;
+  outline: 0;
+  border: 0;
+  transition: 0.7s all;
+  border: 1px solid white;
+  margin: 1em 0;
+
+  font-weight: 500;
+}
+.module_input:focus,
+.module_textarea:focus {
+  transform: scale(1.1);
+
+  box-shadow: 0 0 7px 2px white;
+  border: 0;
+}
+.module_btn,
+.cancel_btn {
+  background: rgb(0, 0, 0);
+  border: 1px solid white;
+  color: rgb(108, 223, 0);
+  letter-spacing: 2px;
+  font-size: 1rem;
+  font-family: sans-serif;
+  font-weight: 700;
+  transition: 0.3s all;
+  transform: scale(1.2);
+}
+.module_btn:hover,
+.cancel_btn:hover {
+  box-shadow: 0 0 8px white;
+  transform: scale(1);
+}
+.cancel_btn {
+  color: red;
+}
+
+@media screen and (min-width: 650px) {
+  .module_input,
+  .module_textarea {
+    font-size: 1.2rem;
+  }
+}

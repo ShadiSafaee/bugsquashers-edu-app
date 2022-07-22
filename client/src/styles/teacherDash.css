@@ -1,0 +1,37 @@
+.teacher_dash_art {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+.dash_column {
+  width: 100%;
+
+  background: #ffc107;
+  font-weight: 100;
+}
+.dash_column_ul {
+  display: flex;
+
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+.dash_content {
+  width: -webkit-fill-available;
+  padding: 0.3em;
+}
+.dash_column_ul li {
+  cursor: pointer;
+}
+.dash_column_ul li a {
+  padding: 0.5em;
+  display: block;
+  transition: 0.7s transform;
+}
+.dash_column_ul li a:hover {
+  background: #ff961e;
+  transform: scale(1.4);
+}

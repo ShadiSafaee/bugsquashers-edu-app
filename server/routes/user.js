@@ -5,36 +5,35 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 
-
 const pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
   // ssl: {
   //   rejectUnauthorized: false,
   // },
-  user: "shadab",
+  user: "ali",
   host: "localhost",
   database: "bug_squashers",
-  password: "222222",
+  password: "111111",
   port: 5432,
 });
 
 const isEqual = async (enteredPassword, hashedPassword) => {
   return await bcrypt.compare(enteredPassword, hashedPassword);
 };
-
 router.get("/", async (req, res) => {
   const query = "SELECT * FROM user_data";
   const data = await pool.query(query);
-  res.send(data.rows);
+  res.json(data.rows);
 });
 
 router.post("/signup", async (req, res) => {
-  let { firstname, surname, email, password, dob, country } = req.body;
+  let { firstname, surname, email, password, dob, country, role } = req.body;
+  console.log(req.body);
   const signUpQuery =
-    "INSERT INTO user_data (firstname, surname, email, password, dob, country) VALUES ($1, $2, $3, $4, $5, $6)";
+    "INSERT INTO user_data (firstname, surname, email, password, dob, country, role) VALUES ($1, $2, $3, $4, $5, $6, $7)";
   const checkEmailQuery =
     "SELECT EXISTS (SELECT email FROM user_data WHERE email= $1)";
-  const query = "SELECT * FROM user_data";
+  const query = "SELECT * FROM user_data WHERE email = $1";
 
   const emailChecked = await pool.query(checkEmailQuery, [email]);
 
@@ -57,8 +56,9 @@ router.post("/signup", async (req, res) => {
       password,
       dob,
       country,
+      role,
     ]);
-    const data = await pool.query(query);
+    const data = await pool.query(query, [email]);
     res.status(200).json({ msg: "New user created", user: data.rows });
   }
 });
@@ -84,7 +84,7 @@ router.post("/login", async (req, res) => {
             if (err) {
               console.log(err);
             }
-            res.status(200).json({ token, msg: "Log in successfull" });
+            res.status(200).json({ token: token, msg: "Log in successfull" });
           }
         );
       } else {
@@ -96,6 +96,7 @@ router.post("/login", async (req, res) => {
   } else {
     res.status(400).json({ msg: "user not found" });
   }
+  // res.redirect("/dashboard");
 });
 
 //Check to make sure header is not undefined, if so, return Forbidden (403), checkToken variable is being initialized here so that we can use it for the get req at the next level
@@ -115,7 +116,6 @@ const checkToken = (req, res, next) => {
 
 //accessing a protected route for user
 router.post("/dashboard", checkToken, (req, res) => {
-  console.log(req.token, process.env.mySecret);
   jwt.verify(req.token, process.env.mySecret, (err, authorizedData) => {
     if (err) {
       res.status(403).json({ msg: "Not authorized" });
@@ -123,7 +123,24 @@ router.post("/dashboard", checkToken, (req, res) => {
       res.status(200).json({ msg: "User authorized", authorizedData });
     }
   });
+});
 
+//log out route
+router.put("/logout", checkToken, (req, res) => {
+  const authHeader = req.headers["authorization"];
+  process.env.mySecret = crypto.randomBytes(64).toString("hex");
+  jwt.sign(
+    authHeader,
+    process.env.mySecret,
+    { expiresIn: 1 },
+    (logout, err) => {
+      if (logout) {
+        res.send({ msg: "You have been Logged Out" });
+      } else {
+        res.send({ msg: "Error" });
+      }
+    }
+  );
 });
 
 module.exports = router;
