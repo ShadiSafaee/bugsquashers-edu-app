@@ -1,0 +1,94 @@
+.lesson_art {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.lesson_info_sec {
+  width: 95%;
+  margin: 0 auto;
+
+  padding: 0.5em;
+}
+.lesson_form_sec {
+  width: 95%;
+  margin: 2em auto;
+
+  padding: 0.5em;
+}
+.lesson_form_sec form {
+  padding: 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgb(255 235 0);
+  border-radius: 20px;
+}
+
+.lesson_info_sec h1,
+.lesson_form_sec h1 {
+  margin: 0.5em auto;
+  font-size: 1.3rem;
+  color: white;
+  padding: 1em;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.589);
+}
+.lesson_form_sec label {
+  display: block;
+  font-size: 1.2rem;
+  background: rgb(255 235 0);
+  border-radius: 20px;
+}
+.upload_btn {
+  background: rgb(255, 239, 8);
+  font-size: 1.2rem;
+}
+.lesson_info_sec table {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: rgb(255 235 0);
+  padding: 0.3em;
+  text-align: center;
+  border-radius: 20px;
+  border-spacing: 0px 14px;
+}
+.submission_upload {
+  font-size: 1.2rem;
+  background: rgb(0, 159, 199);
+  transition: 0.5s all;
+  margin-bottom: -2.3em;
+}
+.submission_upload:hover {
+  background: rgb(29, 247, 255);
+  transform: scale(1.2);
+}
+.lesson_info_sec table td {
+  padding: 0.5em;
+}
+.lesson_info_sec table a {
+  background: #21c754;
+  box-shadow: 0 0 4px 1px black;
+  padding: 1em;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: -52px;
+  border-radius: 20px;
+  transition: all 0.7s;
+}
+.lesson_info_sec table a:hover {
+  background: #15ff00;
+  padding: 1em 5em;
+}
+@media screen and (min-width: 900px) {
+  .lesson_art {
+    flex-direction: row;
+  }
+  .lesson_info_sec {
+    width: 60%;
+    margin: 0;
+  }
+}

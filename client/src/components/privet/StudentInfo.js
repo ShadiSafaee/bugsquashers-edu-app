@@ -12,7 +12,7 @@ const StudentInfo = () => {
         <table className="student_info_table">
           <thead>
             <tr>
-              <th colspan="2">Student Details</th>
+              <th colSpan="2">Student Details</th>
             </tr>
           </thead>
           <tbody>
