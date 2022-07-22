@@ -233,7 +233,7 @@ router.post("/modules/lessons/:moduleid", async (req, res) => {
     .json({ msg: `${lessons.rows.length} lessons found`, data: lessons.rows });
 });
 
-router.update("/marksubmission/:id", async (req, res) => {
+router.put("/marksubmission/:id", async (req, res) => {
   const { id } = req.params;
   const { user_id, lesson_id, mark, mark_by, mark_comments } = req.body;
   const markSubQuery =
