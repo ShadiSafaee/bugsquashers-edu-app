@@ -24,6 +24,7 @@ import UserProfile from "../privet/UserProfile";
 import SContext from "../../context/student/SContext";
 import StudentInfo from "../privet/StudentInfo";
 import Quize from "../privet/Quize";
+import SubmissionTable from "../privet/tables/SubmissionTable";
 function App() {
   // const { user } = useContext(SyntaxContext);
   return (
@@ -64,6 +65,10 @@ function App() {
                   />
                 </Route>
                 <Route path="users" element={<UsersTable></UsersTable>} />
+                <Route
+                  path="submissions"
+                  element={<SubmissionTable></SubmissionTable>}
+                />
               </Route>
             </Route>
             <Route

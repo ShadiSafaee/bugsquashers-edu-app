@@ -20,6 +20,9 @@ const TeacherDashboard = () => {
           <li className="dash_column_li">
             <Link to="modules">Modules</Link>
           </li>
+          <li className="dash_column_li">
+            <Link to="submissions">Submissions</Link>
+          </li>
         </ul>
       </section>
       <section className="dash_content">
