@@ -27,6 +27,7 @@ const Tcontext = ({ children }) => {
     module_id: "",
     lesson_file: {},
   });
+  const [submissions, setSubmissions] = useState([]);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
@@ -369,6 +370,11 @@ const Tcontext = ({ children }) => {
         console.log(error);
       }
     }
+  };
+
+  //==================================Submission====================
+  const getAllSubmission = async () => {
+    const url = "";
   };
   return (
     <TeacherContext.Provider

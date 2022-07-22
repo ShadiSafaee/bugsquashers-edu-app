@@ -19,11 +19,11 @@ const UsersTable = () => {
           <tr>
             <td>#</td>
             <td>Name</td>
-            <td>email</td>
+            <td>Email</td>
             <td>D.O.B</td>
-            <td>country</td>
-            <td>role</td>
-            <td>edit-Role</td>
+            <td>Country</td>
+            <td>Role</td>
+            <td>Edit-Role</td>
           </tr>
         </thead>
         <tbody>
