@@ -1,0 +1,11 @@
+.lesson_art {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.lesson_info_sec h1 {
+  margin: 1em auto;
+  font-size: 1rem;
+  color: white;
+  padding: 1em;
+}

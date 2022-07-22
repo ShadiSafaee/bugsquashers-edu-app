@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import StudentContext from "../../context/student/StudentContext";
+import "../../styles/lesson.css";
 
 const Lesson = () => {
   const { getLessonHandler, lesson } = useContext(StudentContext);
