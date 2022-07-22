@@ -126,7 +126,6 @@ router.delete("/deletedmodule/:id", async (req, res) => {
 //*******************************************LESSONS' END POINTS*******************************************//
 
 //Create a new lesson
-
 router.post("/addnewlesson", upload.single("file"), async (req, res) => {
   const {
     module_id,
@@ -140,7 +139,7 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
 
   const lessCreatedQuery =
     "INSERT INTO lessons (module_id, lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5, $6)";
-
+  lesson_url = req.file.path;
   await pool.query(lessCreatedQuery, [
     module_id,
     lesson_name,
@@ -223,6 +222,29 @@ router.post("/modules/lessons/:moduleid", async (req, res) => {
   res
     .status(200)
     .json({ msg: `${lessons.rows.length} lessons found`, data: lessons.rows });
+});
+//********************************************** Marking Endpoints ******************************//
+
+router.update("/marksubmission/:id", async (req, res) => {
+  const { id } = req.params;
+  const { user_id, lesson_id, mark, mark_by, mark_comments } = req.body;
+  const markSubQuery =
+    "UPDATE submission SET mark = $1, mark_by = $2, mark_comments = $3 WHERE id = $4";
+  if (!user_id || !lesson_id) {
+    res.status(404).json({ msg: "User or Lesson not found!" });
+  } else {
+    await pool.query(markSubQuery, [mark, mark_by, mark_comments, id]);
+    res.status(200).json({ msg: "Marking done! Thanks" });
+  }
+});
+
+router.get("/submission/:id", async (req, res) => {
+  const { id } = req.params;
+  const submissionQeury = "SELECT * FROM submission WHERE id = $1";
+  const submission = await pool.query(submissionQeury, [id]);
+  res
+    .status(200)
+    .json({ msg: "This is a marked assignment", data: submission.rows });
 });
 
 module.exports = router;
