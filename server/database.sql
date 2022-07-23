@@ -40,7 +40,7 @@ CREATE TABLE submission (
     created_date Date NOT NULL DEFAULT CURRENT_DATE,
     type VARCHAR(30) ,
     url VARCHAR(100),
-    mark INT DEFAULT NULL,
+    mark INT,
     mark_by INT REFERENCES user_data(id),
     mark_comments VARCHAR(8000) DEFAULT NULL
 );

@@ -56,21 +56,21 @@ const SContext = ({ children }) => {
     }
   };
   const submitLessonHandler = async (userId, lessonId) => {
-    const myBody = { user_id: userId, lesson_id: lessonId, submitFile };
+    const myForm = new FormData();
+    myForm.append("lesson_id", lessonId);
+    myForm.append("user_id", userId);
+    myForm.append("file", submitFile);
     const postOption = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(myBody),
+      body: myForm,
     };
-    const url = "http://localhost:5000/api/teacher/addnewsubmission";
+    const url = "http://localhost:5000/api/user/addnewsubmission";
     try {
-      const res = fetch(url, postOption);
+      const res = await fetch(url, postOption);
       if (res.ok) {
         alert("Lesson Submitted!");
       } else {
-        alert(res.msg);
+        alert("Could not submitted");
       }
     } catch (error) {
       console.log(error);

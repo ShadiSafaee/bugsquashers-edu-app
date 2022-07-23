@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
 const multer = require("multer");
+const { application } = require("express");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -17,10 +18,10 @@ const pool = new Pool({
   // ssl: {
   //   rejectUnauthorized: false,
   // },
-  user: "shadab",
+  user: "ali",
   host: "localhost",
   database: "bug_squashers",
-  password: "222222",
+  password: "111111",
   port: 5432,
 });
 
@@ -139,7 +140,7 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
 
   const lessCreatedQuery =
     "INSERT INTO lessons (module_id, lesson_name, lesson_description, lesson_type, lesson_url, lesson_created_date) VALUES ($1, $2, $3, $4, $5, $6)";
-  lesson_url = req.file.path;
+
   await pool.query(lessCreatedQuery, [
     module_id,
     lesson_name,
@@ -154,14 +155,11 @@ router.post("/addnewlesson", upload.single("file"), async (req, res) => {
 
 //show a lesson (based on Lesson ID)
 router.get("/lesson/:id", async (req, res) => {
-  console.log("vared shod");
   const { id } = req.params;
   const findQuery = "SELECT EXISTS(SELECT * FROM lessons WHERE id = $1)";
   const lessonQeury = "SELECT * FROM lessons WHERE id = $1";
   const found = await pool.query(findQuery, [id]);
-  console.log(found.rows);
   if (found.rows[0].exists) {
-    console.log("true");
     const lesson = await pool.query(lessonQeury, [id]);
     res
       .status(200)
@@ -233,18 +231,26 @@ router.post("/modules/lessons/:moduleid", async (req, res) => {
     .json({ msg: `${lessons.rows.length} lessons found`, data: lessons.rows });
 });
 //********************************************** Marking Endpoints ******************************//
-
+router.get("/getlessons", async (req, res) => {
+  const query =
+    "SELECT module_name, lesson_name,lesson_id, url ,user_id, firstname, surname, mark FROM modules INNER JOIN lessons ON modules.id = lessons.module_id INNER JOIN submission ON lessons.id = submission.lesson_id INNER JOIN user_data ON user_data.id = submission.user_id";
+  const data = await pool.query(query);
+  console.log(data.rows);
+  res.status(200).json({ data: data.rows });
+});
 router.put("/marksubmission", async (req, res) => {
-  const { mark, mark_by, mark_comments, lesson_id, student_id } = req.body;
+  const { mark, mark_by, mark_comments, lesson_id, user_id } = req.body;
+  const numberMark = Number(mark);
+  console.log({ mark, mark_by, mark_comments, lesson_id });
   const markSubQuery =
     "UPDATE submission SET mark = $1, mark_by = $2, mark_comments = $3 WHERE lesson_id = $4 AND user_id = $5";
-
+  console.log(mark);
   await pool.query(markSubQuery, [
-    mark,
+    numberMark,
     mark_by,
     mark_comments,
     lesson_id,
-    student_id,
+    user_id,
   ]);
   res.status(200).json({ msg: "Marking done! Thanks" });
 });

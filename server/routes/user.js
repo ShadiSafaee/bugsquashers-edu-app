@@ -157,7 +157,8 @@ router.put("/logout", checkToken, (req, res) => {
 //Create a new submission
 
 router.post("/addnewsubmission", upload.single("file"), async (req, res) => {
-  const { lesson_id, user_id } = req.body;
+  const { lesson_id, user_id, file } = req.body;
+
   if (!lesson_id || !user_id) {
     res.status(404).json({ msg: "User or Lesson not found!" });
   }

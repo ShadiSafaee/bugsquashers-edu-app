@@ -28,7 +28,6 @@ const Tcontext = ({ children }) => {
     lesson_file: {},
   });
   const [submissions, setSubmissions] = useState([]);
-  const [mark, setMark] = useState("");
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
@@ -356,7 +355,6 @@ const Tcontext = ({ children }) => {
       body: JSON.stringify(reqBody),
     };
     if (id && (val === "teacher" || val === "student")) {
-      console.log(val, id);
       const url = "http://localhost:5000/api/teacher/change-user-role";
       try {
         const res = await fetch(url, postOption);
@@ -375,7 +373,7 @@ const Tcontext = ({ children }) => {
 
   //==================================Submission====================
   const getAllSubmission = async () => {
-    const url = "http://localhost:5000/api/user/addnewsubmission";
+    const url = "http://localhost:5000/api/teacher/getlessons";
     const res = await fetch(url);
     if (res.ok) {
       const { data } = await res.json();
@@ -384,23 +382,22 @@ const Tcontext = ({ children }) => {
       alert("No submission found!");
     }
   };
-  const markSubmitHandler = async (mark_by, lesson_id, user_id) => {
+  const markSubmitHandler = async (mark_by, lesson_id, user_id, mark) => {
     const myBody = { mark, mark_by, mark_comments: "", lesson_id, user_id };
+    console.log(mark);
     const url = `http://localhost:5000/api/teacher/marksubmission`;
     const putOption = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        myBody,
-      }),
+      body: JSON.stringify(myBody),
     };
     try {
       const res = await fetch(url, putOption);
       if (res.ok) {
         const { msg } = await res.json();
-        getAllSubmission();
+        // getAllSubmission();
         alert(msg);
       } else {
         alert("Please try again later");
@@ -443,8 +440,7 @@ const Tcontext = ({ children }) => {
         submissions,
         setSubmissions,
         getAllSubmission,
-        mark,
-        setMark,
+
         markSubmitHandler,
       }}
     >

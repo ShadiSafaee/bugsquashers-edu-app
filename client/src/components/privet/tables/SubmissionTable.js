@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from "react";
-import "../../../styles/submissiontable.css";
+import React, { useContext, useEffect, useState } from "react";
 import TeacherContext from "../../../context/teacher/TeacherContext";
 import "../../../styles/modulesTable.css";
 import SyntaxContext from "../../../context/user/SyntaxContext";
 
 const SubmissionTable = () => {
-  const { submissions, getAllSubmission, setMark, mark, markSubmitHandler } =
+  const [mark, setMark] = useState("");
+  const { submissions, getAllSubmission, markSubmitHandler } =
     useContext(TeacherContext);
   const { user } = useContext(SyntaxContext);
   useEffect(() => {
     getAllSubmission();
-  });
+  }, []);
 
   return (
     <>
@@ -38,7 +38,17 @@ const SubmissionTable = () => {
                   <td>{index + 1}</td>
                   <td>{item.module_name}</td>
                   <td>{item.lesson_name}</td>
-                  <td>{item.url}</td>
+                  <td>
+                    <a
+                      href={`http://localhost:5000/${item.url}`}
+                      style={{ color: "#ffca00" }}
+                      target="_blank"
+                      download
+                      rel="noreferrer"
+                    >
+                      Download
+                    </a>
+                  </td>
                   <td>{item.firstname + " " + item.surname}</td>
                   <td>
                     {!item.mark ? (
@@ -48,7 +58,8 @@ const SubmissionTable = () => {
                           markSubmitHandler(
                             user.id,
                             item.lesson_id,
-                            item.user_id
+                            item.user_id,
+                            mark
                           );
                         }}
                       >
