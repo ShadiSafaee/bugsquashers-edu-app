@@ -10,7 +10,7 @@ const SubmissionTable = () => {
   const { user } = useContext(SyntaxContext);
   useEffect(() => {
     getAllSubmission();
-  }, []);
+  }, [setMark, markSubmitHandler]);
 
   return (
     <>
