@@ -1,6 +1,7 @@
-DROP TABLE IF EXISTS modules;
+DROP TABLE IF EXISTS submission;
 DROP TABLE IF EXISTS lessons;
-DROP TABLE IF EXISTS user_data;
+DROP TABLE IF EXISTS modules;
+
 
 
 CREATE TABLE user_data (
