@@ -14,15 +14,15 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-  // user: "ali",
-  // host: "localhost",
-  // database: "bug_squashers",
-  // password: "111111",
-  // port: 5432,
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
+  user: "ali",
+  host: "localhost",
+  database: "bug_squashers",
+  password: "111111",
+  port: 5432,
 });
 
 router.get("/", (req, res) => {
@@ -107,8 +107,8 @@ router.put("/updatedmodule", async (req, res) => {
 //Delete an existing module
 router.delete("/deletedmodule/:id", async (req, res) => {
   const { id } = req.params;
-  const deletedLessQuery = "DELETE FROM lessons WHERE module_id = $1";
-  const deleteSubQuery = "DELETE FROM submission Where lesson_id = $1";
+  // const deletedLessQuery = "DELETE FROM lessons WHERE module_id = $1";
+  // const deleteSubQuery = "DELETE FROM submission Where lesson_id = $1";
   const deletedModQuery = "DELETE FROM modules WHERE id = $1";
   const modCheckedDelQuery =
     "SELECT EXISTS (SELECT module_name FROM modules WHERE id = $1)";
@@ -116,8 +116,8 @@ router.delete("/deletedmodule/:id", async (req, res) => {
   const modCheckedDel = await pool.query(modCheckedDelQuery, [id]);
 
   if (modCheckedDel.rows[0].exists) {
-    await pool.query(deleteSubQuery, []);
-    await pool.query(deletedLessQuery, [id]);
+    // await pool.query(deleteSubQuery, []);
+    // await pool.query(deletedLessQuery, [id]);
     await pool.query(deletedModQuery, [id]);
 
     res.status(200).json({ msg: "Item delete!" });
@@ -237,16 +237,13 @@ router.get("/getlessons", async (req, res) => {
   const query =
     "SELECT module_name, lesson_name,lesson_id, url ,user_id, firstname, surname, mark FROM modules INNER JOIN lessons ON modules.id = lessons.module_id INNER JOIN submission ON lessons.id = submission.lesson_id INNER JOIN user_data ON user_data.id = submission.user_id ORDER BY submission.id";
   const data = await pool.query(query);
-  console.log(data.rows);
   res.status(200).json({ data: data.rows });
 });
 router.put("/marksubmission", async (req, res) => {
   const { mark, mark_by, mark_comments, lesson_id, user_id } = req.body;
   const numberMark = Number(mark);
-  console.log({ mark, mark_by, mark_comments, lesson_id });
   const markSubQuery =
     "UPDATE submission SET mark = $1, mark_by = $2, mark_comments = $3 WHERE lesson_id = $4 AND user_id = $5";
-  console.log(mark);
   await pool.query(markSubQuery, [
     numberMark,
     mark_by,
