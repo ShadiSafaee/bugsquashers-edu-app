@@ -12,7 +12,7 @@ const UserProfile = () => {
             <Link to="info">Profile</Link>
           </li>
           <li className="scores_col">
-            <Link to="quiz">Quiz</Link>
+            <Link to="">Quiz</Link>
           </li>
         </ul>
       </section>

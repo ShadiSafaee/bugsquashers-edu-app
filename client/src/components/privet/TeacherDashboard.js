@@ -9,19 +9,16 @@ const TeacherDashboard = () => {
       <section className="dash_column">
         <ul className="dash_column_ul">
           <li className="dash_column_li">
-            <Link to="users">Users</Link>
+            <Link to="modules">Modules</Link>
           </li>
           <li className="dash_column_li">
             <Link to="lessons">Lessons</Link>
           </li>
           <li className="dash_column_li">
-            <Link to="games">Games</Link>
-          </li>
-          <li className="dash_column_li">
-            <Link to="modules">Modules</Link>
-          </li>
-          <li className="dash_column_li">
             <Link to="submissions">Submissions</Link>
+          </li>
+          <li className="dash_column_li">
+            <Link to="users">Users</Link>
           </li>
         </ul>
       </section>

@@ -72,6 +72,7 @@ function App() {
                 />
               </Route>
             </Route>
+
             <Route
               path="student"
               element={
@@ -81,12 +82,10 @@ function App() {
               }
             >
               <Route path=":name" element={<UserProfile />}>
+                <Route index element={<Quiz />}></Route>
                 <Route path="info" element={<StudentInfo />} />
-                <Route path="quiz" element={<Quiz />}></Route>
-                <Route
-                  path="quiz/lesson/:lessonId"
-                  element={<Lesson />}
-                ></Route>
+
+                <Route path="lesson/:lessonId" element={<Lesson />}></Route>
               </Route>
             </Route>
             <Route path="admin" element={<Admin />} />

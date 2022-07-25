@@ -16,15 +16,15 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-  // user: "ali",
-  // host: "localhost",
-  // database: "bug_squashers",
-  // password: "111111",
-  // port: 5432,
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
+  user: "ali",
+  host: "localhost",
+  database: "bug_squashers",
+  password: "111111",
+  port: 5432,
 });
 
 const isEqual = async (enteredPassword, hashedPassword) => {
