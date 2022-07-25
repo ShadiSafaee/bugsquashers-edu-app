@@ -54,6 +54,7 @@
   background: linear-gradient(0deg, #00ff08, #e3f10f);
   margin: 0.5em 0.2em;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-weight: 600;

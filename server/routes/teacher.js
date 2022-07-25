@@ -235,7 +235,7 @@ router.post("/modules/lessons/:moduleid", async (req, res) => {
 //********************************************** Marking Endpoints ******************************//
 router.get("/getlessons", async (req, res) => {
   const query =
-    "SELECT module_name, lesson_name,lesson_id, url ,user_id, firstname, surname, mark FROM modules INNER JOIN lessons ON modules.id = lessons.module_id INNER JOIN submission ON lessons.id = submission.lesson_id INNER JOIN user_data ON user_data.id = submission.user_id";
+    "SELECT module_name, lesson_name,lesson_id, url ,user_id, firstname, surname, mark FROM modules INNER JOIN lessons ON modules.id = lessons.module_id INNER JOIN submission ON lessons.id = submission.lesson_id INNER JOIN user_data ON user_data.id = submission.user_id ORDER BY submission.id";
   const data = await pool.query(query);
   console.log(data.rows);
   res.status(200).json({ data: data.rows });

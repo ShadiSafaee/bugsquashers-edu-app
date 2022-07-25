@@ -35,7 +35,11 @@ const Quiz = () => {
           lessons.map((lesson, index) => {
             return (
               <Link to={`lesson/${lesson.id}`} key={index}>
-                <div className="lesson_card">{lesson.lesson_name}</div>
+                <div className="lesson_card">
+                  <h2>{lesson.lesson_name}</h2>
+                  <h4>{lesson.lesson_id ? "Submitted" : ""}</h4>
+                  <h4>{lesson.mark ? `Mark: ${lesson.mark}` : ""}</h4>
+                </div>
               </Link>
             );
           })
