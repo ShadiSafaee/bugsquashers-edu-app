@@ -3,7 +3,7 @@ import "../../styles/helloPage.css";
 const HelloPage = () => {
   return (
     <section className="hello_sec">
-      <h1>We, as Bug Squashers help you to have fun and learn in here!</h1>
+      <h1>We, Bug Squashers, help you to have fun and learn faster!</h1>
       <img src="/svg/boyquiz.svg" alt="hello svg" />
     </section>
   );

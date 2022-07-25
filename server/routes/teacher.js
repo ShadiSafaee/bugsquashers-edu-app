@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
 const multer = require("multer");
-const { application } = require("express");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -18,10 +17,10 @@ const pool = new Pool({
   // ssl: {
   //   rejectUnauthorized: false,
   // },
-  user: "ali",
+  user: "shadab",
   host: "localhost",
   database: "bug_squashers",
-  password: "111111",
+  password: "222222",
   port: 5432,
 });
 
@@ -226,7 +225,8 @@ router.get("/lessons", async (req, res) => {
 
 router.post("/modules/lessons/:moduleid", async (req, res) => {
   const { moduleid } = req.params;
-  const lessonQeury = "SELECT * FROM lessons WHERE module_id = $1 ORDER BY id";
+  const lessonQeury =
+    "SELECT lessons.id, lessons.lesson_name, lessons.module_id, submission.lesson_id, submission.user_id, submission.mark FROM submission FULL OUTER JOIN lessons ON submission.lesson_id = lessons.id WHERE lessons.module_id = $1 ORDER BY lessons.id";
   const lessons = await pool.query(lessonQeury, [moduleid]);
   res
     .status(200)
@@ -236,6 +236,7 @@ router.post("/modules/lessons/:moduleid", async (req, res) => {
 router.get("/getlessons", async (req, res) => {
   const query =
     "SELECT module_name, lesson_name,lesson_id, url ,user_id, firstname, surname, mark FROM modules INNER JOIN lessons ON modules.id = lessons.module_id INNER JOIN submission ON lessons.id = submission.lesson_id INNER JOIN user_data ON user_data.id = submission.user_id ORDER BY submission.id";
+
   const data = await pool.query(query);
   res.status(200).json({ data: data.rows });
 });
