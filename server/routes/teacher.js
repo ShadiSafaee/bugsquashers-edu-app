@@ -14,15 +14,15 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  // connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   rejectUnauthorized: false,
-  // },
-  user: "shadab",
-  host: "localhost",
-  database: "bug_squashers",
-  password: "222222",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+  // user: "ali",
+  // host: "localhost",
+  // database: "bug_squashers",
+  // password: "111111",
+  // port: 5432,
 });
 
 router.get("/", (req, res) => {
@@ -108,6 +108,7 @@ router.put("/updatedmodule", async (req, res) => {
 router.delete("/deletedmodule/:id", async (req, res) => {
   const { id } = req.params;
   const deletedLessQuery = "DELETE FROM lessons WHERE module_id = $1";
+  const deleteSubQuery = "DELETE FROM submission Where lesson_id = $1";
   const deletedModQuery = "DELETE FROM modules WHERE id = $1";
   const modCheckedDelQuery =
     "SELECT EXISTS (SELECT module_name FROM modules WHERE id = $1)";
@@ -115,6 +116,7 @@ router.delete("/deletedmodule/:id", async (req, res) => {
   const modCheckedDel = await pool.query(modCheckedDelQuery, [id]);
 
   if (modCheckedDel.rows[0].exists) {
+    await pool.query(deleteSubQuery, []);
     await pool.query(deletedLessQuery, [id]);
     await pool.query(deletedModQuery, [id]);
 
