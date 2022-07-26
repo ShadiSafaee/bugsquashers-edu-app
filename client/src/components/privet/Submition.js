@@ -15,7 +15,7 @@ const Submission = ({ item, index }) => {
       <td>{item.lesson_name}</td>
       <td>
         <a
-          href={`http://localhost:5000/${item.url}`}
+          href={`https://bugsquashers-edu-app.herokuapp.com/${item.url}`}
           style={{
             color: "#1e62e1",
             textDecoration: "underline black",

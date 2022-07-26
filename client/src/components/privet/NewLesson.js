@@ -1,19 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import "../../styles/editModule.css";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TeacherContext from "../../context/teacher/TeacherContext";
 const NewLesson = () => {
   const navigate = useNavigate();
   const {
     setLesson,
     lesson,
-    lessons,
+
     errorMessage,
     editLessonInputs,
     newLessonHandler,
     setShowLessonEdit,
     getModulesHandler,
-    showLessonEdit,
+
     modules,
   } = useContext(TeacherContext);
   useEffect(() => {
