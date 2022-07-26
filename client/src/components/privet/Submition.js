@@ -16,8 +16,10 @@ const Submission = ({ item, index }) => {
       <td>
         <a
           href={`http://localhost:5000/${item.url}`}
-          style={{ color: "#ffca00" }}
-          target="_blank"
+          style={{
+            color: "#1e62e1",
+            textDecoration: "underline black",
+          }}
           download
           rel="noreferrer"
         >

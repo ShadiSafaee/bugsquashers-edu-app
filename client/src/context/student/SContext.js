@@ -7,7 +7,8 @@ const SContext = ({ children }) => {
   const [lesson, setLesson] = useState({});
   const [submitFile, setSubmitFile] = useState({});
   const getModulesHandler = async () => {
-    const url = "http://localhost:5000/api/teacher/modules";
+    const url =
+      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/modules";
     const res = await fetch(url);
 
     try {
@@ -30,7 +31,7 @@ const SContext = ({ children }) => {
         "Content-Type": "application/json",
       },
     };
-    const url = `http://localhost:5000/api/teacher/modules/lessons/${id}`;
+    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/modules/lessons/${id}`;
     try {
       const res = await fetch(url, postOption);
       if (res.ok) {
@@ -44,7 +45,7 @@ const SContext = ({ children }) => {
     }
   };
   const getLessonHandler = async (id) => {
-    const url = `http://localhost:5000/api/teacher/lesson/${id}`;
+    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/lesson/${id}`;
     if (id) {
       const res = await fetch(url);
       if (res.ok) {
@@ -64,7 +65,8 @@ const SContext = ({ children }) => {
       method: "POST",
       body: myForm,
     };
-    const url = "http://localhost:5000/api/user/addnewsubmission";
+    const url =
+      "https://bugsquashers-edu-app.herokuapp.com/api/user/addnewsubmission";
     try {
       const res = await fetch(url, postOption);
       if (res.ok) {

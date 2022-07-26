@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
-import StudentContext from "../../context/student/StudentContext";
+import React from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import "../../styles/userprofile.css";
 
 const UserProfile = () => {
@@ -9,10 +8,17 @@ const UserProfile = () => {
       <section className="user_col_section">
         <ul>
           <li className="reg_col">
-            <Link to="info">Profile</Link>
+            <NavLink
+              to="info"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Profile
+            </NavLink>
           </li>
           <li className="scores_col">
-            <Link to="">Quiz</Link>
+            <NavLink to="" className={(x) => (x.isActive ? "active" : "")} end>
+              Quiz
+            </NavLink>
           </li>
         </ul>
       </section>

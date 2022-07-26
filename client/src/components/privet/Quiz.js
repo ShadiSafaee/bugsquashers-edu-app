@@ -37,8 +37,12 @@ const Quiz = () => {
               <Link to={`lesson/${lesson.id}`} key={index}>
                 <div className="lesson_card">
                   <h2>{lesson.lesson_name}</h2>
-                  <h4>{lesson.lesson_id ? "Submitted" : ""}</h4>
-                  <h4>{lesson.mark ? `Mark: ${lesson.mark}` : ""}</h4>
+                  <h4 style={{ color: "#011fff" }}>
+                    {lesson.lesson_id ? "Submitted" : ""}
+                  </h4>
+                  <h4 className="mark">
+                    {lesson.mark ? `Mark: ${lesson.mark}` : ""}
+                  </h4>
                 </div>
               </Link>
             );

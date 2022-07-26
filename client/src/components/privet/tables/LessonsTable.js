@@ -64,7 +64,10 @@ const LessonsTable = () => {
                   <td>{item.lesson_type}</td>
                   <td>
                     <a
-                      style={{ color: "#fff900" }}
+                      style={{
+                        color: "#1e62e1",
+                        textDecoration: "underline black",
+                      }}
                       href={`http://localhost:5000/${item.lesson_url}`}
                       download
                       target="blank"
