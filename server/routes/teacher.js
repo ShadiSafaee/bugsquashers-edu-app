@@ -4,7 +4,7 @@ const { Pool } = require("pg");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, __dirname);
+    cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "--" + file.originalname);
