@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import TeacherContext from "../../context/teacher/TeacherContext";
 import { Outlet } from "react-router";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../../styles/teacherDash.css";
 const TeacherDashboard = () => {
   return (
@@ -9,16 +9,36 @@ const TeacherDashboard = () => {
       <section className="dash_column">
         <ul className="dash_column_ul">
           <li className="dash_column_li">
-            <Link to="modules">Modules</Link>
+            <NavLink
+              to="modules"
+              className={({ isActive }) => (isActive ? "test" : "")}
+            >
+              Modules
+            </NavLink>
           </li>
           <li className="dash_column_li">
-            <Link to="lessons">Lessons</Link>
+            <NavLink
+              to="lessons"
+              className={({ isActive }) => (isActive ? "test" : "")}
+            >
+              Lessons
+            </NavLink>
           </li>
           <li className="dash_column_li">
-            <Link to="submissions">Submissions</Link>
+            <NavLink
+              to="submissions"
+              className={({ isActive }) => (isActive ? "test" : "")}
+            >
+              Submissions
+            </NavLink>
           </li>
           <li className="dash_column_li">
-            <Link to="users">Users</Link>
+            <NavLink
+              to="users"
+              className={({ isActive }) => (isActive ? "test" : "")}
+            >
+              Users
+            </NavLink>
           </li>
         </ul>
       </section>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TeacherContext from "./TeacherContext";
 import { useNavigate } from "react-router";
 const Tcontext = ({ children }) => {
@@ -32,7 +32,8 @@ const Tcontext = ({ children }) => {
   const navigate = useNavigate();
 
   const getModulesHandler = async () => {
-    const url = "http://localhost:5000/api/teacher/modules";
+    const url =
+      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/modules";
     const res = await fetch(url);
 
     try {
@@ -74,7 +75,8 @@ const Tcontext = ({ children }) => {
   };
   const editModuleHandler = async () => {
     if (errorMessage.name.length === 0 && module.module_name.length !== 0) {
-      const url = "http://localhost:5000/api/teacher/updatedmodule";
+      const url =
+        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/updatedmodule";
       const newDate = new Date();
       const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
       const { module_name, module_description } = module;
@@ -110,7 +112,7 @@ const Tcontext = ({ children }) => {
       },
       body: "",
     };
-    const url = `http://localhost:5000/api/teacher/deletedmodule/${id}`;
+    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/deletedmodule/${id}`;
     try {
       const res = fetch(url, deleteOptions);
       if (res.ok) {
@@ -125,7 +127,8 @@ const Tcontext = ({ children }) => {
     if (module.module_name.length !== 0) {
       const newDate = new Date();
       const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
-      const url = "http://localhost:5000/api/teacher/addnewmodule";
+      const url =
+        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/addnewmodule";
       const user = {
         module_name,
         module_description,
@@ -157,7 +160,8 @@ const Tcontext = ({ children }) => {
 
   // =============================Lessons ===========
   const getLessonsHandler = async () => {
-    const url = "http://localhost:5000/api/teacher/lessons";
+    const url =
+      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/lessons";
     const res = await fetch(url);
     try {
       if (res.ok) {
@@ -178,7 +182,7 @@ const Tcontext = ({ children }) => {
       },
       body: "",
     };
-    const url = `http://localhost:5000/api/teacher/deletedlesson/${id}`;
+    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/deletedlesson/${id}`;
     try {
       const res = fetch(url, deleteOptions);
       if (res.ok) {
@@ -190,7 +194,7 @@ const Tcontext = ({ children }) => {
   };
   const editLessonHandler = async (id) => {
     if (errorMessage.name.length === 0 && lesson.lesson_name.length !== 0) {
-      const url = `http://localhost:5000/api/teacher/updatedmodule/${id}`;
+      const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/updatedmodule/${id}`;
       const newDate = new Date();
       const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
       const { lesson_name, lesson_description, module_id } = lesson;
@@ -302,7 +306,8 @@ const Tcontext = ({ children }) => {
     ) {
       return alert("Please fill all the fields");
     }
-    const url = "http://localhost:5000/api/teacher/addnewlesson";
+    const url =
+      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/addnewlesson";
     const newDate = new Date();
     const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
     const myForm = new FormData();
@@ -336,7 +341,8 @@ const Tcontext = ({ children }) => {
     }
   };
   const getAllUsers = async () => {
-    const url = "http://localhost:5000/api/teacher/allusers";
+    const url =
+      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/allusers";
     const res = await fetch(url);
     if (res.ok) {
       const { data } = await res.json();
@@ -355,7 +361,8 @@ const Tcontext = ({ children }) => {
       body: JSON.stringify(reqBody),
     };
     if (id && (val === "teacher" || val === "student")) {
-      const url = "http://localhost:5000/api/teacher/change-user-role";
+      const url =
+        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/change-user-role";
       try {
         const res = await fetch(url, postOption);
         if (res.ok) {
@@ -373,7 +380,8 @@ const Tcontext = ({ children }) => {
 
   //==================================Submission====================
   const getAllSubmission = async () => {
-    const url = "http://localhost:5000/api/teacher/getlessons";
+    const url =
+      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/getlessons";
     const res = await fetch(url);
     if (res.ok) {
       const { data } = await res.json();
@@ -385,7 +393,7 @@ const Tcontext = ({ children }) => {
   const markSubmitHandler = async (mark_by, lesson_id, user_id, mark) => {
     const myBody = { mark, mark_by, mark_comments: "", lesson_id, user_id };
     console.log(mark);
-    const url = `http://localhost:5000/api/teacher/marksubmission`;
+    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/marksubmission`;
     const putOption = {
       method: "PUT",
       headers: {

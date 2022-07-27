@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
 const multer = require("multer");
+const path = require("path");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, path.join(__dirname, "/uploads/"));
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "--" + file.originalname);
@@ -13,15 +14,15 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  // connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   rejectUnauthorized: false,
-  // },
-  user: "shadab",
-  host: "localhost",
-  database: "bug_squashers",
-  password: "222222",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+  // user: "ali",
+  // host: "localhost",
+  // database: "bug_squashers",
+  // password: "111111",
+  // port: 5432,
 });
 
 router.get("/", (req, res) => {

@@ -6,6 +6,8 @@
 }
 .user_col_section {
   width: 100%;
+  border: 2px solid rgb(255, 230, 0);
+  border-radius: 20px;
 }
 .user_content_section {
   width: 100%;
@@ -28,7 +30,7 @@
   list-style: none;
   height: 100%;
   width: 100%;
-  padding: 1em;
+  border-radius: 20px;
   background: rgba(0, 0, 0, 0.63);
   color: rgb(250, 192, 0);
 
@@ -39,14 +41,21 @@
   height: 100%;
   display: block;
   height: inherit;
+  padding: 1em;
+  border-radius: 20px;
 }
 .user_col_section ul li:hover {
   background: #9c9c9c42;
   box-shadow: 0 0 8px 2px white;
 }
+.active {
+  background: #ffffff67;
+  box-shadow: 0 0 8px 2px white;
+}
+
 @media screen and (min-width: 650px) {
   .user_profile_article {
-    flex-direction: row-reverse;
+    flex-direction: row;
   }
   .user_col_section {
     width: fit-content;

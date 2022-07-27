@@ -64,8 +64,11 @@ const LessonsTable = () => {
                   <td>{item.lesson_type}</td>
                   <td>
                     <a
-                      style={{ color: "#fff900" }}
-                      href={`http://localhost:5000/${item.lesson_url}`}
+                      style={{
+                        color: "#1e62e1",
+                        textDecoration: "underline black",
+                      }}
+                      href={`https://bugsquashers-edu-app.herokuapp.com/${item.lesson_url}`}
                       download
                       target="blank"
                     >

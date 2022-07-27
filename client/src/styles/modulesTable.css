@@ -2,8 +2,8 @@
   font-size: 2rem;
   position: relative;
   text-align: center;
-  text-shadow: 1px 1px 3px #03ffdd;
-
+  text-shadow: 1px 1px 3px #000000;
+  color: gold;
   padding: 1em 0;
   background: linear-gradient(90deg, transparent, rgba(0, 225, 255, 0.425));
 }
@@ -47,12 +47,13 @@
   font-weight: 700;
 }
 .modules_table tbody tr:nth-child(odd) {
-  background: rgb(82, 82, 82);
+  background: rgb(203 180 72);
+  color: black;
 }
 
 .modules_table tbody tr:nth-child(even) {
-  background: rgb(36, 36, 36);
-  color: #e3ddd3;
+  background: rgb(74 66 28);
+  color: #ffffff;
 }
 .modules_table td {
   padding: 0.5em 0.1em;

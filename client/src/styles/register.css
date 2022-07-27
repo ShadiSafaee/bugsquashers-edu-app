@@ -5,7 +5,8 @@
   flex-direction: column;
   text-align: center;
   position: relative;
-  background: white;
+  background: linear-gradient(#4cff42ad, rgb(0 124 124 / 0%));
+
   border-radius: 1em;
   padding: 0.5em;
 }
@@ -34,15 +35,17 @@
 .register_select {
   padding: 0.3em;
   border: 0;
-  border-bottom: 2px solid rgb(0, 250, 0);
+  border-bottom: 2px solid #ffe000;
   background: transparent;
   font-weight: 700;
   transition: 1.3s all;
   color: black;
+  letter-spacing: 1px;
+  font-size: 1rem;
 }
 .register_input::placeholder,
 .date_container span {
-  color: rgba(154, 255, 154, 0.767);
+  color: rgb(255, 255, 255);
 }
 .date_container,
 .register_select_div {

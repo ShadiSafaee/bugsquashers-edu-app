@@ -56,10 +56,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   font-weight: 600;
   transition: all 0.6s;
   letter-spacing: 1px;
+}
+.mark {
+  color: #ffd500;
+  text-shadow: 2px 2px 1px #020202;
+  background: #00000096;
 }
 .lesson_card::-webkit-scrollbar,
 .module_card ::-webkit-scrollbar {
