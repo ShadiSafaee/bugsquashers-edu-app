@@ -68,7 +68,7 @@ const LessonsTable = () => {
                         color: "#1e62e1",
                         textDecoration: "underline black",
                       }}
-                      href={`http://localhost:5000/${item.lesson_url}`}
+                      href={`https://bugsquashers-edu-app.herokuapp.com/${item.lesson_url}`}
                       download
                       target="blank"
                     >

@@ -5,7 +5,7 @@ const teacherRouter = require("./routes/teacher");
 const bodyParser = require("body-parser");
 const path = require("path");
 const cors = require("cors");
-app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use(express.static(__dirname));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
