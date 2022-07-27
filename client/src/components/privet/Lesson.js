@@ -39,7 +39,7 @@ const Lesson = () => {
             <tr>
               <td colSpan="2">
                 <a
-                  href={`https://bugsquashers-edu-app.herokuapp.com/${lesson.lesson_url}`}
+                  href={`http://localhost:5000/${lesson.lesson_url}`}
                   target="_blank"
                   download
                   rel="noreferrer"
