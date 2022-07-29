@@ -76,7 +76,9 @@ const Tcontext = ({ children }) => {
     if (errorMessage.name.length === 0 && module.module_name.length !== 0) {
       const url = "http://localhost:5000/api/teacher/updatedmodule";
       const newDate = new Date();
-      const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
+      const fullDate = `${newDate.getDate()}-${
+        newDate.getMonth() + 1
+      }-${newDate.getFullYear()}`;
       const { module_name, module_description } = module;
       const user = {
         module_name: module_name,
@@ -124,7 +126,9 @@ const Tcontext = ({ children }) => {
     const { module_name, module_description } = module;
     if (module.module_name.length !== 0) {
       const newDate = new Date();
-      const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
+      const fullDate = `${newDate.getDate()}-${
+        newDate.getMonth() + 1
+      }-${newDate.getFullYear()}`;
       const url = "http://localhost:5000/api/teacher/addnewmodule";
       const user = {
         module_name,
@@ -192,7 +196,9 @@ const Tcontext = ({ children }) => {
     if (errorMessage.name.length === 0 && lesson.lesson_name.length !== 0) {
       const url = `http://localhost:5000/api/teacher/updatedmodule/${id}`;
       const newDate = new Date();
-      const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
+      const fullDate = `${newDate.getDate()}-${
+        newDate.getMonth() + 1
+      }-${newDate.getFullYear()}`;
       const { lesson_name, lesson_description, module_id } = lesson;
       const newLesson = {
         lesson_name: lesson_name,
@@ -304,7 +310,9 @@ const Tcontext = ({ children }) => {
     }
     const url = "http://localhost:5000/api/teacher/addnewlesson";
     const newDate = new Date();
-    const fullDate = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`;
+    const fullDate = `${newDate.getDate()}-${
+      newDate.getMonth() + 1
+    }-${newDate.getFullYear()}`;
     const myForm = new FormData();
     myForm.append("module_id", module_id);
     myForm.append("lesson_name", lesson_name);

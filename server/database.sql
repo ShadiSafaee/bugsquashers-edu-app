@@ -24,8 +24,8 @@ CREATE TABLE lessons (
     lesson_name VARCHAR(200) NOT NULL,
     lesson_description VARCHAR(6000),
     lesson_type VARCHAR(50) NOT NULL,
-    lesson_url VARCHAR(100),
-    lesson_created_date VARCHAR(20) NOT NULL
+    lesson_url VARCHAR(200),
+    lesson_created_date VARCHAR(40) NOT NULL
 );
 CREATE TABLE submission (
     id SERIAL PRIMARY KEY,
@@ -33,8 +33,8 @@ CREATE TABLE submission (
     user_id INT NOT NULL REFERENCES user_data(id),
     comment VARCHAR(8000),
     created_date Date NOT NULL DEFAULT CURRENT_DATE,
-    type VARCHAR(30) ,
-    url VARCHAR(100),
+    type VARCHAR(200) ,
+    url VARCHAR(200),
     mark INT,
     mark_by INT REFERENCES user_data(id),
     mark_comments VARCHAR(8000) DEFAULT NULL

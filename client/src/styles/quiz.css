@@ -1,8 +1,32 @@
-/* @keyframes unit_border {
-    0%:{
-        border
-    }
-} */
+@keyframes unit_border {
+  10% {
+    box-shadow: 0px 0px 16px 4px rgb(255, 187, 0);
+  }
+  20% {
+    box-shadow: 0px 0px 16px 4px rgb(240, 248, 246);
+  }
+  30% {
+    box-shadow: 0px 0px 16px 4px rgb(167, 20, 20);
+  }
+  40% {
+    box-shadow: 0px 0px 16px 4px rgb(147, 247, 54);
+  }
+  50% {
+    box-shadow: 0px 0px 16px 4px rgb(217, 170, 255);
+  }
+  60% {
+    box-shadow: 0px 0px 16px 4px rgb(3, 153, 190);
+  }
+  70% {
+    box-shadow: 0px 0px 16px 4px rgb(255, 0, 128);
+  }
+  80% {
+    box-shadow: 0px 0px 16px 4px rgb(128, 134, 128);
+  }
+  100% {
+    box-shadow: 0px 0px 16px 4px rgb(255, 187, 0);
+  }
+}
 .quize_art {
   width: 100%;
   min-height: 100vh;
@@ -40,6 +64,8 @@
   justify-content: flex-start;
   transition: 0.7s;
   word-break: break-all;
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 .module_card h2 {
   margin: 0.5em 0;
@@ -48,18 +74,24 @@
   overflow-y: auto;
 }
 .lesson_card {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   background: linear-gradient(0deg, #00ff08, #e3f10f);
-  margin: 0.5em 0.2em;
+  margin: 0.5em 0.7em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  font-weight: 600;
+  padding: 1em;
   transition: all 0.6s;
   letter-spacing: 1px;
+
+  animation: unit_border infinite 8s;
+}
+.lesson_card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 .mark {
   color: #ffd500;
@@ -71,7 +103,7 @@
   display: none;
 }
 .lesson_card:hover {
-  transform: rotate(360deg);
+  transform: scale(1.2);
   box-shadow: 0 0 15px 3px #00fff3;
   background: linear-gradient(0deg, #e3f10f, #00ff08);
 }

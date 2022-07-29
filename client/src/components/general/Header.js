@@ -12,12 +12,11 @@ const Header = () => {
           <ul className="user_ul">
             {user["firstname"] ? (
               <li>
-                Hello
+                Hello{" "}
                 <Link
                   to={`/dashboard/${user["role"]}/${user["firstname"]}-${user["surname"]}`}
                   className="user_header_name"
                 >
-                  {" "}
                   {user["firstname"]}
                 </Link>{" "}
                 <span style={{ color: "red" }}> | </span>{" "}
@@ -32,14 +31,25 @@ const Header = () => {
             )}
           </ul>
         </div>
-        <div className="logo_div"></div>
       </div>
       <nav className="nav_dektop">
         <ul className="nav_ul">
+          <li className="nav_link" style={{ alignSelf: "self-start" }}>
+            <img src="/img/logo.png" alt="app logo" className="app_logo" />
+          </li>
           <li>
             <Link to="/" className="nav_link">
               <img src="/svg/home.svg" alt="home svg" />
               <span>Home</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={`/dashboard/student/${user["firstname"]}-${user["surname"]}`}
+              className="nav_link"
+            >
+              <img src="/svg/quiz.svg" alt="home svg" />
+              <span>Lessons</span>
             </Link>
           </li>
         </ul>
@@ -48,7 +58,6 @@ const Header = () => {
         <ul className="mobile_nav_ul">
           <li
             onClick={() => {
-              console.log(mobileNavClass);
               setMobileNavClass(false);
             }}
           >
@@ -58,15 +67,33 @@ const Header = () => {
               <span>Home</span>
             </Link>
           </li>
+          <li
+            onClick={() => {
+              setMobileNavClass(false);
+            }}
+          >
+            <Link
+              to={`/dashboard/student/${user["firstname"]}-${user["surname"]}`}
+              className="mobile_nav_link"
+            >
+              {" "}
+              <img src="/svg/quiz.svg" alt="lessons svg" />
+              <span>Lessons</span>
+            </Link>
+          </li>
         </ul>
       </div>
-      <div
-        className="hamburger_container"
-        onClick={() => setMobileNavClass(!mobileNavClass)}
-      >
-        <div className="hamburger_parts color"></div>
-        <div className="hamburger_parts color"></div>
-        <div className="hamburger_parts color"></div>
+      <div className="mobile_logo_burger">
+        <img src="/img/logo.png" alt="app logo" className="app_logo" />
+
+        <div
+          className="hamburger_container"
+          onClick={() => setMobileNavClass(!mobileNavClass)}
+        >
+          <div className="hamburger_parts color"></div>
+          <div className="hamburger_parts color"></div>
+          <div className="hamburger_parts color"></div>
+        </div>
       </div>
     </header>
   );

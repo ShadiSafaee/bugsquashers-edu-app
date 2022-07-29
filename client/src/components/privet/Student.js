@@ -11,10 +11,10 @@ const Student = () => {
       return navigate("/", { replace: true });
     }
   }, [user]);
-  return (
-    <>
-      <Outlet />
-    </>
+  return user.role !== "student" ? (
+    navigate("/", { replace: true })
+  ) : (
+    <Outlet />
   );
 };
 
