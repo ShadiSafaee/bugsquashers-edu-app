@@ -237,7 +237,7 @@ const Context = ({ children }) => {
         },
         body: JSON.stringify(user),
       };
-      const url = "http://localhost:5000/api/user/signup";
+      const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/signup";
       const res = await fetch(url, postOption);
       try {
         if (res.ok) {
@@ -259,7 +259,7 @@ const Context = ({ children }) => {
   const loginHandler = async () => {
     const valid = loginValidation();
     const { email, password } = login;
-    const url = "http://localhost:5000/api/user/login";
+    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/login";
     const user = { email, password };
     const postOption = {
       method: "POST",
@@ -292,7 +292,7 @@ const Context = ({ children }) => {
     }
   };
   const logOutHandler = async () => {
-    const url = "http://localhost:5000/api/user/logout";
+    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/logout";
     const token = localStorage.getItem("token");
     if (user["firstname"] && token) {
       setPreloader(true);
@@ -335,7 +335,7 @@ const Context = ({ children }) => {
 
     try {
       const res = await fetch(
-        "http://localhost:5000/api/user/dashboard",
+        "https://bugsquashers-edu-app.herokuapp.com/api/user/dashboard",
         postOption
       );
       if (res.ok) {
