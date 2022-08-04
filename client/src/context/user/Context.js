@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SyntaxContext from "./SyntaxContext";
 import { decodeToken, isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
+import { base_url } from "../../components/main/url";
 // ==========================================================
 const Context = ({ children }) => {
   const [mobileNavClass, setMobileNavClass] = useState(false);
@@ -237,7 +238,7 @@ const Context = ({ children }) => {
         },
         body: JSON.stringify(user),
       };
-      const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/signup";
+      const url = ` ${base_url}/api/user/signup`;
       const res = await fetch(url, postOption);
       try {
         if (res.ok) {
@@ -259,7 +260,7 @@ const Context = ({ children }) => {
   const loginHandler = async () => {
     const valid = loginValidation();
     const { email, password } = login;
-    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/login";
+    const url = ` ${base_url}/api/user/login`;
     const user = { email, password };
     const postOption = {
       method: "POST",
@@ -292,7 +293,7 @@ const Context = ({ children }) => {
     }
   };
   const logOutHandler = async () => {
-    const url = "https://bugsquashers-edu-app.herokuapp.com/api/user/logout";
+    const url = ` ${base_url}/api/user/logout`;
     const token = localStorage.getItem("token");
     if (user["firstname"] && token) {
       setPreloader(true);
@@ -334,10 +335,7 @@ const Context = ({ children }) => {
     };
 
     try {
-      const res = await fetch(
-        "https://bugsquashers-edu-app.herokuapp.com/api/user/dashboard",
-        postOption
-      );
+      const res = await fetch(`${base_url}/api/user/dashboard`, postOption);
       if (res.ok) {
         setIsAuth(true);
         check = true;

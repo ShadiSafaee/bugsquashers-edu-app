@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import SyntaxContext from "../../context/user/SyntaxContext";
 import TeacherContext from "../../context/teacher/TeacherContext";
-
+import { base_url } from "../main/url";
 const Submission = ({ item, index }) => {
   const [mark, setMark] = useState("");
 
@@ -15,7 +15,7 @@ const Submission = ({ item, index }) => {
       <td>{item.lesson_name}</td>
       <td>
         <a
-          href={`https://bugsquashers-edu-app.herokuapp.com/${item.url}`}
+          href={`${base_url}/${item.url}`}
           style={{
             color: "#1e62e1",
             textDecoration: "underline black",

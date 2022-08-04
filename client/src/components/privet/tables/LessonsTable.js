@@ -3,6 +3,7 @@ import TeacherContext from "../../../context/teacher/TeacherContext";
 import "../../../styles/modulesTable.css";
 import { Outlet, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { base_url } from "../../main/url";
 const LessonsTable = () => {
   const context = useContext(TeacherContext);
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const LessonsTable = () => {
                         color: "#1e62e1",
                         textDecoration: "underline black",
                       }}
-                      href={`https://bugsquashers-edu-app.herokuapp.com/${item.lesson_url}`}
+                      href={`${base_url}/${item.lesson_url}`}
                       download
                       target="blank"
                     >

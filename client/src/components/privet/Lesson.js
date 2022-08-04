@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import StudentContext from "../../context/student/StudentContext";
 import SyntaxContext from "../../context/user/SyntaxContext";
 import "../../styles/lesson.css";
-
+import { base_url } from "../main/url";
 const Lesson = () => {
   const { getLessonHandler, lesson, setSubmitFile, submitLessonHandler } =
     useContext(StudentContext);
@@ -39,7 +39,7 @@ const Lesson = () => {
             <tr>
               <td colSpan="2">
                 <a
-                  href={`https://bugsquashers-edu-app.herokuapp.com/${lesson.lesson_url}`}
+                  href={`${base_url}/${lesson.lesson_url}`}
                   target="_blank"
                   download
                   rel="noreferrer"

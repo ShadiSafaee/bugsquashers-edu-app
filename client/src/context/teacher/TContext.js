@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import TeacherContext from "./TeacherContext";
 import { useNavigate } from "react-router";
+import { base_url } from "../../components/main/url";
+
 const Tcontext = ({ children }) => {
   const [modules, setModules] = useState([]);
   const [module, setModule] = useState({
@@ -32,8 +34,7 @@ const Tcontext = ({ children }) => {
   const navigate = useNavigate();
 
   const getModulesHandler = async () => {
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/modules";
+    const url = `${base_url}/api/teacher/modules`;
     const res = await fetch(url);
 
     try {
@@ -75,8 +76,7 @@ const Tcontext = ({ children }) => {
   };
   const editModuleHandler = async () => {
     if (errorMessage.name.length === 0 && module.module_name.length !== 0) {
-      const url =
-        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/updatedmodule";
+      const url = `${base_url}/api/teacher/updatedmodule`;
       const newDate = new Date();
       const fullDate = `${newDate.getDate()}-${
         newDate.getMonth() + 1
@@ -114,7 +114,7 @@ const Tcontext = ({ children }) => {
       },
       body: "",
     };
-    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/deletedmodule/${id}`;
+    const url = `${base_url}/api/teacher/deletedmodule/${id}`;
     try {
       const res = fetch(url, deleteOptions);
       if (res.ok) {
@@ -131,8 +131,7 @@ const Tcontext = ({ children }) => {
       const fullDate = `${newDate.getDate()}-${
         newDate.getMonth() + 1
       }-${newDate.getFullYear()}`;
-      const url =
-        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/addnewmodule";
+      const url = ` ${base_url}/api/teacher/addnewmodule`;
       const user = {
         module_name,
         module_description,
@@ -164,8 +163,7 @@ const Tcontext = ({ children }) => {
 
   // =============================Lessons ===========
   const getLessonsHandler = async () => {
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/lessons";
+    const url = ` ${base_url}/api/teacher/lessons`;
     const res = await fetch(url);
     try {
       if (res.ok) {
@@ -186,7 +184,7 @@ const Tcontext = ({ children }) => {
       },
       body: "",
     };
-    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/deletedlesson/${id}`;
+    const url = `${base_url}/api/teacher/deletedlesson/${id}`;
     try {
       const res = fetch(url, deleteOptions);
       if (res.ok) {
@@ -198,7 +196,7 @@ const Tcontext = ({ children }) => {
   };
   const editLessonHandler = async (id) => {
     if (errorMessage.name.length === 0 && lesson.lesson_name.length !== 0) {
-      const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/updatedmodule/${id}`;
+      const url = `${base_url}/api/teacher/updatedmodule/${id}`;
       const newDate = new Date();
       const fullDate = `${newDate.getDate()}-${
         newDate.getMonth() + 1
@@ -312,8 +310,7 @@ const Tcontext = ({ children }) => {
     ) {
       return alert("Please fill all the fields");
     }
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/addnewlesson";
+    const url = ` ${base_url}/api/teacher/addnewlesson`;
     const newDate = new Date();
     const fullDate = `${newDate.getDate()}-${
       newDate.getMonth() + 1
@@ -349,8 +346,7 @@ const Tcontext = ({ children }) => {
     }
   };
   const getAllUsers = async () => {
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/allusers";
+    const url = `${base_url}/api/teacher/allusers`;
     const res = await fetch(url);
     if (res.ok) {
       const { data } = await res.json();
@@ -369,8 +365,7 @@ const Tcontext = ({ children }) => {
       body: JSON.stringify(reqBody),
     };
     if (id && (val === "teacher" || val === "student")) {
-      const url =
-        "https://bugsquashers-edu-app.herokuapp.com/api/teacher/change-user-role";
+      const url = ` ${base_url}/api/teacher/change-user-role`;
       try {
         const res = await fetch(url, postOption);
         if (res.ok) {
@@ -388,8 +383,7 @@ const Tcontext = ({ children }) => {
 
   //==================================Submission====================
   const getAllSubmission = async () => {
-    const url =
-      "https://bugsquashers-edu-app.herokuapp.com/api/teacher/getlessons";
+    const url = `    ${base_url}/api/teacher/getlessons`;
     const res = await fetch(url);
     if (res.ok) {
       const { data } = await res.json();
@@ -401,7 +395,7 @@ const Tcontext = ({ children }) => {
   const markSubmitHandler = async (mark_by, lesson_id, user_id, mark) => {
     const myBody = { mark, mark_by, mark_comments: "", lesson_id, user_id };
     console.log(mark);
-    const url = `https://bugsquashers-edu-app.herokuapp.com/api/teacher/marksubmission`;
+    const url = `${base_url}/api/teacher/marksubmission`;
     const putOption = {
       method: "PUT",
       headers: {
