@@ -5,15 +5,17 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 const multer = require("multer");
+const urlPath = process.env.UPLOAD_PATH || "./uploads";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, urlPath);
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "--" + file.originalname);
   },
 });
 let upload = multer({ storage: storage });
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
