@@ -12,20 +12,12 @@ const storage = multer.diskStorage({
 });
 let upload = multer({ storage: storage });
 
-const pool = process.env.DATABASE_URL
-  ? new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    })
-  : new Pool({
-      user: "ali",
-      host: "localhost",
-      database: "bug_squashers",
-      password: "111111",
-      port: 5432,
-    });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 router.get("/", (req, res) => {
   res.send("it is working!");
