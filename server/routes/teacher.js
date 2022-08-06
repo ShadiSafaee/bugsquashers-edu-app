@@ -15,7 +15,8 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.REACT_APP_DATABASE_URL,
+  connectionString:
+    process.env.REACT_APP_DATABASE_URL || process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
