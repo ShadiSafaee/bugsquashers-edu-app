@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
 const multer = require("multer");
+const urlPath = process.env.REACT_APP_UPLOAD_PATH || "./uploads";
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, urlPath);
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "--" + file.originalname);
@@ -13,7 +15,7 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.REACT_APP_DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },

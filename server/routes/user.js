@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 const multer = require("multer");
-const urlPath = process.env.UPLOAD_PATH || "./uploads";
+const urlPath = process.env.REACT_APP_UPLOAD_PATH || "./uploads";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, urlPath);
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.REACT_APP_DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
