@@ -50,6 +50,19 @@ const RegistrationForm = () => {
     "South Africa",
     "Lebanon",
   ];
+  const arrayOfEducation = [
+    "Select type of education",
+    "YES - Formal Education",
+    "YES - Non-formal Education",
+    "NO",
+  ];
+  const arrayOfProjects = [
+    "Select project",
+    "No",
+    "Breteau Foundation Mobile Education Bus",
+    "Breteau Foundation Mini Tented School",
+    "Breteau Foundation Partner",
+  ];
   return (
     <section className="register_section">
       <h2>Register</h2>
@@ -106,7 +119,7 @@ const RegistrationForm = () => {
             type="text"
             value={register["surname"]}
             onChange={(e) => registerFormHandler("lname", e.target.value)}
-            placeholder="Surname"
+            placeholder="Surname..."
           ></input>
           <span className="input_message">{errorMessage["surname"]}</span>
         </div>
@@ -154,6 +167,47 @@ const RegistrationForm = () => {
                 ))}
               </select>
               <span className="input_message">{errorMessage["country"]}</span>
+            </div>
+            <div className="register_select_div">
+              <select className="register_select">
+                {arrayOfEducation.map((item, index) => {
+                  return (
+                    <option
+                      value={item}
+                      className="register_select_opts"
+                      key={index}
+                    >
+                      {item}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="input_container">
+              <input
+                className="register_input"
+                type="text"
+                // value={register[""]}
+                // onChange={(e) => registerFormHandler("email", e.target.value)}
+                placeholder="Type of education..."
+              ></input>
+              {/* <span className="input_message">{errorMessage["email"]}</span> */}
+            </div>
+
+            <div className="register_select_div">
+              <select className="register_select">
+                {arrayOfProjects.map((item, index) => {
+                  return (
+                    <option
+                      value={item}
+                      className="register_select_opts"
+                      key={index}
+                    >
+                      {item}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <button type="submit" className="btn register_btn">
               Register

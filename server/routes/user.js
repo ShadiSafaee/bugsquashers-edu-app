@@ -34,9 +34,19 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  let { firstname, surname, email, password, dob, country, role } = req.body;
+  let {
+    firstname,
+    surname,
+    email,
+    password,
+    dob,
+    country,
+    role,
+    edu_type,
+    project,
+  } = req.body;
   const signUpQuery =
-    "INSERT INTO user_data (firstname, surname, email, password, dob, country, role) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+    "INSERT INTO user_data (firstname, surname, email, password, dob, country, role, edu_type, project) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
   const checkEmailQuery =
     "SELECT EXISTS (SELECT email FROM user_data WHERE email= $1)";
   const query = "SELECT * FROM user_data WHERE email = $1";
@@ -63,6 +73,8 @@ router.post("/signup", async (req, res) => {
       dob,
       country,
       role,
+      edu_type,
+      project,
     ]);
     const data = await pool.query(query, [email]);
     res.status(200).json({ msg: "New user created", user: data.rows });

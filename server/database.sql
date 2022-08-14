@@ -10,7 +10,9 @@ CREATE TABLE user_data (
     password VARCHAR (255) NOT NULL,
     dob VARCHAR(12) NOT NULL,
     country VARCHAR(50) NOT NULL,
-    role VARCHAR(10) NOT NULL
+    role VARCHAR(10) NOT NULL,
+    edu_type VARCHAR(40) NOT NULL,
+    project VARCHAR(50) NOT NULL  
 );
 CREATE TABLE modules (
     id SERIAL PRIMARY KEY,

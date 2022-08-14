@@ -42,16 +42,21 @@
   color: black;
   letter-spacing: 1px;
   font-size: 1rem;
+  width: 100%;
 }
+
 .register_input::placeholder,
 .date_container span {
-  color: rgb(255, 255, 255);
+  color: black;
 }
 .date_container,
 .register_select_div {
   display: flex;
   align-items: center;
   margin: 1em auto;
+}
+.register_select_div p {
+  color: white;
 }
 .date_container span {
   width: -webkit-fill-available;
@@ -76,6 +81,7 @@
 }
 .register_svg {
   width: 100px;
+  display: none;
 }
 .image_selecttag_container {
   width: 100%;
@@ -96,6 +102,7 @@
 @media screen and (min-width: 600px) {
   .register_svg {
     transform: scale(1.2);
+    display: block;
   }
   .register_input,
   .date_container input,
