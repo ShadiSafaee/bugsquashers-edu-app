@@ -35,7 +35,10 @@ const Header = () => {
       <nav className="nav_dektop">
         <ul className="nav_ul">
           <li className="nav_link" style={{ alignSelf: "self-start" }}>
-            <img src="/img/logo.png" alt="app logo" className="app_logo" />
+            <a href="https://www.breteaufoundation.org/" target="blank">
+              {" "}
+              <img src="/img/logo.png" alt="app logo" className="app_logo" />
+            </a>
           </li>
           <li>
             <Link to="/" className="nav_link">
