@@ -18,6 +18,9 @@ const Context = ({ children }) => {
     country: "",
     dob: new Date(),
     role: "student",
+    edu_type: "",
+    project: "",
+    non_formal: "",
   });
   const [errorMessage, setErrorMessage] = useState({
     email: "",
@@ -26,6 +29,9 @@ const Context = ({ children }) => {
     firstname: "",
     surname: "",
     country: "",
+    edu_type: "",
+    project: "",
+    non_formal: "",
   });
   //setting user data by decodeing token
   const [user, setUser] = useState(
@@ -47,8 +53,15 @@ const Context = ({ children }) => {
       setUser({});
     }
   }, [setUser, navigate]);
+
   const registerFormHandler = (id, val) => {
-    if (id !== "dob" && id !== "country") {
+    if (
+      id !== "dob" &&
+      id !== "country" &&
+      id !== "edu_type" &&
+      id !== "project" &&
+      id !== "non_formal"
+    ) {
       val = val.replace(/\s/g, "");
     }
     switch (id) {
@@ -137,6 +150,55 @@ const Context = ({ children }) => {
           });
         }
         break;
+      case "edu_type":
+        console.log(errorMessage, id, val);
+        setRegister({ ...register, edu_type: val });
+        if (val === "Select type of education, if there's any") {
+          setErrorMessage({
+            ...errorMessage,
+            edu_type: "Please choose an education",
+          });
+        } else if (val !== "YES - Non-formal Education") {
+          setErrorMessage({
+            ...errorMessage,
+            edu_type: "",
+            non_formal: "",
+          });
+        } else {
+          setErrorMessage({
+            ...errorMessage,
+            edu_type: "",
+          });
+        }
+        break;
+      case "non_formal":
+        setRegister({ ...register, non_formal: val });
+        if (val.length === 0) {
+          setErrorMessage({
+            ...errorMessage,
+            non_formal: "Type name of non_formal edu",
+          });
+        } else {
+          setErrorMessage({
+            ...errorMessage,
+            non_formal: "",
+          });
+        }
+        break;
+      case "project":
+        setRegister({ ...register, project: val });
+        if (val === "Select project") {
+          setErrorMessage({
+            ...errorMessage,
+            project: "Please select a project",
+          });
+        } else {
+          setErrorMessage({
+            ...errorMessage,
+            project: "",
+          });
+        }
+        break;
       default:
         break;
     }
@@ -175,13 +237,23 @@ const Context = ({ children }) => {
           });
         }
         break;
+
       default:
         break;
     }
   };
+
   const registerValidationHandler = () => {
-    const { email, password, confpass, firstname, surname, country, dob } =
-      register;
+    const {
+      email,
+      password,
+      confpass,
+      firstname,
+      surname,
+      country,
+      dob,
+      non_formal,
+    } = register;
     let valid = false;
     if (
       email.length !== 0 &&
@@ -191,12 +263,16 @@ const Context = ({ children }) => {
       country.length !== 0 &&
       confpass.length !== 0 &&
       dob.length !== 0 &&
+      non_formal.length !== 0 &&
       errorMessage["email"].length === 0 &&
       errorMessage["password"].length === 0 &&
       errorMessage["confpass"].length === 0 &&
       errorMessage["firstname"].length === 0 &&
-      (errorMessage["surname"].length === 0 &&
-        errorMessage["country"].length) === 0 &&
+      errorMessage["surname"].length === 0 &&
+      errorMessage["country"].length === 0 &&
+      errorMessage["edu_type"].length === 0 &&
+      errorMessage["non_formal"].length === 0 &&
+      errorMessage["project"].length === 0 &&
       register["password"] === register["confpass"]
     ) {
       valid = true;
@@ -218,7 +294,16 @@ const Context = ({ children }) => {
   };
   const registerHandler = async () => {
     const valid = registerValidationHandler();
-    const { email, password, firstname, surname, country } = register;
+    const {
+      email,
+      password,
+      firstname,
+      surname,
+      country,
+      edu_type,
+      non_formal,
+      project,
+    } = register;
     const dob = register.dob.toLocaleDateString();
     if (valid) {
       setPreloader(true);
@@ -230,6 +315,8 @@ const Context = ({ children }) => {
         country,
         role: "student",
         dob,
+        edu_type: edu_type + " --- " + non_formal,
+        project,
       };
       const postOption = {
         method: "POST",

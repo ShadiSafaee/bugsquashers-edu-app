@@ -51,7 +51,7 @@ const RegistrationForm = () => {
     "Lebanon",
   ];
   const arrayOfEducation = [
-    "Select type of education",
+    "Select type of education, if there's any",
     "YES - Formal Education",
     "YES - Non-formal Education",
     "NO",
@@ -63,6 +63,7 @@ const RegistrationForm = () => {
     "Breteau Foundation Mini Tented School",
     "Breteau Foundation Partner",
   ];
+
   return (
     <section className="register_section">
       <h2>Register</h2>
@@ -169,11 +170,18 @@ const RegistrationForm = () => {
               <span className="input_message">{errorMessage["country"]}</span>
             </div>
             <div className="register_select_div">
-              <select className="register_select">
+              <select
+                className="register_select"
+                value={register["edu_type"]}
+                onChange={(e) =>
+                  registerFormHandler("edu_type", e.target.value)
+                }
+              >
                 {arrayOfEducation.map((item, index) => {
                   return (
                     <option
                       value={item}
+                      onChange={(e) => registerFormHandler("edu_type", item)}
                       className="register_select_opts"
                       key={index}
                     >
@@ -182,25 +190,38 @@ const RegistrationForm = () => {
                   );
                 })}
               </select>
-            </div>
-            <div className="input_container">
-              <input
-                className="register_input"
-                type="text"
-                // value={register[""]}
-                // onChange={(e) => registerFormHandler("email", e.target.value)}
-                placeholder="Type of education..."
-              ></input>
-              {/* <span className="input_message">{errorMessage["email"]}</span> */}
+              <span className="input_message">{errorMessage["edu_type"]}</span>
             </div>
 
+            {register.edu_type === "YES - Non-formal Education" && (
+              <div className="input_container">
+                <input
+                  className="register_input"
+                  type="text"
+                  value={register["non_formal"]}
+                  onChange={(e) =>
+                    registerFormHandler("non_formal", e.target.value)
+                  }
+                  placeholder="Type of education..."
+                ></input>
+                <span className="input_message">
+                  {errorMessage["non_formal"]}
+                </span>
+              </div>
+            )}
+
             <div className="register_select_div">
-              <select className="register_select">
+              <select
+                className="register_select"
+                value={register["project"]}
+                onChange={(e) => registerFormHandler("project", e.target.value)}
+              >
                 {arrayOfProjects.map((item, index) => {
                   return (
                     <option
                       value={item}
                       className="register_select_opts"
+                      onChange={() => registerFormHandler("project", item)}
                       key={index}
                     >
                       {item}
@@ -208,6 +229,7 @@ const RegistrationForm = () => {
                   );
                 })}
               </select>
+              <span className="input_message">{errorMessage["project"]}</span>
             </div>
             <button type="submit" className="btn register_btn">
               Register

@@ -54,6 +54,7 @@
   display: flex;
   align-items: center;
   margin: 1em auto;
+  flex-direction: column;
 }
 .register_select_div p {
   color: white;
