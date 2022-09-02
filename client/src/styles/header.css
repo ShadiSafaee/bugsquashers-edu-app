@@ -64,9 +64,7 @@
   background: rgb(29, 86, 94);
   transform: translateX(0%);
 }
-.color {
-  /* background: linear-gradient(90deg, rgb(118, 157, 189), rgb(0, 105, 190)); */
-}
+
 .app_logo {
   min-width: 100px;
 }
@@ -80,7 +78,6 @@
 .mobile_logo_burger img {
   max-width: 100px;
   margin-left: 0.5em;
-  height: fit-content;
 }
 .nav_link {
   display: flex;
