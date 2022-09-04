@@ -73,6 +73,7 @@
 }
 .mobile_logo_burger {
   display: flex;
+  align-items: center;
   flex-direction: row-reverse;
 }
 .mobile_logo_burger img {
