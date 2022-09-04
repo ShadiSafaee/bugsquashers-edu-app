@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import StudentContext from "../../context/student/StudentContext";
 import SyntaxContext from "../../context/user/SyntaxContext";
 import "../../styles/lesson.css";
@@ -8,8 +8,8 @@ const Lesson = () => {
   const { getLessonHandler, lesson, setSubmitFile, submitLessonHandler } =
     useContext(StudentContext);
   const { user } = useContext(SyntaxContext);
-  const { lessonId } = useParams();
-
+  const { lessonId, name } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     getLessonHandler(lessonId);
   }, []);
@@ -57,6 +57,7 @@ const Lesson = () => {
           onSubmit={(e) => {
             e.preventDefault();
             submitLessonHandler(user["id"], lessonId);
+            navigate(`/dashboard/student/${name}`, { replace: true });
           }}
         >
           <label htmlFor="upfile">

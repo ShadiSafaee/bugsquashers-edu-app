@@ -14,7 +14,8 @@ const ModulesTable = () => {
   } = context;
   useEffect(() => {
     getModulesHandler();
-  }, [deleteModuleHandler]);
+    console.log("useEffect!!!!!!!");
+  }, []);
   return (
     <>
       <h1 className="dash_header">

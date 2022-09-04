@@ -11,6 +11,7 @@ const Teacher = () => {
     if (user.role !== "teacher") {
       return navigate("/", { replace: true });
     }
+    console.log("first");
   }, [user]);
   return (
     <>

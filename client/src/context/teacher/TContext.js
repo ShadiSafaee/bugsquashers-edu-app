@@ -40,9 +40,10 @@ const Tcontext = ({ children }) => {
     try {
       if (res.ok) {
         const data = await res.json();
-
+        console.log("ssssss");
         setModules(data);
       } else {
+        console.log("else");
         setModules([...modules]);
       }
     } catch (error) {
@@ -100,13 +101,14 @@ const Tcontext = ({ children }) => {
 
         if (res.ok) {
           alert("done");
+          getModulesHandler();
         }
       } catch (error) {
         console.log(error);
       }
     }
   };
-  const deleteModuleHandler = (id) => {
+  const deleteModuleHandler = async (id) => {
     const deleteOptions = {
       method: "DELETE",
       headers: {
@@ -116,9 +118,10 @@ const Tcontext = ({ children }) => {
     };
     const url = `${base_url}/api/teacher/deletedmodule/${id}`;
     try {
-      const res = fetch(url, deleteOptions);
+      const res = await fetch(url, deleteOptions);
       if (res.ok) {
         console.log("Module delete!");
+        getModulesHandler();
       }
     } catch (error) {
       console.log(error);
@@ -149,7 +152,8 @@ const Tcontext = ({ children }) => {
         const res = await fetch(url, postOption);
 
         if (res.ok) {
-          console.log("user created!");
+          console.log("New Module created!");
+          getModulesHandler();
           navigate("/dashboard/teacher/teacher-Admin/modules", {
             replace: true,
           });
@@ -383,7 +387,7 @@ const Tcontext = ({ children }) => {
 
   //==================================Submission====================
   const getAllSubmission = async () => {
-    const url = `    ${base_url}/api/teacher/getlessons`;
+    const url = `${base_url}/api/teacher/getlessons`;
     const res = await fetch(url);
     if (res.ok) {
       const { data } = await res.json();
@@ -392,6 +396,7 @@ const Tcontext = ({ children }) => {
       alert("No submission found!");
     }
   };
+
   const markSubmitHandler = async (mark_by, lesson_id, user_id, mark) => {
     const myBody = { mark, mark_by, mark_comments: "", lesson_id, user_id };
     console.log(mark);
@@ -407,7 +412,7 @@ const Tcontext = ({ children }) => {
       const res = await fetch(url, putOption);
       if (res.ok) {
         const { msg } = await res.json();
-        // getAllSubmission();
+        await getAllSubmission();
         alert(msg);
       } else {
         alert("Please try again later");

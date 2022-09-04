@@ -9,7 +9,9 @@ const Quiz = () => {
 
   useEffect(() => {
     modules.length === 0 && getModulesHandler();
-  }, [setLessons]);
+    setLessons([]);
+    console.log("x");
+  }, []);
 
   return (
     <article className="quize_art">

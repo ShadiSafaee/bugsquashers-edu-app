@@ -8,7 +8,7 @@ const SubmissionTable = () => {
   const { submissions, getAllSubmission } = useContext(TeacherContext);
   useEffect(() => {
     getAllSubmission();
-  }, [submissions]);
+  }, []);
   return (
     submissions && (
       <>

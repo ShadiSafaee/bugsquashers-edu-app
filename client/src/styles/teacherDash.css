@@ -7,7 +7,7 @@
 }
 .dash_column {
   width: 100%;
-
+  font-size: 0.8rem;
   background: #ffc107;
   font-weight: 100;
 }
@@ -23,6 +23,10 @@
   width: -webkit-fill-available;
   padding: 0.3em;
   min-height: 100vh;
+  overflow-x: auto;
+}
+.dash_content::-webkit-scrollbar {
+  display: none;
 }
 .dash_column_ul li {
   cursor: pointer;
@@ -39,4 +43,14 @@
 .test {
   background: #ff961e;
   transform: scale(1.4);
+}
+@media screen and (min-width: 500px) {
+  .dash_column {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 900px) {
+  .dash_column {
+    font-size: 1.2rem;
+  }
 }
