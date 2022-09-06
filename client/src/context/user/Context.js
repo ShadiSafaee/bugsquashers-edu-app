@@ -151,53 +151,16 @@ const Context = ({ children }) => {
         }
         break;
       case "edu_type":
-        console.log(errorMessage, id, val);
         setRegister({ ...register, edu_type: val });
-        if (val === "Select type of education, if there's any") {
-          setErrorMessage({
-            ...errorMessage,
-            edu_type: "Please choose an education",
-          });
-        } else if (val !== "YES - Non-formal Education") {
-          setErrorMessage({
-            ...errorMessage,
-            edu_type: "",
-            non_formal: "",
-          });
-        } else {
-          setErrorMessage({
-            ...errorMessage,
-            edu_type: "",
-          });
-        }
+
         break;
       case "non_formal":
         setRegister({ ...register, non_formal: val });
-        if (val.length === 0) {
-          setErrorMessage({
-            ...errorMessage,
-            non_formal: "Type name of non_formal edu",
-          });
-        } else {
-          setErrorMessage({
-            ...errorMessage,
-            non_formal: "",
-          });
-        }
+
         break;
       case "project":
         setRegister({ ...register, project: val });
-        if (val === "Select project") {
-          setErrorMessage({
-            ...errorMessage,
-            project: "Please select a project",
-          });
-        } else {
-          setErrorMessage({
-            ...errorMessage,
-            project: "",
-          });
-        }
+
         break;
       default:
         break;
@@ -263,16 +226,12 @@ const Context = ({ children }) => {
       country.length !== 0 &&
       confpass.length !== 0 &&
       dob.length !== 0 &&
-      non_formal.length !== 0 &&
       errorMessage["email"].length === 0 &&
       errorMessage["password"].length === 0 &&
       errorMessage["confpass"].length === 0 &&
       errorMessage["firstname"].length === 0 &&
       errorMessage["surname"].length === 0 &&
       errorMessage["country"].length === 0 &&
-      errorMessage["edu_type"].length === 0 &&
-      errorMessage["non_formal"].length === 0 &&
-      errorMessage["project"].length === 0 &&
       register["password"] === register["confpass"]
     ) {
       valid = true;
@@ -316,7 +275,7 @@ const Context = ({ children }) => {
         role: "student",
         dob,
         edu_type: edu_type + " --- " + non_formal,
-        project,
+        project: project === "" ? "No" : project,
       };
       const postOption = {
         method: "POST",
