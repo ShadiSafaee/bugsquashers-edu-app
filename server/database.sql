@@ -12,7 +12,7 @@ CREATE TABLE user_data (
     country VARCHAR(50) NOT NULL,
     role VARCHAR(10) NOT NULL,
     edu_type VARCHAR(100) DEFAULT 'No' NOT NULL,
-    project VARCHAR(50) DEFAULT 'No' NOT NULL  
+    project VARCHAR(255) DEFAULT 'No' NOT NULL  
 );
 CREATE TABLE modules (
     id SERIAL PRIMARY KEY,
