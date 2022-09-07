@@ -53,7 +53,21 @@ const Context = ({ children }) => {
       setUser({});
     }
   }, [setUser, navigate]);
-
+  const resetRegister = () => {
+    setRegister({
+      email: "",
+      password: "",
+      confpass: "",
+      firstname: "",
+      surname: "",
+      country: "",
+      dob: new Date(),
+      role: "student",
+      edu_type: "",
+      project: "",
+      non_formal: "",
+    });
+  };
   const registerFormHandler = (id, val) => {
     if (
       id !== "dob" &&
@@ -284,12 +298,15 @@ const Context = ({ children }) => {
         },
         body: JSON.stringify(user),
       };
+      console.log(user);
       const url = ` ${base_url}/api/user/signup`;
       const res = await fetch(url, postOption);
+
       try {
         if (res.ok) {
           alert("Register was successful! :)");
           setPreloader(false);
+          resetRegister();
           navigate("/login");
         } else {
           setPreloader(false);
@@ -338,6 +355,7 @@ const Context = ({ children }) => {
       }
     }
   };
+
   const logOutHandler = async () => {
     const url = ` ${base_url}/api/user/logout`;
     const token = localStorage.getItem("token");
@@ -417,6 +435,7 @@ const Context = ({ children }) => {
         auth,
         isAuth,
         setIsAuth,
+        resetRegister,
       }}
     >
       {children}

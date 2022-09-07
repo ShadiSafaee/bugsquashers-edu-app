@@ -25,6 +25,13 @@ const pool = new Pool({
 router.get("/", (req, res) => {
   res.send("it is working!");
 });
+router.delete("/delete-user/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  const query = "DELETE FROM user_data WHERE id = $1";
+  await pool.query(query, [id]);
+  res.status(201).json({ msg: `user with id ${id} deleted` });
+});
 //users role and get all users
 router.get("/allusers", async (req, res) => {
   const query = "select * from user_data order by id";
@@ -224,8 +231,10 @@ router.get("/lessons", async (req, res) => {
 router.post("/modules/lessons/:moduleid", async (req, res) => {
   const { moduleid } = req.params;
   const lessonQeury =
-    "SELECT lessons.id, lessons.lesson_name, lessons.module_id, submission.lesson_id, submission.user_id, submission.mark FROM submission FULL OUTER JOIN lessons ON submission.lesson_id = lessons.id WHERE lessons.module_id = $1 ORDER BY lessons.id";
+    "SELECT DISTINCT lessons.id, lessons.lesson_name, lessons.module_id, submission.lesson_id, submission.user_id, submission.mark FROM lessons FULL OUTER JOIN submission ON submission.lesson_id = lessons.id WHERE lessons.module_id = $1 ORDER BY lessons.id";
+
   const lessons = await pool.query(lessonQeury, [moduleid]);
+  console.table(lessons.rows);
   res
     .status(200)
     .json({ msg: `${lessons.rows.length} lessons found`, data: lessons.rows });

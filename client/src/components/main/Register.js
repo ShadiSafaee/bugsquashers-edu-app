@@ -16,6 +16,7 @@ const RegistrationForm = () => {
     register,
     errorMessage,
     setErrorMessage,
+    resetRegister,
   } = useContext(SyntaxContext);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -31,7 +32,7 @@ const RegistrationForm = () => {
       email: "",
       password: "",
     });
-
+    resetRegister();
     setErrorMessage({
       email: "",
       password: "",

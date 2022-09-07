@@ -21,5 +21,6 @@ const Context = createContext({
   auth: () => {},
   isAuth: false,
   setIsAuth: () => {},
+  resetRegister: () => {},
 });
 export default Context;
